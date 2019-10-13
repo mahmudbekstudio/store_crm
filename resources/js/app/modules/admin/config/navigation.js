@@ -1,8 +1,10 @@
 export default {
     admin: [
         {text: 'Dashboard', icon: 'mdi-view-dashboard-outline', route: {name: 'dashboard'}},
-        {text: 'Category', icon: 'mdi-post-outline', route: {name: 'category'}},
-        { divider: true },
+        {text: 'Region', icon: 'mdi-city-variant-outline', route: {name: 'region.list'}},
+        {text: 'School', icon: 'mdi-school-outline', route: {name: 'school.list'}},
+        {text: 'Goods', icon: 'mdi-laptop', route: {name: 'goods.list'}},
+        /*{ divider: true },
         { heading: 'Labels' },
         {text: 'Users', icon: 'mdi-account-group-outline', route: {name: 'admin.user'}},
         {text: 'Address', icon: 'mdi-account-group-outline', route: {name: 'admin.address'}},
@@ -19,7 +21,7 @@ export default {
                 { text: 'Undo changes', icon: 'settings' },
                 { text: 'Other contacts', icon: 'settings' },
             ],
-        },
+        },*/
     ],
     manager: [
         {text: 'Dashboard', icon: 'dashboard', route: {name: 'manager.dashboard'}},
