@@ -1,0 +1,9 @@
+{
+  "this_field_is_required": "This field is required",
+  "field_is_required": "{field} is required",
+  "field_must_be_less_than_maxlength_character": "{field} must be less than {maxLength} characters",
+  "field_must_be_more_than_minlength_character": "{field} must be more than {minLength} characters",
+  "field_must_be_valid": "{field} must be valid",
+  "field_must_be_in_the_list": "{field} must be in the list ({list})",
+  "field_must_not_be_in_the_list": "{field} must not be in the list ({list})"
+}

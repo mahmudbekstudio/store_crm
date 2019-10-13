@@ -1,0 +1,40 @@
+{
+    "close": "Yopish",
+    "dataIterator": {
+        "pageText": "{2} dan {0}-{1}",
+        "noResultsText": "Mos keladigani topilmadi",
+        "loadingText": "Yuklanmoqda..."
+    },
+    "dataTable": {
+        "itemsPerPageText": "Sahifadagi qatorlar:",
+        "ariaLabel": {
+            "sortDescending": ": Kamayish tartibida. Tartibni olib tashlash uchun aktivlashtiring.",
+            "sortAscending": ": Ko'payish tartibida. Kamayish tartibida bo'lishi uchun aktivlashtiring.",
+            "sortNone": ": Tartiblanmagan. Ko'payish tartibida bo'lishi uchun aktivlashtiring."
+        },
+        "sortBy": "Saralash"
+    },
+    "dataFooter": {
+        "itemsPerPageText": "Sahifadagi yozuvlar:",
+        "itemsPerPageAll": "Hammasi",
+        "nextPage": "Keyingi sahifa",
+        "prevPage": "Oldingi sahifa",
+        "firstPage": "Birinchi sahifa",
+        "lastPage": "Oxirgi sahifa"
+    },
+    "datePicker": {
+        "itemsSelected": "{0} tanlandi"
+    },
+    "noDataText": "Ma'lumotlar yo'q",
+    "carousel": {
+        "prev": "Oldingi",
+        "next": "Keyingi"
+    },
+    "calendar": {
+        "moreEvents": "Yana {0}"
+    },
+    "fileInput": {
+        "counter": "Fayllar: {0}",
+        "counterSize": "Fayllar: {0} (xammasi {1})"
+    }
+}

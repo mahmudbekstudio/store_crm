@@ -2,6 +2,11 @@
 
 namespace App\Console;
 
+use App\Console\Commands\Frontend\BuildConfig;
+use App\Console\Commands\Frontend\BuildFrontend;
+use App\Console\Commands\Frontend\BuildRoutes;
+use App\Console\Commands\Frontend\BuildTranslations;
+use App\Console\Commands\Frontend\BuildValidation;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +18,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        BuildFrontend::class,
+        BuildRoutes::class,
+        BuildTranslations::class,
+        BuildValidation::class,
+        BuildConfig::class,
     ];
 
     /**

@@ -93,7 +93,6 @@ return [
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
     'numeric' => 'The :attribute must be a number.',
-    'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
     'required' => 'The :attribute field is required.',
@@ -147,5 +146,9 @@ return [
     */
 
     'attributes' => [],
+
+    'exist_in_website' => 'The selected :attribute is invalid.',
+    'exist_in_website_with_user' => 'The selected :attribute is invalid.',
+    'not_exist_in_website' => 'The selected :attribute is invalid.',
 
 ];

@@ -2,6 +2,17 @@
 
 return [
 
+    'version' => env('APP_VERSION', 'v1'),
+    'locale_list' => ['en', 'ru', 'uz'],
+    'except_route_name' => ['api', 'ajax', 'admin', 'authorization'],
+    'refresh_token_lifetime' => 43200,// 30 days in minutes
+    'token_field' => 'Authorization',
+    'token_type' => 'Bearer',
+    'validation' => [
+        'minimum_password_length' => 6,
+    ],
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -174,6 +185,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        App\Providers\HelperServiceProvider::class,
 
     ],
 

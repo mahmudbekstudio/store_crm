@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -17,13 +17,20 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'App\Http\Controllers';
 
     /**
+     * Version of project
+     *
+     * @var string
+     */
+    private $version;
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
     public function boot()
     {
-        //
+        $this->version = config('app.version');
 
         parent::boot();
     }
@@ -36,10 +43,10 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
         $this->mapWebRoutes();
-
-        //
+        $this->mapAdminRoutes();
+        $this->mapFileRoutes();
+        $this->mapAjaxRoutes();
     }
 
     /**
@@ -52,7 +59,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
+             ->namespace($this->namespace . '\\' . $this->version . '\Web')
              ->group(base_path('routes/web.php'));
     }
 
@@ -67,7 +74,46 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('api')
              ->middleware('api')
-             ->namespace($this->namespace)
+             ->namespace($this->namespace . '\\' . $this->version . '\Api')
              ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * Define routes for admin
+     *
+     * @return void
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::prefix('api/admin')
+            ->middleware('api')
+            ->namespace($this->namespace . '\\' . $this->version . '\Admin')
+            ->group(base_path('routes/admin.php'));
+    }
+
+    /**
+     * Define routes for file
+     *
+     * @return void
+     */
+    protected function mapFileRoutes()
+    {
+        Route::prefix('api/file')
+            ->middleware('api')
+            ->namespace($this->namespace . '\\' . $this->version . '\File')
+            ->group(base_path('routes/file.php'));
+    }
+
+    /**
+     * Define routes for ajax
+     *
+     * @return void
+     */
+    protected function mapAjaxRoutes()
+    {
+        Route::prefix('ajax')
+            ->middleware('ajax')
+            ->namespace($this->namespace . '\\' . $this->version . '\Ajax')
+            ->group(base_path('routes/ajax.php'));
     }
 }
