@@ -1,5 +1,5 @@
 <template>
-    <PageBox :actions="actionsList">
+    <PageBox :actions="actionsList" :footer-actions="actionsList" :footer-text="'Testing<br />asd'">
         <v-data-table
                 :headers="headers"
                 :items="desserts"
