@@ -1,6 +1,6 @@
 import store from '../../../plugin/store'
 
-store.registerModule('schoolList', {
+store.registerModule('categoryList', {
     namespaced: true,
 
     state: {

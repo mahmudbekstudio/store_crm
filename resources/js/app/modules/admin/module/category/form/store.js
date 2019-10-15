@@ -1,12 +1,12 @@
 import store from '../../../plugin/store'
 
-store.registerModule('schoolList', {
+store.registerModule('categoryForm', {
     namespaced: true,
 
     state: {
         submitDisabled: true,
         isLoading: false,
-        list: [],
+        item: {},
         errors: ''
     },
 
@@ -14,8 +14,8 @@ store.registerModule('schoolList', {
         changeSubmitDisabled(state, val) {
             state.submitDisabled = !!val;
         },
-        changeList(state, list) {
-            state.list = list;
+        changeItem(state, item) {
+            state.item = item;
         },
         changeErrors(state, errors) {
             state.errors = errors;

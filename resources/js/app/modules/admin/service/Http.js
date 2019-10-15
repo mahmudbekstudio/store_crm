@@ -62,6 +62,11 @@ class Http {
         return this;
     }
 
+    urlParam(param, val) {
+        this.requestParams.url = this.requestParams.url.replace(param, val);
+        return this;
+    }
+
     method(newMethod) {
         this.requestParams.method = newMethod;
         return this;

@@ -2,14 +2,14 @@ import Route from "../../../api/route";
 
 const api = {
     get: {
-        ...Route.admin('region.item'),
+        ...Route.admin('goods.item'),
         callback: function(id) {
             this.urlParam('{id}', id);
         },
         token: true
     },
     update: {
-        ...Route.admin('region.edit'),
+        ...Route.admin('goods.edit'),
         callback: function(id, name) {
             this.urlParam('{id}', id);
             this.data({ name });
@@ -17,7 +17,7 @@ const api = {
         token: true
     },
     add: {
-        ...Route.admin('region.add'),
+        ...Route.admin('goods.add'),
         callback: function(name) {
             this.data({ name });
         },

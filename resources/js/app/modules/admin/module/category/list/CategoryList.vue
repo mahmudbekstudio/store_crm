@@ -59,7 +59,7 @@
 
         computed: {
             items() {
-                return this.$store.state.regionList.list;
+                return this.$store.state.categoryList.list;
             },
         },
 
@@ -67,14 +67,14 @@
             this.$options.service.init();
             this.actionsList.push(getPageBoxAction('New', '', {color: 'primary'}, {
                 click: () => {
-                    this.$router.push({name: 'region.add'})
+                    this.$router.push({name: 'category.add'})
                 }
             }));
         },
 
         methods: {
             editItem (item) {
-                this.$router.push({name: 'region.edit', params: { id: item.id } });
+                this.$router.push({name: 'category.edit', params: { id: item.id } });
             },
 
             deleteItem (item) {

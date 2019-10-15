@@ -46,7 +46,7 @@
 
         computed: {
             item() {
-                return this.$store.state.regionForm.item;
+                return this.$store.state.categoryForm.item;
             },
         },
 
@@ -60,7 +60,7 @@
 
             this.actionsList.push(getPageBoxAction('Back', '', {color: 'default'}, {
                 click: () => {
-                    this.$router.push({name: 'region.list'})
+                    this.$router.push({name: 'category.list'})
                 }
             }));
             this.changeSaveButton();
@@ -83,7 +83,7 @@
                 });
             },
             goToBack() {
-                this.$router.push({name: 'region.list'});
+                this.$router.push({name: 'category.list'});
             },
         },
     }

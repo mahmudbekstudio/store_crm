@@ -2,11 +2,11 @@ import Route from "../../../api/route";
 
 const api = {
     list: {
-        ...Route.admin('school.list'),
+        ...Route.admin('goods.list'),
         token: true
     },
     delete: {
-        ...Route.admin('school.delete'),
+        ...Route.admin('goods.delete'),
         callback: function(id) {
             this.urlParam('{id}', id);
         },

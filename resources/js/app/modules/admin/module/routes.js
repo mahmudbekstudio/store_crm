@@ -3,7 +3,7 @@ import authRoute from './auth/route';
 import dashboardRoute from './dashboard/route';
 import regionRoute from './region/route';
 import schoolRoute from './school/route';
-import goodsRoute from './goods/route';
+import categoryRoute from './category/route';
 import errorRoute from './error/route';
 
 const routes = [
@@ -12,7 +12,7 @@ const routes = [
     dashboardRoute,
     regionRoute,
     schoolRoute,
-    goodsRoute,
+    categoryRoute,
     errorRoute,
     {path: '*', redirect: {name: viewConfig.page.notFound}}
 ];

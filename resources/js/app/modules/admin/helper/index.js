@@ -37,7 +37,7 @@ export let convertUtc = function(date) {
     );
 };
 
-export let getHeaderAction = function(title, icon = '', bind = {}, on = {}) {
+export let getPageBoxAction = function(title, icon = '', bind = {}, on = {}) {
   return {
       title: title,
       icon: icon,

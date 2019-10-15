@@ -17,11 +17,11 @@ export default class Service {
         http(api.list)
             .send()
             .then(response => {
-                logger.info('region.list', response);
-                store.commit('regionList/changeList', response.data.list);
+                logger.info('category.list', response);
+                store.commit('categoryList/changeList', response.data.list);
             })
             .catch(error => {
-                logger.error('region.list', error);
+                logger.error('category.list', error);
                 app.errorMessage('Error');
             })
             .then(() => {
@@ -38,7 +38,7 @@ export default class Service {
                 this.init();
             })
             .catch(error => {
-                logger.error('region.delete', error);
+                logger.error('category.delete', error);
                 app.errorMessage('Error');
             })
             .then(() => {
@@ -48,6 +48,6 @@ export default class Service {
 
     loading(isStart) {
         app.loading(isStart);
-        store.commit('regionList/changeIsLoading', isStart);
+        store.commit('categoryList/changeIsLoading', isStart);
     }
 }

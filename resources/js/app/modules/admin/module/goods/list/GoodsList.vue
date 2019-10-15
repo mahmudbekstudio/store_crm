@@ -64,7 +64,7 @@
 </template>
 <script>
     import PageBox from '../../../view/partial/PageBox';
-    import { getHeaderAction } from '../../../helper';
+    import { getPageBoxAction } from '../../../helper';
 
     export default {
         components: {
@@ -73,12 +73,12 @@
         data: () => ({
             dialog: false,
             actionsList: [
-                /*getHeaderAction('Button 1', '', {color: 'primary'}, {
+                /*getPageBoxAction('Button 1', '', {color: 'primary'}, {
                     click: () => {
                         this.dialog = !this.dialog;
                     }
                 }),
-                getHeaderAction('Button 2'),*/
+                getPageBoxAction('Button 2'),*/
             ],
             headers: [
                 {
@@ -125,12 +125,12 @@
 
         created () {
             this.initialize();
-            this.actionsList.push(getHeaderAction('Button 1', '', {color: 'primary'}, {
+            this.actionsList.push(getPageBoxAction('Button 1', '', {color: 'primary'}, {
                 click: () => {
                     this.dialog = !this.dialog;
                 }
             }));
-            this.actionsList.push(getHeaderAction('Button 2'))
+            this.actionsList.push(getPageBoxAction('Button 2'))
         },
 
         methods: {

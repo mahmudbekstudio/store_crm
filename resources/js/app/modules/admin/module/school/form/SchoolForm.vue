@@ -1,240 +1,106 @@
 <template>
-    <PageBox :actions="actionsList">
-        <v-data-table
-                :headers="headers"
-                :items="desserts"
-                class="elevation-1"
+    <PageBox :actions="actionsList" :footerActions="footerActionsList">
+        <v-form
+                ref="form"
+                v-model="valid"
         >
-            <template v-slot:item.action="{ item }">
-                <v-icon
-                        class="mr-2"
-                        @click="editItem(item)"
-                >
-                    mdi-square-edit-outline
-                </v-icon>
-                <v-icon
-                        class="mr-2"
-                        @click="deleteItem(item)"
-                >
-                    mdi-delete-outline
-                </v-icon>
-            </template>
-            <template v-slot:no-data>
-                <div class="text-center">No Data</div>
-            </template>
-        </v-data-table>
-
-
-        <v-dialog v-model="dialog" max-width="500px">
-            <v-card>
-                <v-card-title>
-                    <span class="headline">{{ formTitle }}</span>
-                </v-card-title>
-
-                <v-card-text>
-                    <v-container>
-                        <v-row>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-card-text>
-
-                <v-card-actions>
-                    <div class="flex-grow-1"></div>
-                    <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+            <v-text-field
+                    v-model="name"
+                    :rules="nameRules"
+                    label="Name"
+                    required
+            ></v-text-field>
+            <v-select
+                    :items="regions"
+                    label="Region"
+                    v-model="region"
+                    :rules="regionRules"
+                    required
+            ></v-select>
+        </v-form>
     </PageBox>
 </template>
 <script>
     import PageBox from '../../../view/partial/PageBox';
-    import { getHeaderAction } from '../../../helper';
+    import { getPageBoxAction } from '../../../helper';
+    import Service from './service';
 
     export default {
+        service: new Service(),
         components: {
             PageBox
         },
         data: () => ({
             dialog: false,
-            actionsList: [
-                /*getHeaderAction('Button 1', '', {color: 'primary'}, {
-                    click: () => {
-                        this.dialog = !this.dialog;
-                    }
-                }),
-                getHeaderAction('Button 2'),*/
+            actionsList: [],
+            footerActionsList: [],
+            isEdit: false,
+
+            // form
+            valid: true,
+            name: '',
+            nameRules: [
+                v => !!v || 'Name is required',
             ],
-            headers: [
-                {
-                    text: 'Dessert (100g serving)',
-                    align: 'left',
-                    sortable: false,
-                    value: 'name',
-                },
-                { text: 'Calories', value: 'calories' },
-                { text: 'Fat (g)', value: 'fat' },
-                { text: 'Carbs (g)', value: 'carbs' },
-                { text: 'Protein (g)', value: 'protein' },
-                { text: 'Actions', value: 'action', sortable: false },
-            ],
-            desserts: [],
-            editedIndex: -1,
-            editedItem: {
-                name: '',
-                calories: 0,
-                fat: 0,
-                carbs: 0,
-                protein: 0,
-            },
-            defaultItem: {
-                name: '',
-                calories: 0,
-                fat: 0,
-                carbs: 0,
-                protein: 0,
-            },
+            region: '',
+            regionRules: [
+                v => !!v || 'Region is required',
+            ]
         }),
 
-        computed: {
-            formTitle () {
-                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-            },
+        watch: {
+            valid(newVal, oldVal) {
+                this.$logger.info('valid', newVal, oldVal);
+                this.changeSaveButton(!newVal);
+            }
         },
 
-        watch: {
-            dialog (val) {
-                val || this.close()
+        computed: {
+            item() {
+                return this.$store.state.schoolForm.item;
             },
+            regions() {
+                return this.$store.state.schoolForm.regions;
+            }
         },
 
         created () {
-            this.initialize();
-            this.actionsList.push(getHeaderAction('Button 1', '', {color: 'primary'}, {
+            this.$options.service.getRegions();
+            
+            if(this.$router.currentRoute.params.id) {
+                this.isEdit = true;
+                this.$options.service.init(this.$router.currentRoute.params.id, (item) => {
+                    this.name = item.name;
+                    this.region = item.region_id;
+                });
+            }
+
+            this.actionsList.push(getPageBoxAction('Back', '', {color: 'default'}, {
                 click: () => {
-                    this.dialog = !this.dialog;
+                    this.$router.push({name: 'school.list'})
                 }
             }));
-            this.actionsList.push(getHeaderAction('Button 2'))
+            this.changeSaveButton();
         },
 
         methods: {
-            initialize () {
-                this.desserts = [
-                    {
-                        name: 'Frozen Yogurt',
-                        calories: 159,
-                        fat: 6.0,
-                        carbs: 24,
-                        protein: 4.0,
-                    },
-                    {
-                        name: 'Ice cream sandwich',
-                        calories: 237,
-                        fat: 9.0,
-                        carbs: 37,
-                        protein: 4.3,
-                    },
-                    {
-                        name: 'Eclair',
-                        calories: 262,
-                        fat: 16.0,
-                        carbs: 23,
-                        protein: 6.0,
-                    },
-                    {
-                        name: 'Cupcake',
-                        calories: 305,
-                        fat: 3.7,
-                        carbs: 67,
-                        protein: 4.3,
-                    },
-                    {
-                        name: 'Gingerbread',
-                        calories: 356,
-                        fat: 16.0,
-                        carbs: 49,
-                        protein: 3.9,
-                    },
-                    {
-                        name: 'Jelly bean',
-                        calories: 375,
-                        fat: 0.0,
-                        carbs: 94,
-                        protein: 0.0,
-                    },
-                    {
-                        name: 'Lollipop',
-                        calories: 392,
-                        fat: 0.2,
-                        carbs: 98,
-                        protein: 0,
-                    },
-                    {
-                        name: 'Honeycomb',
-                        calories: 408,
-                        fat: 3.2,
-                        carbs: 87,
-                        protein: 6.5,
-                    },
-                    {
-                        name: 'Donut',
-                        calories: 452,
-                        fat: 25.0,
-                        carbs: 51,
-                        protein: 4.9,
-                    },
-                    {
-                        name: 'KitKat',
-                        calories: 518,
-                        fat: 26.0,
-                        carbs: 65,
-                        protein: 7,
-                    },
-                ]
+            changeSaveButton(isDisabled = false) {
+                this.footerActionsList[0] = getPageBoxAction('Save', '', {color: 'primary', disabled: isDisabled}, {
+                    click: () => {
+                        if(!this.isEdit) {
+                            this.$options.service.add(this.name, this.region, () => {
+                                this.goToBack();
+                            });
+                        } else {
+                            this.$options.service.edit(this.item.id, this.name, this.region, () => {
+                                this.goToBack();
+                            });
+                        }
+                    }
+                });
             },
-
-            editItem (item) {
-                this.editedIndex = this.desserts.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
-            },
-
-            deleteItem (item) {
-                const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-            },
-
-            close () {
-                this.dialog = false
-                setTimeout(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem)
-                    this.editedIndex = -1
-                }, 300)
-            },
-
-            save () {
-                if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                } else {
-                    this.desserts.push(this.editedItem)
-                }
-                this.close()
+            goToBack() {
+                this.$router.push({name: 'school.list'});
             },
         },
     }
