@@ -9,5 +9,12 @@ return [
     'email' => 'E-mail',
     'send' => 'Send',
     'success' => 'Success',
-    'no-data' => 'No Data'
+    'no-data' => 'No Data',
+    'active' => 'Active',
+    'not_active' => 'Not active',
+    'blocked' => 'Blocked',
+    'first_name' => 'First name',
+    'last_name' => 'Last name',
+    'status' => 'Status',
+    'role' => 'Role'
 ];

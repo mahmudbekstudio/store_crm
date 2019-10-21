@@ -9,4 +9,5 @@ return [
     'token_is_expired' => 'Token is Expired',
     'token_is_invalid' => 'Token is Invalid',
     'you_have_been_logged_out' => 'You have been successfully logged out!',
+    'you_can_not_delete_yourself' => 'Can not delete yourself',
 ];

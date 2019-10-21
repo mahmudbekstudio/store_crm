@@ -19,12 +19,12 @@ Route::group(['middleware' => 'token:refresh'], function() {
 });
 
 Route::group(['middleware' => ['token:access']], function() {
+    Route::post('check-access', 'MainController@success')->name('check-access');
     Route::post('logout', 'AuthController@logout')->name('logout');
     Route::any('website', 'MainController@settings')->name('website');
 });
 
 Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]], function() {
-    Route::post('check-access', 'MainController@success')->name('check-access');
 
     Route::group(['prefix' => 'region', 'as' => 'region.'], function() {
         Route::get('list', 'RegionController@list')->name('list');
@@ -48,5 +48,15 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
         Route::get('item/{id}', 'SchoolController@item')->name('item');
         Route::put('item/{id}', 'SchoolController@edit')->name('edit');
         Route::delete('item/{id}', 'SchoolController@delete')->name('delete');
+    });
+
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
+        Route::get('list', 'UserController@list')->name('list');
+        Route::post('add', 'UserController@add')->name('add');
+        Route::get('item/{id}', 'UserController@item')->name('item');
+        Route::put('item/{id}', 'UserController@edit')->name('edit');
+        Route::delete('item/{id}', 'UserController@delete')->name('delete');
+
+        Route::get('params', 'UserController@params')->name('params');
     });
 });

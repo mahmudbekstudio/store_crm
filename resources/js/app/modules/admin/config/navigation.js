@@ -4,6 +4,7 @@ export default {
         {text: 'Region', icon: 'mdi-city-variant-outline', route: {name: 'region.list'}},
         {text: 'School', icon: 'mdi-school-outline', route: {name: 'school.list'}},
         {text: 'Category', icon: 'mdi-laptop', route: {name: 'category.list'}},
+        {text: 'User', icon: 'mdi-account-supervisor-outline', route: {name: 'user.list'}},
         /*{ divider: true },
         { heading: 'Labels' },
         {text: 'Users', icon: 'mdi-account-group-outline', route: {name: 'admin.user'}},

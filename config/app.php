@@ -11,6 +11,7 @@ return [
     'validation' => [
         'minimum_password_length' => 6,
     ],
+    'date_format' => "Y-m-d",
 
 
     /*

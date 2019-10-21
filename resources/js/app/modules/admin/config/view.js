@@ -25,7 +25,7 @@ export default {
         left: false,
         "multi-line": false,
         right: false,
-        timeout: 26000,
+        timeout: 3000,
         top: false,
         vertical: false,
         showButton: true

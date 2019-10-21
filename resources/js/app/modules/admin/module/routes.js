@@ -4,6 +4,7 @@ import dashboardRoute from './dashboard/route';
 import regionRoute from './region/route';
 import schoolRoute from './school/route';
 import categoryRoute from './category/route';
+import userRoute from './user/route';
 import errorRoute from './error/route';
 
 const routes = [
@@ -13,6 +14,7 @@ const routes = [
     regionRoute,
     schoolRoute,
     categoryRoute,
+    userRoute,
     errorRoute,
     {path: '*', redirect: {name: viewConfig.page.notFound}}
 ];

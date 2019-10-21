@@ -3049,6 +3049,348 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _view_partial_PageBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../view/partial/PageBox */ "./resources/js/app/modules/admin/view/partial/PageBox.vue");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../helper */ "./resources/js/app/modules/admin/helper/index.js");
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./service */ "./resources/js/app/modules/admin/module/user/form/service.js");
+/* harmony import */ var _config_validation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../config/validation */ "./resources/js/app/modules/admin/config/validation.js");
+/* harmony import */ var _plugin_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../plugin/i18n */ "./resources/js/app/modules/admin/plugin/i18n.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  service: new _service__WEBPACK_IMPORTED_MODULE_2__["default"](),
+  components: {
+    PageBox: _view_partial_PageBox__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      actionsList: [],
+      footerActionsList: [],
+      isEdit: false,
+      valid: true,
+      form: {//
+      }
+    };
+  },
+  watch: {
+    valid: function valid(newVal, oldVal) {
+      this.$logger.info('valid', newVal, oldVal);
+      this.changeSaveButton(!newVal);
+    },
+    params: function params(val) {
+      this.$logger.info('watch params', val);
+      this.form.status.items = val.statuses;
+      this.form.role.items = val.roles;
+    }
+  },
+  computed: {
+    item: function item() {
+      return this.$store.state.userForm.item;
+    },
+    params: function params() {
+      return {
+        roles: this.$store.state.userForm.roles,
+        statuses: this.$store.state.userForm.statuses
+      };
+    }
+  },
+  created: function created() {
+    var _this = this;
+
+    this.form = {
+      firstName: {
+        label: _plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.first_name'),
+        value: '',
+        rules: [_config_validation__WEBPACK_IMPORTED_MODULE_3__["default"].required(_plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.first_name'))]
+      },
+      lastName: {
+        label: _plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.last_name'),
+        value: '',
+        rules: [_config_validation__WEBPACK_IMPORTED_MODULE_3__["default"].required(_plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.last_name'))]
+      },
+      email: {
+        label: _plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.email'),
+        value: '',
+        rules: [_config_validation__WEBPACK_IMPORTED_MODULE_3__["default"].required(_plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.email')), _config_validation__WEBPACK_IMPORTED_MODULE_3__["default"].isEmail(_plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.email'))]
+      },
+      password: {
+        label: _plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.password'),
+        value: '',
+        rules: []
+      },
+      password2: {
+        label: _plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.password2'),
+        value: '',
+        rules: []
+      },
+      status: {
+        label: _plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.status'),
+        value: '',
+        items: [],
+        rules: [_config_validation__WEBPACK_IMPORTED_MODULE_3__["default"].required(_plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.status'))]
+      },
+      role: {
+        label: _plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.role'),
+        value: '',
+        items: [],
+        rules: [_config_validation__WEBPACK_IMPORTED_MODULE_3__["default"].required(_plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.role'))]
+      }
+    };
+    this.$options.service.getParams();
+
+    if (this.$router.currentRoute.params.id) {
+      this.form.password.rules.push(_config_validation__WEBPACK_IMPORTED_MODULE_3__["default"].required(_plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.password')));
+      this.form.password2.rules.push(_config_validation__WEBPACK_IMPORTED_MODULE_3__["default"].required(_plugin_i18n__WEBPACK_IMPORTED_MODULE_4__["default"].t('translations.words.password2')));
+      this.isEdit = true;
+      this.$options.service.init(this.$router.currentRoute.params.id, function (item) {
+        for (var i in item) {
+          _this.form[i].value = item[i];
+        }
+      });
+    }
+
+    this.actionsList.push(Object(_helper__WEBPACK_IMPORTED_MODULE_1__["getPageBoxAction"])('Back', '', {
+      color: 'default'
+    }, {
+      click: function click() {
+        _this.goToBack();
+      }
+    }));
+    this.changeSaveButton();
+  },
+  methods: {
+    changeSaveButton: function changeSaveButton() {
+      var _this2 = this;
+
+      var isDisabled = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      this.footerActionsList[0] = Object(_helper__WEBPACK_IMPORTED_MODULE_1__["getPageBoxAction"])('Save', '', {
+        color: 'primary',
+        disabled: isDisabled
+      }, {
+        click: function click() {
+          if (!_this2.isEdit) {
+            var form = {};
+
+            for (var key in _this2.form) {
+              form[key] = _this2.form[key].value;
+            }
+
+            _this2.$logger.info('form', form);
+
+            _this2.$options.service.add(form, function () {
+              _this2.goToBack();
+            });
+          } else {
+            var _form = {};
+
+            for (var _key in _this2.form) {
+              _form[_key] = _this2.form[_key].value;
+            }
+
+            _this2.$options.service.edit(_this2.item.id, _form, function () {
+              _this2.goToBack();
+            });
+          }
+        }
+      });
+    },
+    goToBack: function goToBack() {
+      this.$router.push({
+        name: 'user.list'
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _view_partial_PageBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../view/partial/PageBox */ "./resources/js/app/modules/admin/view/partial/PageBox.vue");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../helper */ "./resources/js/app/modules/admin/helper/index.js");
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./service */ "./resources/js/app/modules/admin/module/user/list/service.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  service: new _service__WEBPACK_IMPORTED_MODULE_2__["default"](),
+  components: {
+    PageBox: _view_partial_PageBox__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      actionsList: [],
+      headers: [{
+        text: 'Id',
+        align: 'left',
+        sortable: false,
+        value: 'id',
+        width: 50
+      }, {
+        text: 'Name',
+        align: 'left',
+        sortable: false,
+        value: 'name'
+      }, {
+        text: 'E-mail',
+        align: 'left',
+        sortable: false,
+        value: 'email'
+      }, {
+        text: 'Status',
+        align: 'left',
+        sortable: false,
+        value: 'status'
+      }, {
+        text: 'Role',
+        align: 'left',
+        sortable: false,
+        value: 'role'
+      }, {
+        text: 'Created',
+        align: 'left',
+        sortable: false,
+        value: 'created'
+      }, {
+        text: 'Actions',
+        value: 'action',
+        sortable: false,
+        width: 100
+      }]
+    };
+  },
+  computed: {
+    items: function items() {
+      return this.$store.state.userList.list;
+    }
+  },
+  created: function created() {
+    var _this = this;
+
+    this.$options.service.init();
+    this.actionsList.push(Object(_helper__WEBPACK_IMPORTED_MODULE_1__["getPageBoxAction"])('New', '', {
+      color: 'primary'
+    }, {
+      click: function click() {
+        _this.$router.push({
+          name: 'user.add'
+        });
+      }
+    }));
+  },
+  methods: {
+    editItem: function editItem(item) {
+      this.$router.push({
+        name: 'user.edit',
+        params: {
+          id: item.id
+        }
+      });
+    },
+    deleteItem: function deleteItem(item) {
+      this.$options.service["delete"](item.id);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/modules/admin/view/App.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/modules/admin/view/App.vue?vue&type=script&lang=js& ***!
@@ -25123,6 +25465,238 @@ render._withStripped = true
 /*!***************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/modules/admin/module/school/list/SchoolList.vue?vue&type=template&id=7638c807& ***!
   \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "PageBox",
+    { attrs: { actions: _vm.actionsList } },
+    [
+      _c("v-data-table", {
+        staticClass: "elevation-1",
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.items,
+          "hide-default-footer": ""
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "item.action",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c(
+                  "v-icon",
+                  {
+                    staticClass: "mr-2",
+                    on: {
+                      click: function($event) {
+                        return _vm.editItem(item)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                mdi-square-edit-outline\n            "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-icon",
+                  {
+                    staticClass: "mr-2",
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteItem(item)
+                      }
+                    }
+                  },
+                  [_vm._v("\n                mdi-delete-outline\n            ")]
+                )
+              ]
+            }
+          },
+          {
+            key: "no-data",
+            fn: function() {
+              return [
+                _c("div", { staticClass: "text-center" }, [_vm._v("No Data")])
+              ]
+            },
+            proxy: true
+          }
+        ])
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=template&id=04d25db5&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=template&id=04d25db5& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "PageBox",
+    {
+      attrs: { actions: _vm.actionsList, footerActions: _vm.footerActionsList }
+    },
+    [
+      _c(
+        "v-form",
+        {
+          ref: "form",
+          model: {
+            value: _vm.valid,
+            callback: function($$v) {
+              _vm.valid = $$v
+            },
+            expression: "valid"
+          }
+        },
+        [
+          _c("v-text-field", {
+            attrs: {
+              rules: _vm.form.firstName.rules,
+              label: _vm.form.firstName.label
+            },
+            model: {
+              value: _vm.form.firstName.value,
+              callback: function($$v) {
+                _vm.$set(_vm.form.firstName, "value", $$v)
+              },
+              expression: "form.firstName.value"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              rules: _vm.form.lastName.rules,
+              label: _vm.form.lastName.label
+            },
+            model: {
+              value: _vm.form.lastName.value,
+              callback: function($$v) {
+                _vm.$set(_vm.form.lastName, "value", $$v)
+              },
+              expression: "form.lastName.value"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { rules: _vm.form.email.rules, label: _vm.form.email.label },
+            model: {
+              value: _vm.form.email.value,
+              callback: function($$v) {
+                _vm.$set(_vm.form.email, "value", $$v)
+              },
+              expression: "form.email.value"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              rules: _vm.form.password.rules,
+              label: _vm.form.password.label,
+              type: "password"
+            },
+            model: {
+              value: _vm.form.password.value,
+              callback: function($$v) {
+                _vm.$set(_vm.form.password, "value", $$v)
+              },
+              expression: "form.password.value"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              rules: _vm.form.password2.rules,
+              label: _vm.form.password2.label,
+              type: "password"
+            },
+            model: {
+              value: _vm.form.password2.value,
+              callback: function($$v) {
+                _vm.$set(_vm.form.password2, "value", $$v)
+              },
+              expression: "form.password2.value"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-select", {
+            attrs: {
+              items: _vm.form.status.items,
+              label: _vm.form.status.label,
+              rules: _vm.form.status.rules
+            },
+            model: {
+              value: _vm.form.status.value,
+              callback: function($$v) {
+                _vm.$set(_vm.form.status, "value", $$v)
+              },
+              expression: "form.status.value"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-select", {
+            attrs: {
+              items: _vm.form.role.items,
+              label: _vm.form.role.label,
+              rules: _vm.form.role.rules
+            },
+            model: {
+              value: _vm.form.role.value,
+              callback: function($$v) {
+                _vm.$set(_vm.form.role, "value", $$v)
+              },
+              expression: "form.role.value"
+            }
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=template&id=5a4772f5&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=template&id=5a4772f5& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -79744,6 +80318,12 @@ __webpack_require__.r(__webpack_exports__);
     route: {
       name: 'category.list'
     }
+  }, {
+    text: 'User',
+    icon: 'mdi-account-supervisor-outline',
+    route: {
+      name: 'user.list'
+    }
   }
   /*{ divider: true },
   { heading: 'Labels' },
@@ -79879,14 +80459,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   isEmail: function isEmail(field) {
     return function (v) {
-      return _constants__WEBPACK_IMPORTED_MODULE_0__["VALIDATION_EMAIL"].test(v) || _plugin_i18n__WEBPACK_IMPORTED_MODULE_1__["default"].t('field_must_be_valid', {
+      return _constants__WEBPACK_IMPORTED_MODULE_0__["VALIDATION_EMAIL"].test(v) || _plugin_i18n__WEBPACK_IMPORTED_MODULE_1__["default"].t('locale.validation.field_must_be_valid', {
         field: field
       });
     };
   },
   "in": function _in(field, list) {
     return function (v) {
-      return v && list.indexOf(v) > -1 || _plugin_i18n__WEBPACK_IMPORTED_MODULE_1__["default"].t('field_must_be_in_the_list', {
+      return v && list.indexOf(v) > -1 || _plugin_i18n__WEBPACK_IMPORTED_MODULE_1__["default"].t('locale.validation.field_must_be_in_the_list', {
         field: field,
         list: list.join('", "')
       });
@@ -79894,7 +80474,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   notIn: function notIn(field, list) {
     return function (v) {
-      return v && list.indexOf(v) == -1 || _plugin_i18n__WEBPACK_IMPORTED_MODULE_1__["default"].t('field_must_not_be_in_the_list', {
+      return v && list.indexOf(v) == -1 || _plugin_i18n__WEBPACK_IMPORTED_MODULE_1__["default"].t('locale.validation.field_must_not_be_in_the_list', {
         field: field,
         list: list.join('", "')
       });
@@ -79941,7 +80521,7 @@ __webpack_require__.r(__webpack_exports__);
     left: false,
     "multi-line": false,
     right: false,
-    timeout: 26000,
+    timeout: 3000,
     top: false,
     vertical: false,
     showButton: true
@@ -80344,7 +80924,13 @@ var map = {
 	"./school/form/translations/uz.json": "./resources/js/app/modules/admin/module/school/form/translations/uz.json",
 	"./school/list/translations/en.json": "./resources/js/app/modules/admin/module/school/list/translations/en.json",
 	"./school/list/translations/ru.json": "./resources/js/app/modules/admin/module/school/list/translations/ru.json",
-	"./school/list/translations/uz.json": "./resources/js/app/modules/admin/module/school/list/translations/uz.json"
+	"./school/list/translations/uz.json": "./resources/js/app/modules/admin/module/school/list/translations/uz.json",
+	"./user/form/translations/en.json": "./resources/js/app/modules/admin/module/user/form/translations/en.json",
+	"./user/form/translations/ru.json": "./resources/js/app/modules/admin/module/user/form/translations/ru.json",
+	"./user/form/translations/uz.json": "./resources/js/app/modules/admin/module/user/form/translations/uz.json",
+	"./user/list/translations/en.json": "./resources/js/app/modules/admin/module/user/list/translations/en.json",
+	"./user/list/translations/ru.json": "./resources/js/app/modules/admin/module/user/list/translations/ru.json",
+	"./user/list/translations/uz.json": "./resources/js/app/modules/admin/module/user/list/translations/uz.json"
 };
 
 
@@ -82880,7 +83466,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _region_route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./region/route */ "./resources/js/app/modules/admin/module/region/route.js");
 /* harmony import */ var _school_route__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./school/route */ "./resources/js/app/modules/admin/module/school/route.js");
 /* harmony import */ var _category_route__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./category/route */ "./resources/js/app/modules/admin/module/category/route.js");
-/* harmony import */ var _error_route__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./error/route */ "./resources/js/app/modules/admin/module/error/route.js");
+/* harmony import */ var _user_route__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./user/route */ "./resources/js/app/modules/admin/module/user/route.js");
+/* harmony import */ var _error_route__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./error/route */ "./resources/js/app/modules/admin/module/error/route.js");
+
 
 
 
@@ -82893,7 +83481,7 @@ var routes = [{
   redirect: {
     name: _config_view__WEBPACK_IMPORTED_MODULE_0__["default"].page["default"]
   }
-}, _auth_route__WEBPACK_IMPORTED_MODULE_1__["default"], _dashboard_route__WEBPACK_IMPORTED_MODULE_2__["default"], _region_route__WEBPACK_IMPORTED_MODULE_3__["default"], _school_route__WEBPACK_IMPORTED_MODULE_4__["default"], _category_route__WEBPACK_IMPORTED_MODULE_5__["default"], _error_route__WEBPACK_IMPORTED_MODULE_6__["default"], {
+}, _auth_route__WEBPACK_IMPORTED_MODULE_1__["default"], _dashboard_route__WEBPACK_IMPORTED_MODULE_2__["default"], _region_route__WEBPACK_IMPORTED_MODULE_3__["default"], _school_route__WEBPACK_IMPORTED_MODULE_4__["default"], _category_route__WEBPACK_IMPORTED_MODULE_5__["default"], _user_route__WEBPACK_IMPORTED_MODULE_6__["default"], _error_route__WEBPACK_IMPORTED_MODULE_7__["default"], {
   path: '*',
   redirect: {
     name: _config_view__WEBPACK_IMPORTED_MODULE_0__["default"].page.notFound
@@ -83557,6 +84145,678 @@ var route = {
     component: _form_SchoolForm__WEBPACK_IMPORTED_MODULE_2__["default"],
     meta: {
       title: 'Add school',
+      requiresAuth: true
+    }
+  }]
+};
+/* harmony default export */ __webpack_exports__["default"] = (route);
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/form/UserForm.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/form/UserForm.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UserForm_vue_vue_type_template_id_04d25db5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserForm.vue?vue&type=template&id=04d25db5& */ "./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=template&id=04d25db5&");
+/* harmony import */ var _UserForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserForm.vue?vue&type=script&lang=js& */ "./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UserForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UserForm_vue_vue_type_template_id_04d25db5___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UserForm_vue_vue_type_template_id_04d25db5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/app/modules/admin/module/user/form/UserForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./UserForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=template&id=04d25db5&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=template&id=04d25db5& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserForm_vue_vue_type_template_id_04d25db5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./UserForm.vue?vue&type=template&id=04d25db5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/modules/admin/module/user/form/UserForm.vue?vue&type=template&id=04d25db5&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserForm_vue_vue_type_template_id_04d25db5___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserForm_vue_vue_type_template_id_04d25db5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/form/api.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/form/api.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api_route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../api/route */ "./resources/js/app/modules/admin/api/route.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var api = {
+  get: _objectSpread({}, _api_route__WEBPACK_IMPORTED_MODULE_0__["default"].admin('user.item'), {
+    callback: function callback(id) {
+      this.urlParam('{id}', id);
+    },
+    token: true
+  }),
+  update: _objectSpread({}, _api_route__WEBPACK_IMPORTED_MODULE_0__["default"].admin('user.edit'), {
+    callback: function callback(id, name, region_id) {
+      this.urlParam('{id}', id);
+      this.data({
+        name: name,
+        region_id: region_id
+      });
+    },
+    token: true
+  }),
+  add: _objectSpread({}, _api_route__WEBPACK_IMPORTED_MODULE_0__["default"].admin('user.add'), {
+    callback: function callback(form) {
+      this.data(form);
+    },
+    token: true
+  }),
+  params: _objectSpread({}, _api_route__WEBPACK_IMPORTED_MODULE_0__["default"].admin('user.params'), {
+    token: true
+  })
+};
+/* harmony default export */ __webpack_exports__["default"] = (api);
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/form/service.js":
+/*!********************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/form/service.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Service; });
+/* harmony import */ var _service_Http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../service/Http */ "./resources/js/app/modules/admin/service/Http.js");
+/* harmony import */ var _service_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../service/App */ "./resources/js/app/modules/admin/service/App.js");
+/* harmony import */ var _service_Logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../service/Logger */ "./resources/js/app/modules/admin/service/Logger.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./api */ "./resources/js/app/modules/admin/module/user/form/api.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./resources/js/app/modules/admin/module/user/form/store.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+
+var Service =
+/*#__PURE__*/
+function () {
+  function Service() {//
+
+    _classCallCheck(this, Service);
+  }
+
+  _createClass(Service, [{
+    key: "init",
+    value: function init(id, callback) {
+      var _this = this;
+
+      this.loading(true);
+      Object(_service_Http__WEBPACK_IMPORTED_MODULE_0__["default"])(_api__WEBPACK_IMPORTED_MODULE_3__["default"].get).callback(id).send().then(function (response) {
+        _service_Logger__WEBPACK_IMPORTED_MODULE_2__["default"].info('user.item', response);
+        _store__WEBPACK_IMPORTED_MODULE_4__["default"].commit('userForm/changeItem', response.data.item);
+
+        if (typeof callback === 'function') {
+          callback(response.data.item);
+        }
+      })["catch"](function (error) {
+        _service_Logger__WEBPACK_IMPORTED_MODULE_2__["default"].error('user.item', error);
+        _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage('Error');
+      }).then(function () {
+        _this.loading(false);
+      });
+    }
+  }, {
+    key: "getParams",
+    value: function getParams() {
+      var _this2 = this;
+
+      this.loading(true);
+      Object(_service_Http__WEBPACK_IMPORTED_MODULE_0__["default"])(_api__WEBPACK_IMPORTED_MODULE_3__["default"].params).send().then(function (response) {
+        var list = {
+          roles: [],
+          statuses: []
+        };
+
+        for (var key in response.data.roles) {
+          list.roles.push({
+            text: response.data.roles[key],
+            value: key
+          });
+        }
+
+        for (var _key in response.data.statuses) {
+          list.statuses.push({
+            text: response.data.statuses[_key],
+            value: _key
+          });
+        }
+
+        _service_Logger__WEBPACK_IMPORTED_MODULE_2__["default"].info('params.list', list);
+        _store__WEBPACK_IMPORTED_MODULE_4__["default"].commit('userForm/changeParams', list);
+      })["catch"](function (error) {
+        _service_Logger__WEBPACK_IMPORTED_MODULE_2__["default"].error('params.list', error);
+        _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage('Error');
+      }).then(function () {
+        _this2.loading(false);
+      });
+    }
+  }, {
+    key: "edit",
+    value: function edit(id, name, regionId, callback) {
+      var _this3 = this;
+
+      this.loading(true);
+      Object(_service_Http__WEBPACK_IMPORTED_MODULE_0__["default"])(_api__WEBPACK_IMPORTED_MODULE_3__["default"].update).callback(id, form).send().then(function (response) {
+        if (response.data.result) {
+          _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].openMessage('Saved');
+
+          if (typeof callback === 'function') {
+            callback(response);
+          }
+        } else {
+          var messages = [];
+
+          for (var key in response.data.message) {
+            messages.push(response.data.message[key][0]);
+          }
+
+          _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage(messages);
+        }
+      })["catch"](function (error) {
+        _service_Logger__WEBPACK_IMPORTED_MODULE_2__["default"].error('user.edit', error);
+        _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage('Error');
+      }).then(function () {
+        _this3.loading(false);
+      });
+    }
+  }, {
+    key: "add",
+    value: function add(form, callback) {
+      var _this4 = this;
+
+      this.loading(true);
+      Object(_service_Http__WEBPACK_IMPORTED_MODULE_0__["default"])(_api__WEBPACK_IMPORTED_MODULE_3__["default"].add).callback(form).send().then(function (response) {
+        if (response.data.result) {
+          _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].openMessage('Saved');
+
+          if (typeof callback === 'function') {
+            callback(response);
+          }
+        } else {
+          var messages = [];
+
+          for (var key in response.data.message) {
+            messages.push(response.data.message[key][0]);
+          }
+
+          _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage(messages);
+        }
+      })["catch"](function (error) {
+        _service_Logger__WEBPACK_IMPORTED_MODULE_2__["default"].error('user.edit', error);
+        _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage('Error');
+      }).then(function () {
+        _this4.loading(false);
+      });
+    }
+  }, {
+    key: "loading",
+    value: function loading(isStart) {
+      _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].loading(isStart);
+      _store__WEBPACK_IMPORTED_MODULE_4__["default"].commit('userList/changeIsLoading', isStart);
+    }
+  }]);
+
+  return Service;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/form/store.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/form/store.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _plugin_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../plugin/store */ "./resources/js/app/modules/admin/plugin/store.js");
+
+_plugin_store__WEBPACK_IMPORTED_MODULE_0__["default"].registerModule('userForm', {
+  namespaced: true,
+  state: {
+    submitDisabled: true,
+    isLoading: false,
+    item: {},
+    roles: [],
+    statuses: [],
+    errors: ''
+  },
+  mutations: {
+    changeSubmitDisabled: function changeSubmitDisabled(state, val) {
+      state.submitDisabled = !!val;
+    },
+    changeItem: function changeItem(state, item) {
+      state.item = item;
+    },
+    changeParams: function changeParams(state, params) {
+      state.roles = params.roles;
+      state.statuses = params.statuses;
+    },
+    changeErrors: function changeErrors(state, errors) {
+      state.errors = errors;
+    },
+    changeIsLoading: function changeIsLoading(state, val) {
+      state.isLoading = !!val;
+    }
+  },
+  actions: {//
+  }
+});
+/* harmony default export */ __webpack_exports__["default"] = (_plugin_store__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/form/translations/en.json":
+/*!******************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/form/translations/en.json ***!
+  \******************************************************************************/
+/*! exports provided: title, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"title\":\"\"}");
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/form/translations/ru.json":
+/*!******************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/form/translations/ru.json ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{}");
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/form/translations/uz.json":
+/*!******************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/form/translations/uz.json ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{}");
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/list/UserList.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/list/UserList.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UserList_vue_vue_type_template_id_5a4772f5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserList.vue?vue&type=template&id=5a4772f5& */ "./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=template&id=5a4772f5&");
+/* harmony import */ var _UserList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserList.vue?vue&type=script&lang=js& */ "./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UserList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UserList_vue_vue_type_template_id_5a4772f5___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UserList_vue_vue_type_template_id_5a4772f5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/app/modules/admin/module/user/list/UserList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./UserList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=template&id=5a4772f5&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=template&id=5a4772f5& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserList_vue_vue_type_template_id_5a4772f5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./UserList.vue?vue&type=template&id=5a4772f5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/modules/admin/module/user/list/UserList.vue?vue&type=template&id=5a4772f5&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserList_vue_vue_type_template_id_5a4772f5___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserList_vue_vue_type_template_id_5a4772f5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/list/api.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/list/api.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api_route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../api/route */ "./resources/js/app/modules/admin/api/route.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var api = {
+  list: _objectSpread({}, _api_route__WEBPACK_IMPORTED_MODULE_0__["default"].admin('user.list'), {
+    token: true
+  }),
+  "delete": _objectSpread({}, _api_route__WEBPACK_IMPORTED_MODULE_0__["default"].admin('user.delete'), {
+    callback: function callback(id) {
+      this.urlParam('{id}', id);
+    },
+    token: true
+  })
+};
+/* harmony default export */ __webpack_exports__["default"] = (api);
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/list/service.js":
+/*!********************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/list/service.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Service; });
+/* harmony import */ var _service_Http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../service/Http */ "./resources/js/app/modules/admin/service/Http.js");
+/* harmony import */ var _service_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../service/App */ "./resources/js/app/modules/admin/service/App.js");
+/* harmony import */ var _service_Logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../service/Logger */ "./resources/js/app/modules/admin/service/Logger.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./api */ "./resources/js/app/modules/admin/module/user/list/api.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./resources/js/app/modules/admin/module/user/list/store.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+
+var Service =
+/*#__PURE__*/
+function () {
+  function Service() {//
+
+    _classCallCheck(this, Service);
+  }
+
+  _createClass(Service, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      this.loading(true);
+      Object(_service_Http__WEBPACK_IMPORTED_MODULE_0__["default"])(_api__WEBPACK_IMPORTED_MODULE_3__["default"].list).send().then(function (response) {
+        _service_Logger__WEBPACK_IMPORTED_MODULE_2__["default"].info('user.list', response);
+        _store__WEBPACK_IMPORTED_MODULE_4__["default"].commit('userList/changeList', response.data.list);
+      })["catch"](function (error) {
+        _service_Logger__WEBPACK_IMPORTED_MODULE_2__["default"].error('user.list', error);
+        _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage('Error');
+      }).then(function () {
+        _this.loading(false);
+      });
+    }
+  }, {
+    key: "delete",
+    value: function _delete(id) {
+      var _this2 = this;
+
+      this.loading(true);
+      Object(_service_Http__WEBPACK_IMPORTED_MODULE_0__["default"])(_api__WEBPACK_IMPORTED_MODULE_3__["default"]["delete"]).callback(id).send().then(function (response) {
+        if (response.data.result) {
+          _this2.init();
+        } else {
+          _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage(response.data.message);
+        }
+      })["catch"](function (error) {
+        _service_Logger__WEBPACK_IMPORTED_MODULE_2__["default"].error('user.delete', error);
+        _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage('Error');
+      }).then(function () {
+        _this2.loading(false);
+      });
+    }
+  }, {
+    key: "loading",
+    value: function loading(isStart) {
+      _service_App__WEBPACK_IMPORTED_MODULE_1__["default"].loading(isStart);
+      _store__WEBPACK_IMPORTED_MODULE_4__["default"].commit('userList/changeIsLoading', isStart);
+    }
+  }]);
+
+  return Service;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/list/store.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/list/store.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _plugin_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../plugin/store */ "./resources/js/app/modules/admin/plugin/store.js");
+
+_plugin_store__WEBPACK_IMPORTED_MODULE_0__["default"].registerModule('userList', {
+  namespaced: true,
+  state: {
+    submitDisabled: true,
+    isLoading: false,
+    list: [],
+    errors: ''
+  },
+  mutations: {
+    changeSubmitDisabled: function changeSubmitDisabled(state, val) {
+      state.submitDisabled = !!val;
+    },
+    changeList: function changeList(state, list) {
+      state.list = list;
+    },
+    changeErrors: function changeErrors(state, errors) {
+      state.errors = errors;
+    },
+    changeIsLoading: function changeIsLoading(state, val) {
+      state.isLoading = !!val;
+    }
+  },
+  actions: {//
+  }
+});
+/* harmony default export */ __webpack_exports__["default"] = (_plugin_store__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/list/translations/en.json":
+/*!******************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/list/translations/en.json ***!
+  \******************************************************************************/
+/*! exports provided: title, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"title\":\"\"}");
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/list/translations/ru.json":
+/*!******************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/list/translations/ru.json ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{}");
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/list/translations/uz.json":
+/*!******************************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/list/translations/uz.json ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{}");
+
+/***/ }),
+
+/***/ "./resources/js/app/modules/admin/module/user/route.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/app/modules/admin/module/user/route.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _view_ParentRoute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../view/ParentRoute */ "./resources/js/app/modules/admin/view/ParentRoute.vue");
+/* harmony import */ var _list_UserList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./list/UserList */ "./resources/js/app/modules/admin/module/user/list/UserList.vue");
+/* harmony import */ var _form_UserForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form/UserForm */ "./resources/js/app/modules/admin/module/user/form/UserForm.vue");
+
+
+
+var route = {
+  path: '/user',
+  name: 'user',
+  component: _view_ParentRoute__WEBPACK_IMPORTED_MODULE_0__["default"],
+  children: [{
+    path: '',
+    redirect: {
+      name: 'user.list'
+    }
+  }, {
+    path: 'list',
+    name: 'user.list',
+    component: _list_UserList__WEBPACK_IMPORTED_MODULE_1__["default"],
+    meta: {
+      title: 'Users',
+      requiresAuth: true
+    }
+  }, {
+    path: 'edit/:id',
+    name: 'user.edit',
+    component: _form_UserForm__WEBPACK_IMPORTED_MODULE_2__["default"],
+    meta: {
+      title: 'Edit user',
+      requiresAuth: true
+    }
+  }, {
+    path: 'add',
+    name: 'user.add',
+    component: _form_UserForm__WEBPACK_IMPORTED_MODULE_2__["default"],
+    meta: {
+      title: 'Add user',
       requiresAuth: true
     }
   }]
@@ -85695,7 +86955,7 @@ module.exports = JSON.parse("{\"app\":{\"version\":\"v1\",\"name\":\"Store CRM\"
 /*! exports provided: routes, baseUrl, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"routes\":\"{\\\"debugbar.openhandler\\\":{\\\"uri\\\":\\\"_debugbar\\\\/open\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.clockwork\\\":{\\\"uri\\\":\\\"_debugbar\\\\/clockwork\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.telescope\\\":{\\\"uri\\\":\\\"_debugbar\\\\/telescope\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.assets.css\\\":{\\\"uri\\\":\\\"_debugbar\\\\/assets\\\\/stylesheets\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.assets.js\\\":{\\\"uri\\\":\\\"_debugbar\\\\/assets\\\\/javascript\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.cache.delete\\\":{\\\"uri\\\":\\\"_debugbar\\\\/cache\\\\/{key}\\\\/{tags?}\\\",\\\"methods\\\":[\\\"DELETE\\\"],\\\"domain\\\":null},\\\"web.admin\\\":{\\\"uri\\\":\\\"admin\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.login\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/auth\\\\/login\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.reset-password\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/auth\\\\/reset-password\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.register\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/auth\\\\/register\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.refresh\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/auth\\\\/refresh\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.logout\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/logout\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.website\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/website\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\",\\\"POST\\\",\\\"PUT\\\",\\\"PATCH\\\",\\\"DELETE\\\",\\\"OPTIONS\\\"],\\\"domain\\\":null},\\\"admin.check-access\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/check-access\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.region.list\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/list\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.region.add\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/add\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.region.item\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.region.edit\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"PUT\\\"],\\\"domain\\\":null},\\\"admin.region.delete\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"DELETE\\\"],\\\"domain\\\":null},\\\"admin.goods.list\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/list\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.goods.add\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/add\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.goods.item\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.goods.edit\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"PUT\\\"],\\\"domain\\\":null},\\\"admin.goods.delete\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"DELETE\\\"],\\\"domain\\\":null},\\\"admin.school.list\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/list\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.school.add\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/add\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.school.item\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.school.edit\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"PUT\\\"],\\\"domain\\\":null},\\\"admin.school.delete\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"DELETE\\\"],\\\"domain\\\":null}}\",\"baseUrl\":\"http://store-crm.local/\"}");
+module.exports = JSON.parse("{\"routes\":\"{\\\"debugbar.openhandler\\\":{\\\"uri\\\":\\\"_debugbar\\\\/open\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.clockwork\\\":{\\\"uri\\\":\\\"_debugbar\\\\/clockwork\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.telescope\\\":{\\\"uri\\\":\\\"_debugbar\\\\/telescope\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.assets.css\\\":{\\\"uri\\\":\\\"_debugbar\\\\/assets\\\\/stylesheets\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.assets.js\\\":{\\\"uri\\\":\\\"_debugbar\\\\/assets\\\\/javascript\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"debugbar.cache.delete\\\":{\\\"uri\\\":\\\"_debugbar\\\\/cache\\\\/{key}\\\\/{tags?}\\\",\\\"methods\\\":[\\\"DELETE\\\"],\\\"domain\\\":null},\\\"web.admin\\\":{\\\"uri\\\":\\\"admin\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.login\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/auth\\\\/login\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.reset-password\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/auth\\\\/reset-password\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.register\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/auth\\\\/register\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.refresh\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/auth\\\\/refresh\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.check-access\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/check-access\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.logout\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/logout\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.website\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/website\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\",\\\"POST\\\",\\\"PUT\\\",\\\"PATCH\\\",\\\"DELETE\\\",\\\"OPTIONS\\\"],\\\"domain\\\":null},\\\"admin.region.list\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/list\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.region.add\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/add\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.region.item\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.region.edit\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"PUT\\\"],\\\"domain\\\":null},\\\"admin.region.delete\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/region\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"DELETE\\\"],\\\"domain\\\":null},\\\"admin.goods.list\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/list\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.goods.add\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/add\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.goods.item\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.goods.edit\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"PUT\\\"],\\\"domain\\\":null},\\\"admin.goods.delete\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/goods\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"DELETE\\\"],\\\"domain\\\":null},\\\"admin.school.list\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/list\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.school.add\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/add\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.school.item\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.school.edit\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"PUT\\\"],\\\"domain\\\":null},\\\"admin.school.delete\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/school\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"DELETE\\\"],\\\"domain\\\":null},\\\"admin.user.list\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/user\\\\/list\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.user.add\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/user\\\\/add\\\",\\\"methods\\\":[\\\"POST\\\"],\\\"domain\\\":null},\\\"admin.user.item\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/user\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null},\\\"admin.user.edit\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/user\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"PUT\\\"],\\\"domain\\\":null},\\\"admin.user.delete\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/user\\\\/item\\\\/{id}\\\",\\\"methods\\\":[\\\"DELETE\\\"],\\\"domain\\\":null},\\\"admin.user.params\\\":{\\\"uri\\\":\\\"api\\\\/admin\\\\/user\\\\/params\\\",\\\"methods\\\":[\\\"GET\\\",\\\"HEAD\\\"],\\\"domain\\\":null}}\",\"baseUrl\":\"http://store-crm.local/\"}");
 
 /***/ }),
 
@@ -85706,7 +86966,7 @@ module.exports = JSON.parse("{\"routes\":\"{\\\"debugbar.openhandler\\\":{\\\"ur
 /*! exports provided: en, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"en\":{\"repository::criteria\":{\"fields_not_accepted\":\"Columns :field are not accepted in the research\"},\"repository::packages\":{\"prettus_laravel_validation_required\":\"Package required. Please install: 'composer require prettus/laravel-validation'\",\"league_fractal_required\":\"Package required. Please install: 'composer require league/fractal' (0.12.*)\"},\"auth\":{\"failed\":\"These credentials do not match our records.\",\"throttle\":\"Too many login attempts. Please try again in :seconds seconds.\"},\"message\":{\"email_or_password_is_incorrect\":\"Email or password is incorrect\",\"your_account_is_not_active\":\"Your account is not active\",\"your_account_is_blocked\":\"Your account is blocked\",\"you_do_not_have_permission\":\"You do not have permission\",\"token_in_not_exist\":\"Token is not exist\",\"authorization_token_not_found\":\"Authorization Token not found\",\"token_is_expired\":\"Token is Expired\",\"token_is_invalid\":\"Token is Invalid\",\"you_have_been_logged_out\":\"You have been successfully logged out!\"},\"pagination\":{\"previous\":\"&laquo; Previous\",\"next\":\"Next &raquo;\"},\"passwords\":{\"reset\":\"Your password has been reset!\",\"sent\":\"We have e-mailed your password reset link!\",\"token\":\"This password reset token is invalid.\",\"user\":\"We can't find a user with that e-mail address.\"},\"validation\":{\"accepted\":\"The :attribute must be accepted.\",\"active_url\":\"The :attribute is not a valid URL.\",\"after\":\"The :attribute must be a date after :date.\",\"after_or_equal\":\"The :attribute must be a date after or equal to :date.\",\"alpha\":\"The :attribute may only contain letters.\",\"alpha_dash\":\"The :attribute may only contain letters, numbers, dashes and underscores.\",\"alpha_num\":\"The :attribute may only contain letters and numbers.\",\"array\":\"The :attribute must be an array.\",\"before\":\"The :attribute must be a date before :date.\",\"before_or_equal\":\"The :attribute must be a date before or equal to :date.\",\"between\":{\"numeric\":\"The :attribute must be between :min and :max.\",\"file\":\"The :attribute must be between :min and :max kilobytes.\",\"string\":\"The :attribute must be between :min and :max characters.\",\"array\":\"The :attribute must have between :min and :max items.\"},\"boolean\":\"The :attribute field must be true or false.\",\"confirmed\":\"The :attribute confirmation does not match.\",\"date\":\"The :attribute is not a valid date.\",\"date_equals\":\"The :attribute must be a date equal to :date.\",\"date_format\":\"The :attribute does not match the format :format.\",\"different\":\"The :attribute and :other must be different.\",\"digits\":\"The :attribute must be :digits digits.\",\"digits_between\":\"The :attribute must be between :min and :max digits.\",\"dimensions\":\"The :attribute has invalid image dimensions.\",\"distinct\":\"The :attribute field has a duplicate value.\",\"email\":\"The :attribute must be a valid email address.\",\"ends_with\":\"The :attribute must end with one of the following: :values\",\"exists\":\"The selected :attribute is invalid.\",\"file\":\"The :attribute must be a file.\",\"filled\":\"The :attribute field must have a value.\",\"gt\":{\"numeric\":\"The :attribute must be greater than :value.\",\"file\":\"The :attribute must be greater than :value kilobytes.\",\"string\":\"The :attribute must be greater than :value characters.\",\"array\":\"The :attribute must have more than :value items.\"},\"gte\":{\"numeric\":\"The :attribute must be greater than or equal :value.\",\"file\":\"The :attribute must be greater than or equal :value kilobytes.\",\"string\":\"The :attribute must be greater than or equal :value characters.\",\"array\":\"The :attribute must have :value items or more.\"},\"image\":\"The :attribute must be an image.\",\"in\":\"The selected :attribute is invalid.\",\"in_array\":\"The :attribute field does not exist in :other.\",\"integer\":\"The :attribute must be an integer.\",\"ip\":\"The :attribute must be a valid IP address.\",\"ipv4\":\"The :attribute must be a valid IPv4 address.\",\"ipv6\":\"The :attribute must be a valid IPv6 address.\",\"json\":\"The :attribute must be a valid JSON string.\",\"lt\":{\"numeric\":\"The :attribute must be less than :value.\",\"file\":\"The :attribute must be less than :value kilobytes.\",\"string\":\"The :attribute must be less than :value characters.\",\"array\":\"The :attribute must have less than :value items.\"},\"lte\":{\"numeric\":\"The :attribute must be less than or equal :value.\",\"file\":\"The :attribute must be less than or equal :value kilobytes.\",\"string\":\"The :attribute must be less than or equal :value characters.\",\"array\":\"The :attribute must not have more than :value items.\"},\"max\":{\"numeric\":\"The :attribute may not be greater than :max.\",\"file\":\"The :attribute may not be greater than :max kilobytes.\",\"string\":\"The :attribute may not be greater than :max characters.\",\"array\":\"The :attribute may not have more than :max items.\"},\"mimes\":\"The :attribute must be a file of type: :values.\",\"mimetypes\":\"The :attribute must be a file of type: :values.\",\"min\":{\"numeric\":\"The :attribute must be at least :min.\",\"file\":\"The :attribute must be at least :min kilobytes.\",\"string\":\"The :attribute must be at least :min characters.\",\"array\":\"The :attribute must have at least :min items.\"},\"not_in\":\"The selected :attribute is invalid.\",\"not_regex\":\"The :attribute format is invalid.\",\"numeric\":\"The :attribute must be a number.\",\"present\":\"The :attribute field must be present.\",\"regex\":\"The :attribute format is invalid.\",\"required\":\"The :attribute field is required.\",\"required_if\":\"The :attribute field is required when :other is :value.\",\"required_unless\":\"The :attribute field is required unless :other is in :values.\",\"required_with\":\"The :attribute field is required when :values is present.\",\"required_with_all\":\"The :attribute field is required when :values are present.\",\"required_without\":\"The :attribute field is required when :values is not present.\",\"required_without_all\":\"The :attribute field is required when none of :values are present.\",\"same\":\"The :attribute and :other must match.\",\"size\":{\"numeric\":\"The :attribute must be :size.\",\"file\":\"The :attribute must be :size kilobytes.\",\"string\":\"The :attribute must be :size characters.\",\"array\":\"The :attribute must contain :size items.\"},\"starts_with\":\"The :attribute must start with one of the following: :values\",\"string\":\"The :attribute must be a string.\",\"timezone\":\"The :attribute must be a valid zone.\",\"unique\":\"The :attribute has already been taken.\",\"uploaded\":\"The :attribute failed to upload.\",\"url\":\"The :attribute format is invalid.\",\"uuid\":\"The :attribute must be a valid UUID.\",\"custom\":{\"attribute-name\":{\"rule-name\":\"custom-message\"}},\"attributes\":[],\"exist_in_website\":\"The selected :attribute is invalid.\",\"exist_in_website_with_user\":\"The selected :attribute is invalid.\",\"not_exist_in_website\":\"The selected :attribute is invalid.\"},\"words\":{\"loading\":\"Loading...\",\"login\":\"Login\",\"register\":\"Register\",\"password\":\"Password\",\"password2\":\"Confirm password\",\"email\":\"E-mail\",\"send\":\"Send\",\"success\":\"Success\",\"no-data\":\"No Data\"}}}");
+module.exports = JSON.parse("{\"en\":{\"repository::criteria\":{\"fields_not_accepted\":\"Columns :field are not accepted in the research\"},\"repository::packages\":{\"prettus_laravel_validation_required\":\"Package required. Please install: 'composer require prettus/laravel-validation'\",\"league_fractal_required\":\"Package required. Please install: 'composer require league/fractal' (0.12.*)\"},\"auth\":{\"failed\":\"These credentials do not match our records.\",\"throttle\":\"Too many login attempts. Please try again in :seconds seconds.\"},\"message\":{\"email_or_password_is_incorrect\":\"Email or password is incorrect\",\"your_account_is_not_active\":\"Your account is not active\",\"your_account_is_blocked\":\"Your account is blocked\",\"you_do_not_have_permission\":\"You do not have permission\",\"token_in_not_exist\":\"Token is not exist\",\"authorization_token_not_found\":\"Authorization Token not found\",\"token_is_expired\":\"Token is Expired\",\"token_is_invalid\":\"Token is Invalid\",\"you_have_been_logged_out\":\"You have been successfully logged out!\",\"you_can_not_delete_yourself\":\"Can not delete yourself\"},\"pagination\":{\"previous\":\"&laquo; Previous\",\"next\":\"Next &raquo;\"},\"passwords\":{\"reset\":\"Your password has been reset!\",\"sent\":\"We have e-mailed your password reset link!\",\"token\":\"This password reset token is invalid.\",\"user\":\"We can't find a user with that e-mail address.\"},\"validation\":{\"accepted\":\"The :attribute must be accepted.\",\"active_url\":\"The :attribute is not a valid URL.\",\"after\":\"The :attribute must be a date after :date.\",\"after_or_equal\":\"The :attribute must be a date after or equal to :date.\",\"alpha\":\"The :attribute may only contain letters.\",\"alpha_dash\":\"The :attribute may only contain letters, numbers, dashes and underscores.\",\"alpha_num\":\"The :attribute may only contain letters and numbers.\",\"array\":\"The :attribute must be an array.\",\"before\":\"The :attribute must be a date before :date.\",\"before_or_equal\":\"The :attribute must be a date before or equal to :date.\",\"between\":{\"numeric\":\"The :attribute must be between :min and :max.\",\"file\":\"The :attribute must be between :min and :max kilobytes.\",\"string\":\"The :attribute must be between :min and :max characters.\",\"array\":\"The :attribute must have between :min and :max items.\"},\"boolean\":\"The :attribute field must be true or false.\",\"confirmed\":\"The :attribute confirmation does not match.\",\"date\":\"The :attribute is not a valid date.\",\"date_equals\":\"The :attribute must be a date equal to :date.\",\"date_format\":\"The :attribute does not match the format :format.\",\"different\":\"The :attribute and :other must be different.\",\"digits\":\"The :attribute must be :digits digits.\",\"digits_between\":\"The :attribute must be between :min and :max digits.\",\"dimensions\":\"The :attribute has invalid image dimensions.\",\"distinct\":\"The :attribute field has a duplicate value.\",\"email\":\"The :attribute must be a valid email address.\",\"ends_with\":\"The :attribute must end with one of the following: :values\",\"exists\":\"The selected :attribute is invalid.\",\"file\":\"The :attribute must be a file.\",\"filled\":\"The :attribute field must have a value.\",\"gt\":{\"numeric\":\"The :attribute must be greater than :value.\",\"file\":\"The :attribute must be greater than :value kilobytes.\",\"string\":\"The :attribute must be greater than :value characters.\",\"array\":\"The :attribute must have more than :value items.\"},\"gte\":{\"numeric\":\"The :attribute must be greater than or equal :value.\",\"file\":\"The :attribute must be greater than or equal :value kilobytes.\",\"string\":\"The :attribute must be greater than or equal :value characters.\",\"array\":\"The :attribute must have :value items or more.\"},\"image\":\"The :attribute must be an image.\",\"in\":\"The selected :attribute is invalid.\",\"in_array\":\"The :attribute field does not exist in :other.\",\"integer\":\"The :attribute must be an integer.\",\"ip\":\"The :attribute must be a valid IP address.\",\"ipv4\":\"The :attribute must be a valid IPv4 address.\",\"ipv6\":\"The :attribute must be a valid IPv6 address.\",\"json\":\"The :attribute must be a valid JSON string.\",\"lt\":{\"numeric\":\"The :attribute must be less than :value.\",\"file\":\"The :attribute must be less than :value kilobytes.\",\"string\":\"The :attribute must be less than :value characters.\",\"array\":\"The :attribute must have less than :value items.\"},\"lte\":{\"numeric\":\"The :attribute must be less than or equal :value.\",\"file\":\"The :attribute must be less than or equal :value kilobytes.\",\"string\":\"The :attribute must be less than or equal :value characters.\",\"array\":\"The :attribute must not have more than :value items.\"},\"max\":{\"numeric\":\"The :attribute may not be greater than :max.\",\"file\":\"The :attribute may not be greater than :max kilobytes.\",\"string\":\"The :attribute may not be greater than :max characters.\",\"array\":\"The :attribute may not have more than :max items.\"},\"mimes\":\"The :attribute must be a file of type: :values.\",\"mimetypes\":\"The :attribute must be a file of type: :values.\",\"min\":{\"numeric\":\"The :attribute must be at least :min.\",\"file\":\"The :attribute must be at least :min kilobytes.\",\"string\":\"The :attribute must be at least :min characters.\",\"array\":\"The :attribute must have at least :min items.\"},\"not_in\":\"The selected :attribute is invalid.\",\"not_regex\":\"The :attribute format is invalid.\",\"numeric\":\"The :attribute must be a number.\",\"present\":\"The :attribute field must be present.\",\"regex\":\"The :attribute format is invalid.\",\"required\":\"The :attribute field is required.\",\"required_if\":\"The :attribute field is required when :other is :value.\",\"required_unless\":\"The :attribute field is required unless :other is in :values.\",\"required_with\":\"The :attribute field is required when :values is present.\",\"required_with_all\":\"The :attribute field is required when :values are present.\",\"required_without\":\"The :attribute field is required when :values is not present.\",\"required_without_all\":\"The :attribute field is required when none of :values are present.\",\"same\":\"The :attribute and :other must match.\",\"size\":{\"numeric\":\"The :attribute must be :size.\",\"file\":\"The :attribute must be :size kilobytes.\",\"string\":\"The :attribute must be :size characters.\",\"array\":\"The :attribute must contain :size items.\"},\"starts_with\":\"The :attribute must start with one of the following: :values\",\"string\":\"The :attribute must be a string.\",\"timezone\":\"The :attribute must be a valid zone.\",\"unique\":\"The :attribute has already been taken.\",\"uploaded\":\"The :attribute failed to upload.\",\"url\":\"The :attribute format is invalid.\",\"uuid\":\"The :attribute must be a valid UUID.\",\"custom\":{\"attribute-name\":{\"rule-name\":\"custom-message\"}},\"attributes\":[],\"exist_in_website\":\"The selected :attribute is invalid.\",\"exist_in_website_with_user\":\"The selected :attribute is invalid.\",\"not_exist_in_website\":\"The selected :attribute is invalid.\"},\"words\":{\"loading\":\"Loading...\",\"login\":\"Login\",\"register\":\"Register\",\"password\":\"Password\",\"password2\":\"Confirm password\",\"email\":\"E-mail\",\"send\":\"Send\",\"success\":\"Success\",\"no-data\":\"No Data\",\"active\":\"Active\",\"not_active\":\"Not active\",\"blocked\":\"Blocked\",\"first_name\":\"First name\",\"last_name\":\"Last name\",\"status\":\"Status\",\"role\":\"Role\"}}}");
 
 /***/ }),
 

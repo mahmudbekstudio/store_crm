@@ -45,6 +45,15 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
+    public static function getStatuses()
+    {
+        return [
+            self::STATUS_NOT_ACTIVE => __('words.not_active'),
+            self::STATUS_ACTIVE => __('words.active'),
+            self::STATUS_BLOCKED => __('words.blocked'),
+        ];
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
