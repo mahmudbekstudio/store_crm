@@ -5,6 +5,7 @@
 * `git clone <repository> projectname`
 * `cd projectname`
 * `composer install`
+* `npm install`
 * `create .env file`
 * `php artisan key:generate`
 * `php artisan jwt:secret`

@@ -16,3 +16,6 @@ yarn-error.log
 /storage/debugbar
 /public/css
 /public/js
+/public/css/admin
+/public/js/admin
+/public/mix-manifest.json
