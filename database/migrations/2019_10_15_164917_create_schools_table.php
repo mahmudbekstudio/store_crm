@@ -16,14 +16,12 @@ class CreateSchoolsTable extends Migration
         Schema::create('schools', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->default(0);
-            $table->unsignedBigInteger('region_id')->default(0);
+            $table->unsignedBigInteger('district_id')->default(0);
             $table->string('name');
             $table->timestamps();
 
             $table->index('user_id');
-            $table->index('region_id');
-
-            $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
+            $table->index('district_id');
         });
     }
 

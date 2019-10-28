@@ -3,21 +3,36 @@
 namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\GoodsCategoryRepository;
 use App\Repositories\GoodsRepository;
 use Illuminate\Http\Request;
 
 class GoodsController extends Controller
 {
     private $goodsRepository;
+    private $goodsCategoryRepository;
 
-    public function __construct(GoodsRepository $goodsRepository)
+    public function __construct(GoodsRepository $goodsRepository, GoodsCategoryRepository $goodsCategoryRepository)
     {
         $this->goodsRepository = $goodsRepository;
+        $this->goodsCategoryRepository = $goodsCategoryRepository;
     }
 
     public function list()
     {
-        return responseData(true, ['list' => $this->goodsRepository->all()]);
+        $categories = [];
+        $goodsCat = $this->goodsCategoryRepository->all();
+
+        foreach($goodsCat as $item) {
+            $categories[$item->id] = $item->name;
+        }
+
+        $list = $this->goodsRepository->all()->toArray();
+        for($i = 0; $i < count($list); $i++) {
+            $list[$i]['category'] = $categories[$list[$i]['id']];
+        }
+
+        return responseData(true, ['list' => $list]);
     }
 
     public function add(Request $request)

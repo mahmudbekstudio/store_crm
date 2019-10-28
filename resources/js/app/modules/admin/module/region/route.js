@@ -1,6 +1,6 @@
 import ParentRoute from '../../view/ParentRoute';
 import RegionList from './list/RegionList';
-import RegionForm from './form/RegionForm';
+//import RegionForm from './form/RegionForm';
 
 const route = {
     path: '/region',
@@ -17,7 +17,7 @@ const route = {
                 requiresAuth: true
             }
         },
-        {
+        /*{
             path: 'edit/:id',
             name: 'region.edit',
             component: RegionForm,
@@ -34,7 +34,7 @@ const route = {
                 title: 'Add region',
                 requiresAuth: true
             }
-        }
+        }*/
     ]
 };
 

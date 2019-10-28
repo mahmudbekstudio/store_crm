@@ -100,6 +100,21 @@ abstract class AbstractRepository extends BaseRepository
         }
     }
 
+    /**
+     * Find data by multiple values in one field
+     *
+     * @param       $field
+     * @param array $values
+     * @param array $columns
+     *
+     * @return mixed
+     */
+    public function findWhereIn($field, array $values, $columns = ['*'])
+    {
+        $this->whereSelected();
+        return parent::findWhereIn($field, $values, $columns);
+    }
+
     public function withUser($userId = null) {
         $this->selectedUser = is_int($userId) ? $userId : (int)auth()->id();
         return $this;

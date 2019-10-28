@@ -7,7 +7,7 @@
                 hide-default-footer
         >
             <template v-slot:item.action="{ item }">
-                <v-icon
+                <!--v-icon
                         class="mr-2"
                         @click="editItem(item)"
                 >
@@ -18,7 +18,7 @@
                         @click="deleteItem(item)"
                 >
                     mdi-delete-outline
-                </v-icon>
+                </v-icon-->
             </template>
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>
@@ -65,11 +65,11 @@
 
         created () {
             this.$options.service.init();
-            this.actionsList.push(getPageBoxAction('New', '', {color: 'primary'}, {
+            /*this.actionsList.push(getPageBoxAction('New', '', {color: 'primary'}, {
                 click: () => {
                     this.$router.push({name: 'region.add'})
                 }
-            }));
+            }));*/
         },
 
         methods: {

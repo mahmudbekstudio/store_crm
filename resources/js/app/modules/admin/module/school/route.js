@@ -1,6 +1,6 @@
 import ParentRoute from '../../view/ParentRoute';
 import SchoolList from './list/SchoolList';
-import SchoolForm from './form/SchoolForm';
+//import SchoolForm from './form/SchoolForm';
 
 const route = {
     path: '/school',
@@ -17,7 +17,7 @@ const route = {
                 requiresAuth: true
             }
         },
-        {
+        /*{
             path: 'edit/:id',
             name: 'school.edit',
             component: SchoolForm,
@@ -34,7 +34,7 @@ const route = {
                 title: 'Add school',
                 requiresAuth: true
             }
-        }
+        }*/
     ]
 };
 

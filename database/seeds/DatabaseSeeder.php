@@ -25,10 +25,12 @@ class DatabaseSeeder extends Seeder
                 $user = $this->createUser(0, 'user_' . $role . '0@gmail.com', 'Password112233', $role);
                 $this->createUserMeta($user->id, \App\Helpers\DataFormat::FORMAT_STRING, 'first_name', 'user0', getLang());
                 $this->createUserMeta($user->id, \App\Helpers\DataFormat::FORMAT_STRING, 'last_name', $role, getLang());
+                $this->createUserMeta($user->id, \App\Helpers\DataFormat::FORMAT_STRING, 'full_name', 'user0 ' . $role, getLang());
 
                 $user = $this->createUser(1, 'user_' . $role . '1@gmail.com', 'Password112233', $role);
                 $this->createUserMeta($user->id, \App\Helpers\DataFormat::FORMAT_STRING, 'first_name', 'user1', getLang());
                 $this->createUserMeta($user->id, \App\Helpers\DataFormat::FORMAT_STRING, 'last_name', $role, getLang());
+                $this->createUserMeta($user->id, \App\Helpers\DataFormat::FORMAT_STRING, 'full_name', 'user1 ' . $role, getLang());
 
                 if($role == \App\Models\User::ROLE_ADMIN) {
                     $this->createUserPermission($user->id, 'setting', 1, 1, 1, 1, 0);

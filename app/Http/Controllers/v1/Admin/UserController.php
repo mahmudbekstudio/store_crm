@@ -9,6 +9,7 @@ use App\Models\UserMeta;
 use App\Repositories\UserMetaRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -31,20 +32,24 @@ class UserController extends Controller
     {
         $list = [];
         $names = [];
-        $this->userMetaRepository->all(['user_id', 'meta_key', 'meta_value'])->map(function($item) use(&$names) {
+        $phones = [];
+        $this->userMetaRepository->all(['user_id', 'meta_key', 'meta_value'])->map(function($item) use(&$names, &$phones) {
             $names[$item['user_id']] = $names[$item['user_id']] ?? '';
 
             if($item['meta_key'] === 'first_name') {
                 $names[$item['user_id']] = $item['meta_value'] . ' ' . $names[$item['user_id']];
             } elseif($item['meta_key'] === 'last_name') {
                 $names[$item['user_id']] = $names[$item['user_id']] . $item['meta_value'];
+            } elseif($item['meta_key'] === 'phone') {
+                $phones[$item['user_id']] = $item['meta_value'];
             }
         });
 
-        $this->userRepository->all()->map(function($item) use(&$list, $names) {
+        $this->userRepository->all()->map(function($item) use(&$list, $names, $phones) {
             $list[] = [
                 'id'        => $item->id,
                 'name'      => $names[$item->id] ?? $item->id,
+                'phone'     => $phones[$item->id] ?? '',
                 'email'     => $item->email,
                 'status'    => $item->status ? __('words.active') : __('words.not_active'),
                 'role'      => $item->role,
@@ -79,21 +84,30 @@ class UserController extends Controller
             'meta_value' => $metaData['lastName'],
             'lang' => 'en'
         ]);
+        $this->userMetaRepository->create([
+            'user_id' => $user->id,
+            'meta_format' => 'string',
+            'meta_key' => 'full_name',
+            'meta_value' => $metaData['firstName'] . ' ' . $metaData['lastName'],
+            'lang' => 'en'
+        ]);
         return responseData(true);
     }
 
     public function item($id)
     {
         $item = [];
-        $user = $this->userRepository->find($id);
-        foreach($user as $key => $item) {
-            $item[$key] = $item;
+        $user = $this->userRepository->with('metas')->find($id)->toArray();
+        foreach($user as $key => $val) {
+            if($key != 'metas') {
+                $item[$key] = $val;
+            }
         }
 
-        $userMeta = $this->userMetaRepository->getMetas($id);
-        foreach($userMeta as $key => $val) {
+        foreach($user['metas'] as $val) {
             $item[$val['meta_key']] = $val['meta_value'];
         }
+
         return responseData(true, ['item' => $item]);
         /*return responseData(true, ['item' => $this->schoolRepository->find($id), 'regions' => $this->regionRepository->all()]);*/
     }
@@ -106,6 +120,7 @@ class UserController extends Controller
 
         $this->userMetaRepository->deleteWhere(['user_id' => $id, 'meta_key' => 'first_name']);
         $this->userMetaRepository->deleteWhere(['user_id' => $id, 'meta_key' => 'last_name']);
+        $this->userMetaRepository->deleteWhere(['user_id' => $id, 'meta_key' => 'full_name']);
 
         $this->userMetaRepository->create([
             'user_id' => $id,
@@ -119,6 +134,13 @@ class UserController extends Controller
             'meta_format' => 'string',
             'meta_key' => 'last_name',
             'meta_value' => $metaData['lastName'],
+            'lang' => 'en'
+        ]);
+        $this->userMetaRepository->create([
+            'user_id' => $id,
+            'meta_format' => 'string',
+            'meta_key' => 'last_name',
+            'meta_value' => $metaData['firstName'] . ' ' . $metaData['lastName'],
             'lang' => 'en'
         ]);
 

@@ -1,0 +1,37 @@
+.component-file {
+  display: inline-block;
+  .file-button {
+    display: inline-block;
+    padding: 3px 5px;
+    border: 1px solid #EEE;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px #999;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 1px 1px 2px #333;
+    }
+  }
+  .file-label {
+    display: inline-block;
+  }
+  .items-list {
+    display: inline-block;
+
+    .file-item {
+      display: inline-block;
+      padding: 3px 5px;
+      border: 1px solid #EEE;
+      cursor: pointer;
+
+      &:hover {
+        background-color: firebrick;
+        color: #FFF;
+
+        .v-icon {
+          color: #FFF;
+        }
+      }
+    }
+  }
+}

@@ -16,10 +16,13 @@ class CreateGoodsTable extends Migration
         Schema::create('goods', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->default(0);
+            $table->unsignedBigInteger('goods_category_id')->default(0);
             $table->string('name');
             $table->timestamps();
 
+            $table->index('name');
             $table->index('user_id');
+            $table->index('goods_category_id');
         });
     }
 

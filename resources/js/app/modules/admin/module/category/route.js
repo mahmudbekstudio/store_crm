@@ -1,6 +1,6 @@
 import ParentRoute from '../../view/ParentRoute';
 import CategoryList from './list/CategoryList';
-import CategoryForm from './form/CategoryForm';
+//import CategoryForm from './form/CategoryForm';
 
 const route = {
     path: '/category',
@@ -17,7 +17,7 @@ const route = {
                 requiresAuth: true
             }
         },
-        {
+        /*{
             path: 'edit/:id',
             name: 'category.edit',
             component: CategoryForm,
@@ -34,7 +34,7 @@ const route = {
                 title: 'Add category',
                 requiresAuth: true
             }
-        }
+        }*/
     ]
 };
 

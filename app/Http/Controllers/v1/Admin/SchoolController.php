@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\DistrictRepository;
 use App\Repositories\RegionRepository;
 use App\Repositories\SchoolRepository;
 use Illuminate\Http\Request;
@@ -10,24 +11,24 @@ use Illuminate\Http\Request;
 class SchoolController extends Controller
 {
     private $schoolRepository;
-    private $regionRepository;
+    private $districtRepository;
 
-    public function __construct(SchoolRepository $schoolRepository, RegionRepository $regionRepository)
+    public function __construct(SchoolRepository $schoolRepository, DistrictRepository $districtRepository)
     {
         $this->schoolRepository = $schoolRepository;
-        $this->regionRepository = $regionRepository;
+        $this->districtRepository = $districtRepository;
     }
 
     public function list()
     {
         $list = [];
-        $regions = [];
-        $this->regionRepository->all()->map(function($item) use(&$regions) {
-            $regions[$item->id] = $item->name;
+        $districts = [];
+        $this->districtRepository->all()->map(function($item) use(&$districts) {
+            $districts[$item->id] = $item->name;
         });
 
-        $this->schoolRepository->all()->map(function($item) use(&$list, $regions) {
-            $list[] = ['id' => $item->id, 'name' => $item->name, 'region' => $regions[$item->region_id]];
+        $this->schoolRepository->all()->map(function($item) use(&$list, $districts) {
+            $list[] = ['id' => $item->id, 'name' => $item->name, 'district' => $districts[$item->district_id] ?? ''];
         });
 
         return responseData(true, ['list' => $list]);
@@ -42,7 +43,7 @@ class SchoolController extends Controller
 
     public function item($id)
     {
-        return responseData(true, ['item' => $this->schoolRepository->find($id), 'regions' => $this->regionRepository->all()]);
+        return responseData(true, ['item' => $this->schoolRepository->find($id), 'district' => $this->districtRepository->all()]);
     }
 
     public function edit($id, Request $request)

@@ -19,6 +19,16 @@ const defaultStates = {
         timeout: viewSettings.snackbar.timeout,
         slot: ''
     },
+    alert: {
+        show: false,
+        text: ''
+    },
+    confirm: {
+        show: false,
+        text: '',
+        yesCallback: () => {},
+        noCallback: () => {}
+    },
 };
 
 export default {
@@ -65,6 +75,21 @@ export default {
                 slot: val.slot || ''
             };
         },
+        changeAlert(state, val) {
+            state.alert = {
+                show: typeof val.show !== 'undefined' ? val.show : defaultStates.alert.show,
+                text: typeof val.text !== 'undefined' ? val.text : defaultStates.alert.text
+            };
+        },
+
+        changeConfirm(state, val) {
+            state.confirm = {
+                show: typeof val.show !== 'undefined' ? val.show : defaultStates.confirm.show,
+                text: typeof val.text !== 'undefined' ? val.text : defaultStates.confirm.text,
+                yesCallback: typeof val.yesCallback !== 'undefined' ? val.yesCallback : defaultStates.confirm.yesCallback,
+                noCallback: typeof val.noCallback !== 'undefined' ? val.noCallback : defaultStates.confirm.noCallback
+            };
+        },
     },
 
     actions: {
@@ -95,6 +120,31 @@ export default {
                 showButton: viewSettings.snackbar.showButton,
                 timeout: viewSettings.snackbar.timeout,
                 slot: ''
+            });
+        },
+        openAlert({ commit }, text) {
+            commit('changeAlert', {show: true, text: text});
+        },
+
+        closeAlert({ commit }) {
+            commit('changeAlert', {show: defaultStates.alert.show, text: defaultStates.alert.text});
+        },
+
+        openConfirm({ commit }, params) {
+            commit('changeConfirm', {
+                show: true,
+                text: typeof params.text !== 'undefined' ? params.text : defaultStates.confirm.text,
+                yesCallback: typeof params.yesCallback !== 'undefined' ? params.yesCallback : defaultStates.confirm.yesCallback,
+                noCallback: typeof params.noCallback !== 'undefined' ? params.noCallback : defaultStates.confirm.noCallback
+            });
+        },
+
+        closeConfirm({ commit }) {
+            commit('changeConfirm', {
+                show: defaultStates.confirm.show,
+                text: defaultStates.confirm.text,
+                yesCallback: defaultStates.confirm.yesCallback,
+                noCallback: defaultStates.confirm.noCallback
             });
         },
     },

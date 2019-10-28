@@ -34,11 +34,16 @@
                 <v-icon>mdi-close-box-outline</v-icon>
             </v-btn>
         </v-snackbar>
+        <AlertDialog :show="alert.show" @onClose="alertClosed">{{ alert.text }}</AlertDialog>
+        <ConfirmDialog :show="confirm.show" @onSelect="confirmSelected">{{ confirm.text }}</ConfirmDialog>
     </div>
 </template>
 <script>
     import {mapState} from 'vuex';
     import viewConfig from '../../config/view';
+    import AlertDialog from '../../component/alert-dialog';
+    import ConfirmDialog from '../../component/confirm-dialog';
+    import app from '../../service/App';
 
     export default {
         data: function () {
@@ -55,13 +60,26 @@
                 fillHeight: state => state.view.containerFillHeight,
                 isLoading: state => state.view.loading,
                 snackbar: state => state.view.snackbar
-            })
+            }),
+            alert: function () {
+                return this.$store.state.view.alert;
+            },
+            confirm: function () {
+                return this.$store.state.view.confirm;
+            },
         },
         methods: {
-            //
+            alertClosed: function () {
+                app.closeAlert();
+            },
+            confirmSelected: function (type) {
+                app.callConfirm(type);
+                app.closeConfirm();
+            }
         },
         components: {
-            //
+            AlertDialog,
+            ConfirmDialog,
         },
         watch: {
             'snackbar.slot' (newVal) {

@@ -9,5 +9,5 @@ class Goods extends Model
 {
     use BelongsToUser;
 
-    protected $fillable = ['user_id', 'name'];
+    protected $fillable = ['user_id', 'name', 'goods_category_id'];
 }

@@ -173,7 +173,8 @@
                             for(let key in this.form) {
                                 form[key] = this.form[key].value;
                             }
-                            this.$options.service.edit(this.item.id, form, () => {
+                            this.$logger.info('edit form', form);
+                            this.$options.service.edit(this.$router.currentRoute.params.id, form, () => {
                                 this.goToBack();
                             });
                         }

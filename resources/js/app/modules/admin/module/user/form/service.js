@@ -19,9 +19,16 @@ export default class Service {
             .send()
             .then(response => {
                 logger.info('user.item', response);
-                store.commit('userForm/changeItem', response.data.item);
+                const formItem = {
+                    firstName: response.data.item.first_name,
+                    lastName: response.data.item.last_name,
+                    email: response.data.item.email,
+                    status: response.data.item.status,
+                    role: response.data.item.role
+                };
+                store.commit('userForm/changeItem', formItem);
                 if(typeof callback === 'function') {
-                    callback(response.data.item);
+                    callback(formItem);
                 }
             })
             .catch(error => {
@@ -63,7 +70,7 @@ export default class Service {
             });
     }
 
-    edit(id, name, regionId, callback) {
+    edit(id, form, callback) {
         this.loading(true);
         http(api.update)
             .callback(id, form)

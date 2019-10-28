@@ -101,6 +101,16 @@ class Http {
         this.requestParams.data = dataObj;
     }
 
+    setFormData(dataObj) {
+        let formData = new FormData();
+        for(let key in dataObj) {
+            if(dataObj.hasOwnProperty(key)) {
+                formData.append(key, dataObj[key]);
+            }
+        }
+        this.setData(formData);
+    }
+
     data(dataObj) {
         if(typeof dataObj === 'object') {
             for(let key in dataObj) {

@@ -10,9 +10,9 @@ const api = {
     },
     update: {
         ...Route.admin('user.edit'),
-        callback: function(id, name, region_id) {
+        callback: function(id, form) {
             this.urlParam('{id}', id);
-            this.data({ name, region_id });
+            this.data(form);
         },
         token: true
     },
