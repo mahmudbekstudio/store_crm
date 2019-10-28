@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Defect;
 use App\Models\User;
 use App\Models\UserMeta;
 use App\Repositories\DefectRepository;
@@ -28,6 +29,8 @@ class DefectImport implements ToCollection
         $userMetaRepository = app(UserMetaRepository::class);
         $defectRepository = app(DefectRepository::class);
 
+        Defect::where('id', 'like', '%%')->delete();
+
         for($i = 5; $i < $rowsCount; $i++) {
             $item = $rows[$i]->toArray();
             if(
@@ -37,7 +40,7 @@ class DefectImport implements ToCollection
                 break;
             }
 
-            $date = date("m/d/Y", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[1])->getTimestamp());
+            $date = date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[1])->getTimestamp());
             $region = $regionRepository->firstOrCreate(['name' => $item[2]]);
             $district = $districtRepository->firstOrCreate(['region_id' => $region->id, 'name' => $item[3]]);
             $school = $schoolRepository->firstOrCreate(['district_id' => $district->id, 'name' => $item[4]]);
@@ -82,7 +85,7 @@ class DefectImport implements ToCollection
             $replacementOfPart = !empty($item[16]);
             $recovery = !empty($item[17]);
             $replacementOfPc = !empty($item[18]);
-            $dateOfDone = date("m/d/Y", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[19])->getTimestamp());
+            $dateOfDone = date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[19])->getTimestamp());
 
 
             if(empty($item[20]) || is_null($item[20])) {
@@ -90,7 +93,7 @@ class DefectImport implements ToCollection
             } else {
                 $managerUserMeta = UserMeta::where(['meta_key' => 'full_name', 'meta_value' => $item[20]])->first();
                 if(!$managerUserMeta) {
-                    $user = $userRepository->firstOrCreate(['status' => 1, 'email' => $item[20] . '@gmail.com', 'password' => '123456']);
+                    $user = $userRepository->firstOrCreate(['status' => 1, 'email' => $item[20] . '@gmail.com', 'password' => '123456', 'role' => 'manager']);
                     $userName = explode(' ', $item[20]);
                     $userName[1] = $userName[1] ?? '';
                     $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'full_name', 'meta_value' => $item[20], 'lang' => 'en']);

@@ -44,9 +44,9 @@ class DatabaseSeeder extends Seeder
         // Create setting
         $this->createSetting($admin->id, \App\Helpers\DataFormat::FORMAT_BOOL,      'indexing',     \App\Helpers\DataFormat::toString(false, \App\Helpers\DataFormat::FORMAT_BOOL), '');
         $this->createSetting($admin->id, \App\Helpers\DataFormat::FORMAT_STRING,    'description',  \App\Helpers\DataFormat::toString('Website description', \App\Helpers\DataFormat::FORMAT_STRING), getLang());
-        $this->createSetting($admin->id, \App\Helpers\DataFormat::FORMAT_STRING,    'keywords',     \App\Helpers\DataFormat::toString('agromart,website', \App\Helpers\DataFormat::FORMAT_STRING), getLang());
+        $this->createSetting($admin->id, \App\Helpers\DataFormat::FORMAT_STRING,    'keywords',     \App\Helpers\DataFormat::toString('store,website', \App\Helpers\DataFormat::FORMAT_STRING), getLang());
         $this->createSetting($admin->id, \App\Helpers\DataFormat::FORMAT_INT,       'favicon',      \App\Helpers\DataFormat::toString(0, \App\Helpers\DataFormat::FORMAT_INT), '');
-        $this->createSetting($admin->id, \App\Helpers\DataFormat::FORMAT_STRING,    'title',        \App\Helpers\DataFormat::toString('Agromart', \App\Helpers\DataFormat::FORMAT_STRING), getLang());
+        $this->createSetting($admin->id, \App\Helpers\DataFormat::FORMAT_STRING,    'title',        \App\Helpers\DataFormat::toString('Store crm', \App\Helpers\DataFormat::FORMAT_STRING), getLang());
         $this->createSetting($admin->id, \App\Helpers\DataFormat::FORMAT_INT,       'logo',         \App\Helpers\DataFormat::toString(0, \App\Helpers\DataFormat::FORMAT_INT), '');
         $this->createSetting($admin->id, \App\Helpers\DataFormat::FORMAT_INT,       'status',       \App\Helpers\DataFormat::toString(1, \App\Helpers\DataFormat::FORMAT_INT), '');
 

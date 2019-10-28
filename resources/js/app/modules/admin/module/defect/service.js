@@ -29,15 +29,19 @@ export default class Service {
             });
     }
 
-    submit(files) {
+    submit(files, callback) {
         logger.info('submitted', files[0]);
         this.loading(true);
         http(api.submit)
             .callback(files[0])
             .send()
             .then(response => {
-                //this.init();
+                this.init();
+                if(typeof callback === 'function') {
+                    callback();
+                }
                 logger.info('defect submit response', response);
+                app.openMessage('Updated');
             })
             .catch(error => {
                 logger.error('defect.submit', error);
