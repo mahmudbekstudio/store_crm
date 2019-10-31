@@ -5,6 +5,17 @@ const api = {
         ...Route.admin('defect.list'),
         token: true
     },
+    changeField: {
+        ...Route.admin('defect.change-field'),
+        callback: function(id, key, val) {
+            this.data({
+                id,
+                key,
+                val
+            });
+        },
+        token: true
+    },
     submit: {
         ...Route.admin('import.defect'),
         callback: function(file) {

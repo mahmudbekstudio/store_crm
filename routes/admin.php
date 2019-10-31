@@ -78,6 +78,7 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
 
     Route::group(['prefix' => 'defect', 'as' => 'defect.'], function() {
         Route::get('list', 'DefectController@list')->name('list');
+        Route::put('change-field', 'DefectController@changeField')->name('change-field');
         /*Route::post('add', 'UserController@add')->name('add');
         Route::get('item/{id}', 'UserController@item')->name('item');
         Route::put('item/{id}', 'UserController@edit')->name('edit');

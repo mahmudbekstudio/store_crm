@@ -29,6 +29,24 @@ export default class Service {
             });
     }
 
+    changeField(id, key, val) {
+        this.loading(true);
+        http(api.changeField)
+            .callback(id, key, val)
+            .send()
+            .then(response => {
+                this.init();
+                app.openMessage('Updated');
+            })
+            .catch(error => {
+                logger.error('defect.changeField', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                this.loading(false);
+            });
+    }
+
     submit(files, callback) {
         logger.info('submitted', files[0]);
         this.loading(true);

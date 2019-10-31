@@ -141,6 +141,346 @@
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>
             </template>
+            <template v-slot:item.date="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.date"
+                        @save="fieldSave(props.item.id, 'date')"
+                        large
+                > {{ props.item.date }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.date"
+                                @input="changeField(props.item.id, 'date', $event)"
+
+                                label="Date"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.region="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.region"
+                        @save="fieldSave(props.item.id, 'region')"
+                        large
+                > {{ props.item.region }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.region"
+                                @input="changeField(props.item.id, 'region', $event)"
+
+                                label="Region"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.district="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.district"
+                        @save="fieldSave(props.item.id, 'district')"
+                        large
+                > {{ props.item.district }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.district"
+                                @input="changeField(props.item.id, 'district', $event)"
+
+                                label="District"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.school="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.school"
+                        @save="fieldSave(props.item.id, 'school')"
+                        large
+                > {{ props.item.school }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.school"
+                                @input="changeField(props.item.id, 'school', $event)"
+
+                                label="School"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.from_user_name="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.from_user_name"
+                        @save="fieldSave(props.item.id, 'from_user_name')"
+                        large
+                > {{ props.item.from_user_name }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.from_user_name"
+                                @input="changeField(props.item.id, 'from_user_name', $event)"
+
+                                label="User name"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.from_user_phone="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.from_user_phone"
+                        @save="fieldSave(props.item.id, 'from_user_phone')"
+                        large
+                > {{ props.item.from_user_phone }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.from_user_phone"
+                                @input="changeField(props.item.id, 'from_user_phone', $event)"
+
+                                label="User phone"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.received_user_name="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.received_user_name"
+                        @save="fieldSave(props.item.id, 'received_user_name')"
+                        large
+                > {{ props.item.received_user_name }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.received_user_name"
+                                @input="changeField(props.item.id, 'received_user_name', $event)"
+
+                                label="Received user"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.product1="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.product1"
+                        @save="fieldSave(props.item.id, 'product1')"
+                        large
+                > {{ props.item.product1 }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.product1"
+                                @input="changeField(props.item.id, 'product1', $event)"
+                                :items="['', 'O']"
+                                label="PC"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.product2="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.product2"
+                        @save="fieldSave(props.item.id, 'product2')"
+                        large
+                > {{ props.item.product2 }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.product2"
+                                @input="changeField(props.item.id, 'product2', $event)"
+                                :items="['', 'O']"
+                                label="Mouse"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.product3="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.product3"
+                        @save="fieldSave(props.item.id, 'product3')"
+                        large
+                > {{ props.item.product3 }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.product3"
+                                @input="changeField(props.item.id, 'product3', $event)"
+                                :items="['', 'O']"
+                                label="Keyboard"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.product4="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.product4"
+                        @save="fieldSave(props.item.id, 'product4')"
+                        large
+                > {{ props.item.product4 }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.product4"
+                                @input="changeField(props.item.id, 'product4', $event)"
+                                :items="['', 'O']"
+                                label="Monitor"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.product5="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.product5"
+                        @save="fieldSave(props.item.id, 'product5')"
+                        large
+                > {{ props.item.product5 }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.product5"
+                                @input="changeField(props.item.id, 'product5', $event)"
+                                :items="['', 'O']"
+                                label="Laser printer"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.product6="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.product6"
+                        @save="fieldSave(props.item.id, 'product6')"
+                        large
+                > {{ props.item.product6 }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.product6"
+                                @input="changeField(props.item.id, 'product6', $event)"
+                                :items="['', 'O']"
+                                label="AVR"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.product7="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.product7"
+                        @save="fieldSave(props.item.id, 'product7')"
+                        large
+                > {{ props.item.product7 }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.product7"
+                                @input="changeField(props.item.id, 'product7', $event)"
+                                :items="['', 'O']"
+                                label="Network switch"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.comment="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.comment"
+                        @save="fieldSave(props.item.id, 'comment')"
+                        large
+                > {{ props.item.comment }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.comment"
+                                @input="changeField(props.item.id, 'comment', $event)"
+
+                                label="Comment"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.replacement_part="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.replacement_part"
+                        @save="fieldSave(props.item.id, 'replacement_part')"
+                        large
+                > {{ props.item.replacement_part }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.replacement_part"
+                                @input="changeField(props.item.id, 'replacement_part', $event)"
+                                :items="['', 'O']"
+                                label="Replacement part"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.recovery="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.recovery"
+                        @save="fieldSave(props.item.id, 'recovery')"
+                        large
+                > {{ props.item.recovery }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.recovery"
+                                @input="changeField(props.item.id, 'recovery', $event)"
+                                :items="['', 'O']"
+                                label="Recovery"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.replacement_pc="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.replacement_pc"
+                        @save="fieldSave(props.item.id, 'replacement_pc')"
+                        large
+                > {{ props.item.replacement_pc }}
+                    <template v-slot:input>
+                        <v-select
+                                :value="props.item.replacement_pc"
+                                @input="changeField(props.item.id, 'replacement_pc', $event)"
+                                :items="['', 'O']"
+                                label="Replcaement pc"
+                        ></v-select>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.date_done="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.date_done"
+                        @save="fieldSave(props.item.id, 'date_done')"
+                        large
+                > {{ props.item.date_done }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.date_done"
+                                @input="changeField(props.item.id, 'date_done', $event)"
+
+                                label="Date done"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.manager_name="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.manager_name"
+                        @save="fieldSave(props.item.id, 'manager_name')"
+                        large
+                > {{ props.item.manager_name }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="props.item.manager_name"
+                                @input="changeField(props.item.id, 'manager_name', $event)"
+
+                                label="Manager"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
         </v-data-table>
     </PageBox>
 </template>
@@ -153,6 +493,7 @@
         service: new Service(),
         data() {
             return {
+                changedFields: {},
                 filterShow: false,
                 files: [],
                 extensions: ['xlsx'],
@@ -415,6 +756,22 @@
             this.$options.service.init();
         },
         methods: {
+            changeField(id, key, val, send) {
+                this.$logger.info(id, key, val);
+                this.changedFields[id] = this.changedFields[id] || {};
+                this.changedFields[id][key] = val;
+
+                if(send) {
+                    this.fieldSave(id, key);
+                }
+            },
+            fieldSave(id, key) {
+                if(typeof this.changedFields[id] !== 'undefined' && typeof this.changedFields[id][key] !== 'undefined') {
+                    this.$logger.info('changed field', id, key, this.changedFields[id][key]);
+                    this.$options.service.changeField(id, key, this.changedFields[id][key]);
+                }
+                this.changedFields = {};
+            },
             submitSelectedFile() {
                 this.$options.service.submit(this.files, () => {
                     this.files = [];

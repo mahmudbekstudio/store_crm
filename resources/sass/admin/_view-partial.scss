@@ -1,8 +1,14 @@
+.v-content__wrap {
+  background-image: url("/img/content-background.jpg");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+
 .page-box {
   padding: 24px;
   margin-top: 10px;
   border-top: 1px solid #e7eaec;
-  background-color: #FFF;
+  background-color: rgba(255, 255, 255, 0.7) !important;
   border-radius: 3px;
   flex: auto;
 
@@ -15,6 +21,9 @@
   .v-btn {
     margin-left: 5px;
     margin-right: 5px;
+  }
+  .v-toolbar {
+    background-color: rgba(255, 255, 255, 0.7) !important;
   }
 }
 
@@ -30,4 +39,17 @@
 
 .page-box-wrapper {
   overflow: auto;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.top-header {
+  background-image: url("/img/logo.jpg");
+  background-size: auto 100%;
+  background-position: center top;
+
+
+  @media (max-width: 560px) {
+    background-image: url("/img/logo-small.jpg");
+  }
+
 }
