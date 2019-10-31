@@ -9,6 +9,7 @@ import goodsRoute from './goods/route';
 import userRoute from './user/route';
 import errorRoute from './error/route';
 import defectRoute from './defect/route';
+import progressRateRoute from './progressrate/route';
 
 const routes = [
     {path: '/', redirect: {name: viewConfig.page.default}},
@@ -20,6 +21,7 @@ const routes = [
     categoryRoute,
     goodsRoute,
     defectRoute,
+    progressRateRoute,
     userRoute,
     errorRoute,
     {path: '*', redirect: {name: viewConfig.page.notFound}}

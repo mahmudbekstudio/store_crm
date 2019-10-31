@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Store crm admin')
+@section('title', 'Progress Management System admin')
 
 @section('content')
     <div class="module-admin"></div>
