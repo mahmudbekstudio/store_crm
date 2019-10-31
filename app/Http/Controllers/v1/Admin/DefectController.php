@@ -195,7 +195,7 @@ class DefectController extends Controller
                     $item->save();
                     break;
                 case 'comment':
-                    $item->date = $data['val'];
+                    $item->comment = $data['val'];
                     $item->save();
                     break;
                 case 'replacement_part':
