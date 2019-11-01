@@ -30,20 +30,20 @@ export default class Service {
     }
 
     init() {
-        /*this.loading(true);
+        this.loading(true);
         http(api.list)
           .send()
           .then(response => {
-            logger.info('defect.list', response);
-            store.commit('defect/changeList', response.data.list);
+            logger.info('progressrate.list', response);
+            store.commit('progressrate/changeList', response.data.list);
           })
           .catch(error => {
-            logger.error('goods.list', error);
+            logger.error('progressrate.list', error);
             app.errorMessage('Error');
           })
           .then(() => {
             this.loading(false);
-          });*/
+          });
     }
 
     changeField(id, key, val, isDetail) {
