@@ -1,6 +1,6 @@
 <template>
     <PageBox class="module-progressrate">
-        <router-link :to="{ name: 'progressrate.detail'}">Detail</router-link>
+        <router-link :to="{ name: 'progressrate.detail'}">Detail >></router-link>
 
         <div>
             <File v-model="files" :extList="extensions" btnTitle="Update"></File>
@@ -122,13 +122,29 @@
     },
     computed: {
       items() {
-        return [];
+        return this.$store.state.progressrate.list;//list
       }
     },
     created() {
       this.$options.service.init();
     },
     methods: {
+      changeField(id, key, val, send) {
+        this.$logger.info(id, key, val);
+        this.changedFields[id] = this.changedFields[id] || {};
+        this.changedFields[id][key] = val;
+
+        if(send) {
+          this.fieldSave(id, key);
+        }
+      },
+      fieldSave(id, key) {
+        if(typeof this.changedFields[id] !== 'undefined' && typeof this.changedFields[id][key] !== 'undefined') {
+          this.$logger.info('changed field', id, key, this.changedFields[id][key]);
+          this.$options.service.changeField(id, key, this.changedFields[id][key]);
+        }
+        this.changedFields = {};
+      },
       submitSelectedFile() {
         this.$options.service.submit(this.files, () => {
           this.files = [];

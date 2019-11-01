@@ -56,63 +56,96 @@ class ProgressRateController extends Controller
 
     public function list()
     {
-        /*$defects = $this->defectRepository->with(['region', 'district', 'school', 'from_user.metas', 'received_user.metas', 'manager.metas'])->all()->toArray();
+        $details = $this->progressRateRepository->with(['region', 'district', 'school'])->all()->toArray();
         $list = [];
+        $region = '';
+        $teachersComputer = 0;
+        $studentComputer = 0;
+        $survey = 0;
+        $outWh = 0;
+        $site_arrival_inspection = 0;
+        $oat_training = 0;
+        $oac = 0;
+        $mac = 0;
+        $warranty_completion = 0;
 
-        foreach($defects as $item) {
-            $fromUserName = '';
-            $fromUserPhone = '';
-            $receivedUserName = '';
-            $managerName = '';
-
-            foreach($item['from_user']['metas'] ?? [] as $meta) {
-                if($meta['meta_key'] === 'full_name') {
-                    $fromUserName = $meta['meta_value'];
-                }
-
-                if($meta['meta_key'] === 'phone') {
-                    $fromUserPhone = $meta['meta_value'];
-                }
+        foreach($details as $item) {
+            /*$installedQuantityEcc = empty($item['mac']) ? 0 : 1;
+            $installedQuantityPc = ($item['teacher_computer'] + $item['student_computer']) * $installedQuantityEcc;*/
+            if($region == '') {
+                $region = $item['region']['name'];
             }
 
-            foreach($item['received_user']['metas'] ?? [] as $meta) {
-                if($meta['meta_key'] === 'full_name') {
-                    $receivedUserName = $meta['meta_value'];
-                }
+            if(!empty($item['teacher_computer'])) {
+                $teachersComputer++;
             }
 
-            foreach($item['manager']['metas'] ?? [] as $meta) {
-                if($meta['meta_key'] === 'full_name') {
-                    $managerName = $meta['meta_value'];
-                }
+            if(!empty($item['student_computer'])) {
+                $studentComputer++;
             }
 
-            $list[] = [
-                'id' => $item['id'],
-                'date' => $item['date'],
-                'region' => $item['region']['name'],
-                'district' => $item['district']['name'],
-                'school' => $item['school']['name'],
-                'from_user_name' => $fromUserName,
-                'from_user_phone' => $fromUserPhone,
-                'received_user_name' => $receivedUserName,
-                'product1' => $item['goods1_id'] ? 'O' : '',
-                'product2' => $item['goods2_id'] ? 'O' : '',
-                'product3' => $item['goods3_id'] ? 'O' : '',
-                'product4' => $item['goods4_id'] ? 'O' : '',
-                'product5' => $item['goods5_id'] ? 'O' : '',
-                'product6' => $item['goods6_id'] ? 'O' : '',
-                'product7' => $item['goods7_id'] ? 'O' : '',
-                'comment' => $item['comment'],
-                'replacement_part' => $item['replacement_of_part'] ? 'O' : '',
-                'recovery' => $item['recovery'] ? 'O' : '',
-                'replacement_pc' => $item['replacement_of_pc'] ? 'O' : '',
-                'date_done' => $item['date_of_done'],
-                'manager_name' => $managerName
-            ];
+            if(!empty($item['survey'])) {
+                $survey++;
+            }
+
+            if(!empty($item['out_wh'])) {
+                $outWh++;
+            }
+
+            if(!empty($item['site_arrival_inspection'])) {
+                $site_arrival_inspection++;
+            }
+
+            if(!empty($item['oat_training'])) {
+                $oat_training++;
+            }
+
+            if(!empty($item['oac'])) {
+                $oac++;
+            }
+
+            if(!empty($item['mac'])) {
+                $mac++;
+            }
+
+            if(!empty($item['warranty_completion'])) {
+                $warranty_completion++;
+            }
+
+            if($region != $item['region']['name']) {
+                $list[] = [
+                    'id' => $item['region']['id'],
+                    'region' => $region,
+                    'teacher_computer' => $teachersComputer,
+                    'student_computer' => $studentComputer,
+                    'total_pc' => ($teachersComputer + $studentComputer),
+                    'survey' => $survey,
+                    'out_wh' => $outWh,
+                    'site_arrival_inspection' => $site_arrival_inspection,
+                    'oat_training' => $oat_training,
+                    'oac' => $oac,
+                    'mac' => $mac,
+                    'warranty_completion' => $warranty_completion,
+                    'installed_quantity_ecc' => '',
+                    'installed_quantity_pc' => '',
+                    'progress_rate_ecc' => (round($mac/$teachersComputer * 100) / 100) . '%',
+                    'progress_rate_pc' => (round($mac/$teachersComputer * 100) / 100) . '%'
+                ];
+
+                $teachersComputer = 0;
+                $studentComputer = 0;
+                $survey = 0;
+                $outWh = 0;
+                $site_arrival_inspection = 0;
+                $oat_training = 0;
+                $oac = 0;
+                $mac = 0;
+                $warranty_completion = 0;
+                $region = $item['region']['name'];
+            }
         }
 
-        return responseData(true, ['list' => $list]);*/
+        return responseData(true, ['list' => $list]);
     }
 
     public function changeField(Request $request)

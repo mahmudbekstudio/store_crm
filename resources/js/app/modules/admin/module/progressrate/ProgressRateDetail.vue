@@ -1,6 +1,6 @@
 <template>
     <PageBox class="module-progressrate">
-        <router-link :to="{ name: 'progressrate.list'}">List</router-link>
+        <router-link :to="{ name: 'progressrate.list'}"><< List</router-link>
 
         <div>
             <File v-model="files" :extList="extensions" btnTitle="Update"></File>
@@ -419,7 +419,7 @@
             submitSelectedFile() {
                 this.$options.service.submit(this.files, () => {
                     this.files = [];
-                });
+                }, true);
             },
         },
         components: {
