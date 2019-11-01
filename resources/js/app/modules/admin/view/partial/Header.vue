@@ -5,10 +5,7 @@
             color="blue darken-3 top-header"
             dark
     >
-        <v-toolbar-title
-                style="width: 300px"
-                class="ml-0"
-        >
+        <v-toolbar-title class="ml-0">
             <v-app-bar-nav-icon @click.stop="toggleDrawer"></v-app-bar-nav-icon>
             <span class="hidden-sm-and-down company-name">{{ title }}</span>
         </v-toolbar-title>

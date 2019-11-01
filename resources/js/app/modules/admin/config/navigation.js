@@ -1,14 +1,14 @@
 export default {
     admin: [
         {text: 'Dashboard', icon: 'mdi-view-dashboard-outline', route: {name: 'dashboard'}},
-        {text: 'Region', icon: 'mdi-city-variant-outline', route: {name: 'region.list'}},
+        /*{text: 'Region', icon: 'mdi-city-variant-outline', route: {name: 'region.list'}},
         {text: 'District', icon: 'mdi-city-variant-outline', route: {name: 'district.list'}},
         {text: 'School', icon: 'mdi-school-outline', route: {name: 'school.list'}},
         {text: 'Category', icon: 'mdi-laptop', route: {name: 'category.list'}},
-        {text: 'Goods', icon: 'mdi-laptop', route: {name: 'goods.list'}},
+        {text: 'Goods', icon: 'mdi-laptop', route: {name: 'goods.list'}},*/
         {text: 'User', icon: 'mdi-account-supervisor-outline', route: {name: 'user.list'}},
         {text: 'Defects', icon: 'mdi-account-supervisor-outline', route: {name: 'defect'}},
-        {text: 'Progress rate', icon: 'mdi-account-supervisor-outline', route: {name: 'progressrate'}},
+        {text: 'Progress rate', icon: 'mdi-account-supervisor-outline', route: {name: 'progressrate.list'}},
         /*{ divider: true },
         { heading: 'Labels' },
         {text: 'Users', icon: 'mdi-account-group-outline', route: {name: 'admin.user'}},

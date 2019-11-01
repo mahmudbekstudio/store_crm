@@ -87,7 +87,20 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
         Route::get('params', 'UserController@params')->name('params');*/
     });
 
+    Route::group(['prefix' => 'progressrate', 'as' => 'progressrate.'], function() {
+        Route::get('list', 'ProgressRateController@list')->name('list');
+        Route::get('detail', 'ProgressRateController@detail')->name('detail');
+        Route::put('change-field', 'ProgressRateController@changeField')->name('change-field');
+        /*Route::post('add', 'UserController@add')->name('add');
+        Route::get('item/{id}', 'UserController@item')->name('item');
+        Route::put('item/{id}', 'UserController@edit')->name('edit');
+        Route::delete('item/{id}', 'UserController@delete')->name('delete');
+
+        Route::get('params', 'UserController@params')->name('params');*/
+    });
+
     Route::group(['prefix' => 'import', 'as' => 'import.'], function() {
         Route::post('defect', 'ImportController@defect')->name('defect');
+        Route::post('progressrate', 'ImportController@progressRate')->name('progressrate');
     });
 });

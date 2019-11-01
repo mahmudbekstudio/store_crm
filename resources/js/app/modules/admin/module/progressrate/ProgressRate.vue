@@ -1,5 +1,7 @@
 <template>
     <PageBox class="module-progressrate">
+        <router-link :to="{ name: 'progressrate.detail'}">Detail</router-link>
+
         <div>
             <File v-model="files" :extList="extensions" btnTitle="Update"></File>
             <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading">{{ $t('progressrate.submit') }}</v-btn>
@@ -93,7 +95,7 @@
           {
             text: 'Warranty Competition',
             align: 'left',
-            value: 'warranty_competition',
+            value: 'warranty_completion',
           },
           {
             text: 'Installed Q-ty of Ecc',
