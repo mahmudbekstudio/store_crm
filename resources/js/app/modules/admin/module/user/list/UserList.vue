@@ -6,7 +6,7 @@
                 class="elevation-1"
 
         >
-            <!--template v-slot:item.action="{ item }">
+            <template v-slot:item.action="{ item }">
                 <v-icon
                         class="mr-2"
                         @click="editItem(item)"
@@ -19,7 +19,7 @@
                 >
                     mdi-delete-outline
                 </v-icon>
-            </template-->
+            </template>
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>
             </template>
@@ -83,7 +83,7 @@
                     sortable: false,
                     value: 'created',
                 },
-                //{ text: 'Actions', value: 'action', sortable: false, width: 100 },
+                { text: 'Actions', value: 'action', sortable: false, width: 100 },
             ],
         }),
 
@@ -95,11 +95,11 @@
 
         created () {
             this.$options.service.init();
-            /*this.actionsList.push(getPageBoxAction('New', '', {color: 'primary'}, {
+            this.actionsList.push(getPageBoxAction('New', '', {color: 'primary'}, {
                 click: () => {
                     this.$router.push({name: 'user.add'})
                 }
-            }));*/
+            }));
         },
 
         methods: {
