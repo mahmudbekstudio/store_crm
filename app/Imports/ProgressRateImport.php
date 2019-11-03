@@ -24,7 +24,8 @@ class ProgressRateImport implements WithMultipleSheets
     {
         return [
             null,
-            new ProgressRateSecondSheetImport()
+            new ProgressRateSecondSheetImport(),
+            new ProgressRateThirdSheetImport()
         ];
     }
 

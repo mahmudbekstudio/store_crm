@@ -45,3 +45,18 @@ export let getPageBoxAction = function(title, icon = '', bind = {}, on = {}) {
       on: on
   };
 };
+
+/*
+export let formatDate = function(date) {
+    if (!date) return null;
+
+    const [year, month, day] = date.split('-');
+    return `${year}-${month}-${day}`
+};
+
+export let parseDate = function(date) {
+    if (!date) return null;
+
+    const [year, month, day] = date.split('-');
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+};*/

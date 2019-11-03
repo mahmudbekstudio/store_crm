@@ -91,6 +91,9 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
         Route::get('list', 'ProgressRateController@list')->name('list');
         Route::get('detail', 'ProgressRateController@detail')->name('detail');
         Route::put('change-field', 'ProgressRateController@changeField')->name('change-field');
+
+        Route::get('check-list', 'ProgressRateController@checkList')->name('check-list');
+        Route::put('change-field-check-list', 'ProgressRateController@changeFieldCheckList')->name('change-field-check-list');
         /*Route::post('add', 'UserController@add')->name('add');
         Route::get('item/{id}', 'UserController@item')->name('item');
         Route::put('item/{id}', 'UserController@edit')->name('edit');

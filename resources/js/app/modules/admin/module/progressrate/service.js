@@ -12,13 +12,16 @@ export default class Service {
         //
     }
 
-    detailInit() {
+    detailInit(text) {
         this.loading(true);
+        !text && app.openMessage('Loading');
         http(api.detail)
             .send()
             .then(response => {
                 logger.info('progressrate.detailList', response);
                 store.commit('progressrate/changeDetailList', response.data.list);
+                text && app.openMessage(text);
+                !text && app.openMessage('Loaded');
             })
             .catch(error => {
                 logger.error('progressrate.detailList', error);
@@ -29,38 +32,79 @@ export default class Service {
             });
     }
 
-    init() {
+    checkListInit(text) {
         this.loading(true);
+        !text && app.openMessage('Loading');
+        http(api.checkList)
+            .send()
+            .then(response => {
+                logger.info('progressrate.checkList', response);
+                store.commit('progressrate/changeCheckList', response.data.list);
+                text && app.openMessage(text);
+                !text && app.openMessage('Loaded');
+            })
+            .catch(error => {
+                logger.error('progressrate.checkList', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                this.loading(false);
+            });
+    }
+
+    init(text) {
+        this.loading(true);
+        !text && app.openMessage('Loading');
         http(api.list)
-          .send()
-          .then(response => {
-            logger.info('progressrate.list', response);
-            store.commit('progressrate/changeList', response.data.list);
-          })
-          .catch(error => {
-            logger.error('progressrate.list', error);
-            app.errorMessage('Error');
-          })
-          .then(() => {
-            this.loading(false);
-          });
+            .send()
+            .then(response => {
+                logger.info('progressrate.list', response);
+                store.commit('progressrate/changeList', response.data.list);
+                text && app.openMessage(text);
+                !text && app.openMessage('Loaded');
+            })
+            .catch(error => {
+                logger.error('progressrate.list', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                this.loading(false);
+            });
     }
 
     changeField(id, key, val, isDetail) {
         this.loading(true);
+        app.openMessage('Saving');
         http(api.changeField)
             .callback(id, key, val)
             .send()
             .then(response => {
                 if (isDetail) {
-                    this.detailInit();
+                    this.detailInit('Updated');
                 } else {
-                    this.init();
+                    this.init('Updated');
                 }
-                app.openMessage('Updated');
             })
             .catch(error => {
                 logger.error('defect.changeField', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                this.loading(false);
+            });
+    }
+
+    changeFieldCheckList(id, key, val, isDetail) {
+        this.loading(true);
+        app.openMessage('Saving');
+        http(api.changeFieldCheckList)
+            .callback(id, key, val)
+            .send()
+            .then(response => {
+                this.checkListInit('Updated');
+            })
+            .catch(error => {
+                logger.error('defect.changeFieldCheckList', error);
                 app.errorMessage('Error');
             })
             .then(() => {
@@ -75,7 +119,9 @@ export default class Service {
             .callback(files[0])
             .send()
             .then(response => {
-                if (isDetail) {
+                if(isDetail && isDetail === 'check-list') {
+                    this.checkListInit();
+                } else if (isDetail) {
                     this.detailInit();
                 } else {
                     this.init();

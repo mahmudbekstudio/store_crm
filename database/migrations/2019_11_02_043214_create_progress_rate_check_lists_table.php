@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProgressRatesTable extends Migration
+class CreateProgressRateCheckListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProgressRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('progress_rates', function (Blueprint $table) {
+        Schema::create('progress_rate_check_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('region_id');
@@ -21,16 +21,16 @@ class CreateProgressRatesTable extends Migration
             $table->unsignedBigInteger('school_id');
             $table->string('teacher_computer');
             $table->string('student_computer');
-            $table->string('survey');
-            $table->string('out_wh');
-            $table->string('site_arrival_inspection');
-            $table->string('installation');
-            $table->string('oat_training');
-            $table->string('oac');
-            $table->string('mac');
-            $table->string('warranty_completion');
-            //- installed_quantity_ecc
-            //- installed_quantity_pc
+            $table->string('quantity_teacher_desk');
+            $table->string('quantity_student_desk');
+            $table->string('size_ecc_length');
+            $table->string('size_ecc_width');
+            $table->string('power_socket_l');
+            $table->string('power_socket_r');
+            $table->string('power_socket_f');
+            $table->string('power_socket_b');
+            $table->string('circuit_breaker');
+            $table->string('internet');
             $table->string('remark');
 
             $table->index('user_id');
@@ -49,6 +49,6 @@ class CreateProgressRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('progress_rates');
+        Schema::dropIfExists('progress_rate_check_lists');
     }
 }

@@ -38,6 +38,14 @@ class CreateDefectsTable extends Migration
             $table->string('date_of_done');
             $table->unsignedBigInteger('manager_id');
 
+            $table->index('user_id');
+            $table->index('date');
+            $table->index('region_id');
+            $table->index('district_id');
+            $table->index('school_id');
+            $table->index('from_user_id');
+            $table->index('received_user_id');
+
             $table->timestamps();
         });
     }

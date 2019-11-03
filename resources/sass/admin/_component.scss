@@ -35,3 +35,18 @@
     }
   }
 }
+
+.v-data-table-header {
+  th {
+    min-width: 100px;
+    white-space: nowrap;
+  }
+}
+
+.custom-table {
+  td {
+    .v-small-dialog__activator {
+      background-color: #F6F6F6;
+    }
+  }
+}

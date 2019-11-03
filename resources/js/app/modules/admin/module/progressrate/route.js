@@ -1,6 +1,7 @@
 import i18n from '../../plugin/i18n';
 import ProgressRate from './ProgressRate'
 import ProgressRateDetail from './ProgressRateDetail';
+import ProgressRateCheckList from './ProgressRateCheckList';
 import ParentRoute from '../../view/ParentRoute';
 
 const route = {
@@ -25,6 +26,15 @@ const route = {
             meta: {
                 requiresAuth: true,
                 title: i18n.t('progressrate.title-detail')
+            },
+        },
+        {
+            path: 'check-list',
+            name: 'progressrate.checkList',
+            component: ProgressRateCheckList,
+            meta: {
+                requiresAuth: true,
+                title: i18n.t('progressrate.title-check-list')
             },
         }
     ]

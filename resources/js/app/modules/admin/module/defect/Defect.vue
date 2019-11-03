@@ -148,14 +148,32 @@
                         large
                 > {{ props.item.date }}
                     <template v-slot:input>
-                        <v-text-field
-                                :value="props.item.date"
-                                @input="changeField(props.item.id, 'date', $event)"
-
-                                label="Date"
-                                single-line
-                                counter
-                        ></v-text-field>
+                        <v-menu
+                                v-model="dateMenu[props.item.id + '_date']"
+                                :close-on-content-click="false"
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                max-width="290px"
+                                min-width="290px"
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-text-field
+                                        :value="getField(props.item.id, 'date') || props.item.date"
+                                        label="Date"
+                                        hint="YYYY-MM-DD format"
+                                        persistent-hint
+                                        prepend-icon="mdi-calendar"
+                                        readonly
+                                        v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                                    :value="props.item.date"
+                                    @input="changeField(props.item.id, 'date', $event);dateMenu[props.item.id + '_date']=false"
+                                    no-title
+                            ></v-date-picker>
+                        </v-menu>
                     </template>
                 </v-edit-dialog>
             </template>
@@ -245,6 +263,7 @@
                                 label="User phone"
                                 single-line
                                 counter
+                                v-mask="phoneMask"
                         ></v-text-field>
                     </template>
                 </v-edit-dialog>
@@ -452,14 +471,32 @@
                         large
                 > {{ props.item.date_done }}
                     <template v-slot:input>
-                        <v-text-field
-                                :value="props.item.date_done"
-                                @input="changeField(props.item.id, 'date_done', $event)"
-
-                                label="Date done"
-                                single-line
-                                counter
-                        ></v-text-field>
+                        <v-menu
+                                v-model="dateMenu[props.item.id + '_date_done']"
+                                :close-on-content-click="false"
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                max-width="290px"
+                                min-width="290px"
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-text-field
+                                        :value="getField(props.item.id, 'date_done') || props.item.date_done"
+                                        label="Date done"
+                                        hint="YYYY-MM-DD format"
+                                        persistent-hint
+                                        prepend-icon="mdi-calendar"
+                                        readonly
+                                        v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                                    :value="props.item.date_done"
+                                    @input="changeField(props.item.id, 'date_done', $event);dateMenu[props.item.id + '_date_done']=false"
+                                    no-title
+                            ></v-date-picker>
+                        </v-menu>
                     </template>
                 </v-edit-dialog>
             </template>
@@ -488,11 +525,15 @@
     import PageBox from '../../view/partial/PageBox';
     import File from '../../component/File';
     import Service from './service';
+    import {mask} from 'vue-the-mask'
 
     export default {
+        directives: {mask},
         service: new Service(),
         data() {
             return {
+                dateMenu: {},
+                phoneMask: '+### (##) ###-##-##',
                 changedFields: {},
                 filterShow: false,
                 files: [],
@@ -501,108 +542,108 @@
                 headers: [
                     {
                         text: 'Id',
-                        align: 'left',
+                        align: 'center',
                         value: 'id',
                         width: 50
                     },
                     {
                         text: 'Date',
-                        align: 'left',
+                        align: 'center',
                         value: 'date',
                     },
                     {
                         text: 'Region',
-                        align: 'left',
+                        align: 'center',
                         value: 'region',
                     },
                     {
                         text: 'District',
-                        align: 'left',
+                        align: 'center',
                         value: 'district',
                     },
                     {
                         text: 'School',
-                        align: 'left',
+                        align: 'center',
                         value: 'school',
                     },
                     {
                         text: 'From user',
-                        align: 'left',
+                        align: 'center',
                         value: 'from_user_name',
                     },
                     {
                         text: 'User phone',
-                        align: 'left',
+                        align: 'center',
                         value: 'from_user_phone',
                     },
                     {
                         text: 'Received user',
-                        align: 'left',
+                        align: 'center',
                         value: 'received_user_name',
                     },
                     {
                         text: 'PC',
-                        align: 'left',
+                        align: 'center',
                         value: 'product1',
                     },
                     {
                         text: 'Mouse',
-                        align: 'left',
+                        align: 'center',
                         value: 'product2',
                     },
                     {
                         text: 'Keyboard',
-                        align: 'left',
+                        align: 'center',
                         value: 'product3',
                     },
                     {
                         text: 'Monitor',
-                        align: 'left',
+                        align: 'center',
                         value: 'product4',
                     },
                     {
                         text: 'Laser printer',
-                        align: 'left',
+                        align: 'center',
                         value: 'product5',
                     },
                     {
                         text: 'AVR',
-                        align: 'left',
+                        align: 'center',
                         value: 'product6',
                     },
                     {
                         text: 'Network switch',
-                        align: 'left',
+                        align: 'center',
                         value: 'product7',
                     },
                     {
                         text: 'Comment',
-                        align: 'left',
+                        align: 'center',
                         value: 'comment',
                     },
                     {
                         text: 'Replacement part',
-                        align: 'left',
+                        align: 'center',
                         value: 'replacement_part',
                     },
                     {
                         text: 'Recovery',
-                        align: 'left',
+                        align: 'center',
                         value: 'recovery',
                     },
                     {
                         text: 'Replacement pc',
-                        align: 'left',
+                        align: 'center',
                         value: 'replacement_pc',
                     },
                     {
                         text: 'Done',
-                        align: 'left',
+                        align: 'center',
                         value: 'date_done',
                     },
                     {
                         text: 'Manager',
-                        align: 'left',
+                        align: 'center',
                         value: 'manager_name',
                     },
                 ],
@@ -764,6 +805,12 @@
                 if(send) {
                     this.fieldSave(id, key);
                 }
+            },
+            getField(id, key) {
+                if(this.changedFields[id] && this.changedFields[id][key]) {
+                    return this.changedFields[id][key];
+                }
+                return null;
             },
             fieldSave(id, key) {
                 if(typeof this.changedFields[id] !== 'undefined' && typeof this.changedFields[id][key] !== 'undefined') {

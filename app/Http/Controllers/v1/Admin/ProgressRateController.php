@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProgressRateCheckList;
 use App\Models\UserMeta;
 use App\Repositories\DefectRepository;
 use App\Repositories\DistrictRepository;
+use App\Repositories\ProgressRateCheckListRepository;
 use App\Repositories\ProgressRateRepository;
 use App\Repositories\RegionRepository;
 use App\Repositories\SchoolRepository;
@@ -15,11 +17,45 @@ use Illuminate\Http\Request;
 class ProgressRateController extends Controller
 {
     private $progressRateRepository;
+    private $progressRateCheckListRepository;
 
     public function __construct(
-        ProgressRateRepository $progressRateRepository
-    ) {
+        ProgressRateRepository $progressRateRepository,
+        ProgressRateCheckListRepository $progressRateCheckListRepository
+    )
+    {
         $this->progressRateRepository = $progressRateRepository;
+        $this->progressRateCheckListRepository = $progressRateCheckListRepository;
+    }
+
+    public function checkList()
+    {
+        $checkList = $this->progressRateCheckListRepository->with(['region', 'district', 'school'])->all()->toArray();
+        $list = [];
+
+        foreach ($checkList as $item) {
+            $list[] = [
+                'id' => $item['id'],
+                'region' => $item['region']['name'],
+                'district' => $item['district']['name'],
+                'school' => $item['school']['name'],
+                'teacher_computer' => $item['teacher_computer'],
+                'student_computer' => $item['student_computer'],
+                'quantity_teacher_desk' => $item['quantity_teacher_desk'],
+                'quantity_student_desk' => $item['quantity_student_desk'],
+                'size_ecc_length' => $item['size_ecc_length'],
+                'size_ecc_width' => $item['size_ecc_width'],
+                'power_socket_l' => $item['power_socket_l'],
+                'power_socket_r' => $item['power_socket_r'],
+                'power_socket_f' => $item['power_socket_f'],
+                'power_socket_b' => $item['power_socket_b'],
+                'circuit_breaker' => $item['circuit_breaker'],
+                'internet' => $item['internet'],
+                'remark' => $item['remark']
+            ];
+        }
+
+        return responseData(true, ['list' => $list]);
     }
 
     public function detail()
@@ -27,9 +63,9 @@ class ProgressRateController extends Controller
         $details = $this->progressRateRepository->with(['region', 'district', 'school'])->all()->toArray();
         $list = [];
 
-        foreach($details as $item) {
+        foreach ($details as $item) {
             $installedQuantityEcc = empty($item['mac']) ? 0 : 1;
-            $installedQuantityPc = ($item['teacher_computer'] + $item['student_computer']) * $installedQuantityEcc;
+            $installedQuantityPc = ((int)$item['teacher_computer'] + (int)$item['student_computer']) * $installedQuantityEcc;
             $list[] = [
                 'id' => $item['id'],
                 'region' => $item['region']['name'],
@@ -68,51 +104,16 @@ class ProgressRateController extends Controller
         $oac = 0;
         $mac = 0;
         $warranty_completion = 0;
+        $installed_quantity_pc = 0;
 
-        foreach($details as $item) {
+        foreach ($details as $item) {
             /*$installedQuantityEcc = empty($item['mac']) ? 0 : 1;
             $installedQuantityPc = ($item['teacher_computer'] + $item['student_computer']) * $installedQuantityEcc;*/
-            if($region == '') {
+            if ($region == '') {
                 $region = $item['region']['name'];
             }
 
-            if(!empty($item['teacher_computer'])) {
-                $teachersComputer++;
-            }
-
-            if(!empty($item['student_computer'])) {
-                $studentComputer++;
-            }
-
-            if(!empty($item['survey'])) {
-                $survey++;
-            }
-
-            if(!empty($item['out_wh'])) {
-                $outWh++;
-            }
-
-            if(!empty($item['site_arrival_inspection'])) {
-                $site_arrival_inspection++;
-            }
-
-            if(!empty($item['oat_training'])) {
-                $oat_training++;
-            }
-
-            if(!empty($item['oac'])) {
-                $oac++;
-            }
-
-            if(!empty($item['mac'])) {
-                $mac++;
-            }
-
-            if(!empty($item['warranty_completion'])) {
-                $warranty_completion++;
-            }
-
-            if($region != $item['region']['name']) {
+            if ($region != $item['region']['name']) {
                 $list[] = [
                     'id' => $item['region']['id'],
                     'region' => $region,
@@ -126,10 +127,10 @@ class ProgressRateController extends Controller
                     'oac' => $oac,
                     'mac' => $mac,
                     'warranty_completion' => $warranty_completion,
-                    'installed_quantity_ecc' => '',
-                    'installed_quantity_pc' => '',
-                    'progress_rate_ecc' => (round($mac/$teachersComputer * 100) / 100) . '%',
-                    'progress_rate_pc' => (round($mac/$teachersComputer * 100) / 100) . '%'
+                    'installed_quantity_ecc' => $mac,
+                    'installed_quantity_pc' => $installed_quantity_pc,
+                    'progress_rate_ecc' => (round($mac / $teachersComputer * 10000) / 100) . '%',
+                    'progress_rate_pc' => (round($installed_quantity_pc / ($teachersComputer + $studentComputer) * 10000) / 100) . '%'
                 ];
 
                 $teachersComputer = 0;
@@ -141,7 +142,48 @@ class ProgressRateController extends Controller
                 $oac = 0;
                 $mac = 0;
                 $warranty_completion = 0;
+                $installed_quantity_pc = 0;
                 $region = $item['region']['name'];
+            }
+
+            if (!empty($item['teacher_computer'])) {
+                $teachersComputer += (int)$item['teacher_computer'];
+            }
+
+            if (!empty($item['student_computer'])) {
+                $studentComputer += (int)$item['student_computer'];
+            }
+
+            if (!empty($item['teacher_computer']) && !empty($item['student_computer']) && !empty($item['mac'])) {
+                $installed_quantity_pc += $item['teacher_computer'] + $item['student_computer'];
+            }
+
+            if (!empty($item['survey'])) {
+                $survey++;
+            }
+
+            if (!empty($item['out_wh'])) {
+                $outWh++;
+            }
+
+            if (!empty($item['site_arrival_inspection'])) {
+                $site_arrival_inspection++;
+            }
+
+            if (!empty($item['oat_training'])) {
+                $oat_training++;
+            }
+
+            if (!empty($item['oac'])) {
+                $oac++;
+            }
+
+            if (!empty($item['mac'])) {
+                $mac++;
+            }
+
+            if (!empty($item['warranty_completion'])) {
+                $warranty_completion++;
             }
         }
 
@@ -152,7 +194,7 @@ class ProgressRateController extends Controller
     {
         $data = $request->only(['id', 'key', 'val']);
 
-        if(count($data) == 3) {
+        if (count($data) == 3) {
             $item = $this->progressRateRepository->find($data['id']);
 
             switch ($data['key']) {
@@ -212,6 +254,92 @@ class ProgressRateController extends Controller
                     break;
                 case 'warranty_completion':
                     $item->warranty_completion = $data['val'];
+                    $item->save();
+                    break;
+                case 'remark':
+                    $item->remark = $data['val'];
+                    $item->save();
+                    break;
+            }
+        }
+
+        return responseData(true);
+    }
+
+    public function changeFieldCheckList(Request $request)
+    {
+        $data = $request->only(['id', 'key', 'val']);
+
+        if (count($data) == 3) {
+            $item = $this->progressRateCheckListRepository->find($data['id']);
+
+            switch ($data['key']) {
+                case 'region':
+                    $regionRepository = app(RegionRepository::class);
+                    $region = $regionRepository->find($item->region_id);
+                    $region->name = $data['val'];
+                    $region->save();
+                    break;
+                case 'district':
+                    $districtRepository = app(DistrictRepository::class);
+                    $district = $districtRepository->find($item->district_id);
+                    $district->name = $data['val'];
+                    $district->save();
+                    break;
+                case 'school':
+                    $schoolRepository = app(SchoolRepository::class);
+                    $school = $schoolRepository->find($item->school_id);
+                    $school->name = $data['val'];
+                    $school->save();
+                    break;
+                case 'teacher_computer':
+                    $item->teacher_computer = $data['val'];
+                    $item->save();
+                    break;
+                case 'student_computer':
+                    $item->student_computer = $data['val'];
+                    $item->save();
+                    break;
+
+
+                case 'quantity_teacher_desk':
+                    $item->quantity_teacher_desk = $data['val'];
+                    $item->save();
+                    break;
+                case 'quantity_student_desk':
+                    $item->quantity_student_desk = $data['val'];
+                    $item->save();
+                    break;
+                case 'size_ecc_length':
+                    $item->size_ecc_length = $data['val'];
+                    $item->save();
+                    break;
+                case 'size_ecc_width':
+                    $item->size_ecc_width = $data['val'];
+                    $item->save();
+                    break;
+                case 'power_socket_l':
+                    $item->power_socket_l = $data['val'];
+                    $item->save();
+                    break;
+                case 'power_socket_r':
+                    $item->power_socket_r = $data['val'];
+                    $item->save();
+                    break;
+                case 'power_socket_f':
+                    $item->power_socket_f = $data['val'];
+                    $item->save();
+                    break;
+                case 'power_socket_b':
+                    $item->power_socket_b = $data['val'];
+                    $item->save();
+                    break;
+                case 'circuit_breaker':
+                    $item->circuit_breaker = $data['val'];
+                    $item->save();
+                    break;
+                case 'internet':
+                    $item->internet = $data['val'];
                     $item->save();
                     break;
                 case 'remark':

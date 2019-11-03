@@ -12,13 +12,16 @@ export default class Service {
         //
     }
 
-    init() {
+    init(text) {
         this.loading(true);
+        !text && app.openMessage('Loading');
         http(api.list)
             .send()
             .then(response => {
                 logger.info('defect.list', response);
                 store.commit('defect/changeList', response.data.list);
+                text && app.openMessage(text);
+                !text && app.openMessage('Loaded');
             })
             .catch(error => {
                 logger.error('goods.list', error);
@@ -31,12 +34,12 @@ export default class Service {
 
     changeField(id, key, val) {
         this.loading(true);
+        app.openMessage('Saving');
         http(api.changeField)
             .callback(id, key, val)
             .send()
             .then(response => {
-                this.init();
-                app.openMessage('Updated');
+                this.init('Updated');
             })
             .catch(error => {
                 logger.error('defect.changeField', error);
@@ -50,6 +53,7 @@ export default class Service {
     submit(files, callback) {
         logger.info('submitted', files[0]);
         this.loading(true);
+        app.openMessage('Uploading');
         http(api.submit)
             .callback(files[0])
             .send()

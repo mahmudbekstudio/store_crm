@@ -20,6 +20,21 @@ const api = {
         },
         token: true
     },
+    checkList: {
+        ...Route.admin('progressrate.check-list'),
+        token: true
+    },
+    changeFieldCheckList: {
+        ...Route.admin('progressrate.change-field-check-list'),
+        callback: function (id, key, val) {
+            this.data({
+                id,
+                key,
+                val
+            });
+        },
+        token: true
+    },
     submit: {
         ...Route.admin('import.progressrate'),
         callback: function (file) {

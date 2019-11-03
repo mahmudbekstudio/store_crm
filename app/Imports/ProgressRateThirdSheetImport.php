@@ -2,15 +2,15 @@
 
 namespace App\Imports;
 
-use App\Models\ProgressRate;
+use App\Models\ProgressRateCheckList;
 use App\Repositories\DistrictRepository;
-use App\Repositories\ProgressRateRepository;
+use App\Repositories\ProgressRateCheckListRepository;
 use App\Repositories\RegionRepository;
 use App\Repositories\SchoolRepository;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
-class ProgressRateSecondSheetImport implements ToCollection
+class ProgressRateThirdSheetImport implements ToCollection
 {
     public function collection(Collection $rows)
     {
@@ -22,10 +22,10 @@ class ProgressRateSecondSheetImport implements ToCollection
         $regionRepository = app(RegionRepository::class);
         $districtRepository = app(DistrictRepository::class);
         $schoolRepository = app(SchoolRepository::class);
-        $progressRateRepository = app(ProgressRateRepository::class);
+        $progressRateCheckListRepository = app(ProgressRateCheckListRepository::class);
         $lastDistrict = '';
 
-        ProgressRate::where('id', 'like', '%%')->delete();
+        ProgressRateCheckList::where('id', 'like', '%%')->delete();
 
         for($i = 4; $i < $rowsCount; $i++) {
             $item = $rows[$i]->toArray();
@@ -48,24 +48,24 @@ class ProgressRateSecondSheetImport implements ToCollection
             //school_id
             $school = $schoolRepository->firstOrCreate(['district_id' => $district->id, 'name' => $item[2]]);
 
-            $progressRateRepository->create([
+            $progressRateCheckListRepository->create([
                 'user_id' => auth()->user()->id,
                 'region_id' => $region->id,
                 'district_id' => $district->id,
                 'school_id' => $school->id,
                 'teacher_computer' => $item[3] ?? '',
                 'student_computer' => $item[4] ?? '',
-                'survey' => $item[5] ?? '',
-                'out_wh' => $item[6] ?? '',
-                'site_arrival_inspection' => $item[7] ?? '',
-                'installation' => $item[8] ?? '',
-                'oat_training' => $item[9] ?? '',
-                'oac' => $item[10] ?? '',
-                'mac' => $item[11] ?? '',
-                'warranty_completion' => $item[12] ?? '',
-                //- installed_quantity_ecc
-                //- installed_quantity_pc
-                'remark' => $item[15] ?? ''
+                'quantity_teacher_desk' => $item[5] ?? '',
+                'quantity_student_desk' => $item[6] ?? '',
+                'size_ecc_length' => $item[7] ?? '',
+                'size_ecc_width' => $item[8] ?? '',
+                'power_socket_l' => $item[9] ?? '',
+                'power_socket_r' => $item[10] ?? '',
+                'power_socket_f' => $item[11] ?? '',
+                'power_socket_b' => $item[12] ?? '',
+                'circuit_breaker' => $item[13] ?? '',
+                'internet' => $item[14] ?? '',
+                'remark' => $item[15] ?? '',
             ]);
         }
     }
