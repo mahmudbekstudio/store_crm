@@ -10,6 +10,7 @@ import userRoute from './user/route';
 import errorRoute from './error/route';
 import defectRoute from './defect/route';
 import progressRateRoute from './progressrate/route';
+import stockRoute from './stock/route';
 
 const routes = [
     {path: '/', redirect: {name: viewConfig.page.default}},
@@ -22,6 +23,7 @@ const routes = [
     goodsRoute,
     defectRoute,
     progressRateRoute,
+    stockRoute,
     userRoute,
     errorRoute,
     {path: '*', redirect: {name: viewConfig.page.notFound}}

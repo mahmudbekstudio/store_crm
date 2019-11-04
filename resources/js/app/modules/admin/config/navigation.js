@@ -7,8 +7,9 @@ export default {
         {text: 'Category', icon: 'mdi-laptop', route: {name: 'category.list'}},
         {text: 'Goods', icon: 'mdi-laptop', route: {name: 'goods.list'}},*/
         {text: 'User', icon: 'mdi-account-supervisor-outline', route: {name: 'user.list'}},
-        {text: 'Defects', icon: 'mdi-account-supervisor-outline', route: {name: 'defect'}},
-        {text: 'Progress rate', icon: 'mdi-account-supervisor-outline', route: {name: 'progressrate.list'}},
+        {text: 'Defects', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},
+        {text: 'Progress rate', icon: 'mdi-progress-check', route: {name: 'progressrate.list'}},
+        {text: 'Stock', icon: 'mdi-inbox-multiple', route: {name: 'stock.list'}},
         /*{ divider: true },
         { heading: 'Labels' },
         {text: 'Users', icon: 'mdi-account-group-outline', route: {name: 'admin.user'}},

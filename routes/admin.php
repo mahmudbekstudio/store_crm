@@ -102,8 +102,18 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
         Route::get('params', 'UserController@params')->name('params');*/
     });
 
+    Route::group(['prefix' => 'stock', 'as' => 'stock.'], function() {
+        Route::get('list', 'StockController@list')->name('list');
+        /*Route::get('detail', 'ProgressRateController@detail')->name('detail');
+        Route::put('change-field', 'ProgressRateController@changeField')->name('change-field');
+
+        Route::get('check-list', 'ProgressRateController@checkList')->name('check-list');
+        Route::put('change-field-check-list', 'ProgressRateController@changeFieldCheckList')->name('change-field-check-list');*/
+    });
+
     Route::group(['prefix' => 'import', 'as' => 'import.'], function() {
         Route::post('defect', 'ImportController@defect')->name('defect');
         Route::post('progressrate', 'ImportController@progressRate')->name('progressrate');
+        Route::post('stock', 'ImportController@stock')->name('stock');
     });
 });

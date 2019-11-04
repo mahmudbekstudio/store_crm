@@ -18,6 +18,7 @@ class CreateGoodsTable extends Migration
             $table->unsignedBigInteger('user_id')->default(0);
             $table->unsignedBigInteger('goods_category_id')->default(0);
             $table->string('name');
+            $table->string('unit')->default('');
             $table->timestamps();
 
             $table->index('name');
