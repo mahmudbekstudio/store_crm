@@ -1,6 +1,16 @@
 <template>
     <PageBox class="module-progressrate">
         <p>
+            <v-btn color="default" :to="{ name: 'stock.list'}">Summary</v-btn>
+            <v-btn color="primary" :to="{ name: 'stock.detail1'}">W/H 1</v-btn>
+            <v-btn color="primary" :to="{ name: 'stock.detail2'}">W/H 2</v-btn>
+            <v-btn color="primary" :to="{ name: 'stock.detail3'}">W/H 3</v-btn>
+            <v-btn color="primary" :to="{ name: 'stock.detail4'}">W/H 4</v-btn>
+            <v-btn color="primary" :to="{ name: 'stock.detail5'}">W/H 5</v-btn>
+            <v-btn color="primary" :to="{ name: 'stock.detail6'}">W/H 6</v-btn>
+            <v-btn color="primary" :to="{ name: 'stock.detail7'}">W/H 7</v-btn>
+        </p>
+        <p>
             <File v-model="files" :extList="extensions"></File>
             <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading"
                    :loading="isLoading">{{ $t('progressrate.submit') }}

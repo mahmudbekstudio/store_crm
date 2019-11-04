@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\GoodsRepository;
 use App\Repositories\StockRepository;
 use Illuminate\Http\Request;
 
@@ -104,9 +105,9 @@ class StockController extends Controller
         return responseData(true, ['list' => $list]);
     }
 
-    public function details()
+    public function details($id)
     {
-        $stocks = $this->stockRepository->with(['goods'])->all()->toArray();
+        $stocks = $this->stockRepository->with(['goods'])->findWhere(['wh_no' => $id])->toArray();
         $list = [];
         $columns = [];
         $columns['in'] = [];
@@ -130,14 +131,71 @@ class StockController extends Controller
             ];
         }
 
+        $k = 0;
         foreach ($stocks as $item) {
-            $list[] = [
-                'id' => $stocks['id'],
-                'item',
-                'unit'
+            $inObj = json_decode($item['in_obj']);
+            $outObj = json_decode($item['out_obj']);
+            $list[$k] = [
+                'id' => $item['id'],
+                'item' => $item['goods']['name'],
+                'unit' => $item['goods']['unit'],
             ];
+
+            foreach($inObj as $key => $subItem) {
+                $list[$k]['in_column_' . $key] = $subItem->value ?? '';
+            }
+
+            $list[$k]['total_a'] = $item['in_total'] ?? 0;
+
+            foreach($outObj as $key => $subItem) {
+                $list[$k]['out_column_' . $key] = $subItem->value ?? '';
+            }
+
+            $list[$k]['total_b'] = $item['out_total'] ?? 0;
+            $list[$k]['total_ab'] = $list[$k]['total_a'] - $list[$k]['total_b'];
+            $list[$k]['remark'] = $item['remark'] ?? '';
+            $k++;
         }
 
         return responseData(true, ['list' => $list, 'columns' => $columns]);
+    }
+
+    public function changeField(Request $request)
+    {
+        $data = $request->only(['id', 'key', 'val']);
+
+        if (count($data) == 3) {
+            $item = $this->stockRepository->find($data['id']);
+
+            switch ($data['key']) {
+                case 'item':
+                    $regionRepository = app(GoodsRepository::class);
+                    $goods = $regionRepository->find($item->goods_id);
+                    $goods->name = $data['val'];
+                    $goods->save();
+                    break;
+                case 'unit':
+                    $districtRepository = app(GoodsRepository::class);
+                    $goods = $districtRepository->find($item->goods_id);
+                    $goods->unit = $data['val'];
+                    $goods->save();
+                    break;
+
+                case 'total_a':
+                    $item->total_a = $data['val'];
+                    $item->save();
+                    break;
+                case 'total_b':
+                    $item->total_b = $data['val'];
+                    $item->save();
+                    break;
+                case 'remark':
+                    $item->remark = $data['val'];
+                    $item->save();
+                    break;
+            }
+        }
+
+        return responseData(true);
     }
 }

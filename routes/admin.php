@@ -104,10 +104,10 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
 
     Route::group(['prefix' => 'stock', 'as' => 'stock.'], function() {
         Route::get('list', 'StockController@list')->name('list');
-        /*Route::get('detail', 'ProgressRateController@detail')->name('detail');
-        Route::put('change-field', 'ProgressRateController@changeField')->name('change-field');
+        Route::get('detail/{id}', 'StockController@details')->name('detail');
+        Route::put('change-field', 'StockController@changeField')->name('change-field');
 
-        Route::get('check-list', 'ProgressRateController@checkList')->name('check-list');
+        /*Route::get('check-list', 'ProgressRateController@checkList')->name('check-list');
         Route::put('change-field-check-list', 'ProgressRateController@changeFieldCheckList')->name('change-field-check-list');*/
     });
 

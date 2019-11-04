@@ -7,7 +7,15 @@ store.registerModule('stock', {
         submitDisabled: true,
         isLoading: false,
         list: [],
+        detail: [],
         errors: '',
+        detailFilter: {
+            item: {list: [], value: 'All'},
+            unit: {list: [], value: 'All'},
+            total_a: {list: [], value: 'All'},
+            total_b: {list: [], value: 'All'},
+            total_ab: {list: [], value: 'All'},
+        },
         filter: {
             item: {list: [], value: 'All'},
             unit: {list: [], value: 'All'},
@@ -78,6 +86,36 @@ store.registerModule('stock', {
             }
             state.list = list;
         },
+        changeDetail(state, list) {
+            for (let i = 0; i < list.length; i++) {
+                if (state.detailFilter.item.list.indexOf(list[i]['item']) === -1) {
+                    state.detailFilter.item.list.push(list[i]['item']);
+                }
+
+                if (state.detailFilter.unit.list.indexOf(list[i]['unit']) === -1) {
+                    state.detailFilter.unit.list.push(list[i]['unit']);
+                }
+
+                if (state.detailFilter.total_a.list.indexOf(list[i]['total_a']) === -1) {
+                    state.detailFilter.total_a.list.push(list[i]['total_a']);
+                }
+
+                if (state.detailFilter.total_b.list.indexOf(list[i]['total_b']) === -1) {
+                    state.detailFilter.total_b.list.push(list[i]['total_b']);
+                }
+
+                if (state.detailFilter.total_ab.list.indexOf(list[i]['total_ab']) === -1) {
+                    state.detailFilter.total_ab.list.push(list[i]['total_ab']);
+                }
+            }
+
+            state.detailFilter.item.list.sort();
+            state.detailFilter.unit.list.sort();
+            state.detailFilter.total_a.list.sort((a, b) => parseFloat(a) > parseFloat(b));
+            state.detailFilter.total_b.list.sort((a, b) => parseFloat(a) > parseFloat(b));
+            state.detailFilter.total_ab.list.sort((a, b) => parseFloat(a) > parseFloat(b));
+            state.detail = list;
+        },
         changeErrors(state, errors) {
             state.errors = errors;
         },
@@ -90,6 +128,14 @@ store.registerModule('stock', {
         resetFilter(state) {
             for (let key in state.filter) {
                 state.filter[key].value = 'All';
+            }
+        },
+        changeDetailFilter(state, val) {
+            state.detailFilter = val;
+        },
+        resetDetailFilter(state) {
+            for (let key in state.filter) {
+                state.detailFilter[key].value = 'All';
             }
         },
     },

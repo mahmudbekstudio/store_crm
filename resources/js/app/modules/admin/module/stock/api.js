@@ -5,12 +5,15 @@ const api = {
         ...Route.admin('stock.list'),
         token: true
     },
-    /*detail: {
-        ...Route.admin('progressrate.detail'),
+    detail: {
+        ...Route.admin('stock.detail'),
+        callback: function(id) {
+            this.urlParam('{id}', id);
+        },
         token: true
     },
     changeField: {
-        ...Route.admin('progressrate.change-field'),
+        ...Route.admin('stock.change-field'),
         callback: function (id, key, val) {
             this.data({
                 id,
@@ -19,7 +22,7 @@ const api = {
             });
         },
         token: true
-    },*/
+    },
     submit: {
         ...Route.admin('import.stock'),
         callback: function (file) {

@@ -35,7 +35,32 @@ export default class Service {
             });
     }
 
-    /*changeField(id, key, val, isDetail) {
+    detailInit(id, text, callback) {
+        this.loading(true);
+        !text && app.openMessage('Loading');
+        http(api.detail)
+            .callback(id)
+            .send()
+            .then(response => {
+                if (typeof callback === 'function') {
+                    callback(response.data.columns);
+                }
+                logger.info('stock.detail', response);
+                store.commit('stock/changeDetail', response.data.list);
+                text && app.openMessage(text);
+                !text && app.openMessage('Loaded');
+            })
+            .catch(error => {
+                logger.error('stock.detail', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                this.loading(false);
+            });
+    }
+
+    changeFieldDetail(id, key, val, isDetail, no) {
+        console.log(id, key, val);
         this.loading(true);
         app.openMessage('Saving');
         http(api.changeField)
@@ -43,28 +68,32 @@ export default class Service {
             .send()
             .then(response => {
                 if (isDetail) {
-                    this.detailInit('Updated');
+                    this.detailInit(no, 'Updated');
                 } else {
                     this.init('Updated');
                 }
             })
             .catch(error => {
-                logger.error('defect.changeField', error);
+                logger.error('stock.changeField', error);
                 app.errorMessage('Error');
             })
             .then(() => {
                 this.loading(false);
             });
-    }*/
+    }
 
-    submit(files, callback, isDetail) {
+    submit(files, callback, isDetail, id) {
         logger.info('submitted', files[0]);
         this.loading(true);
         http(api.submit)
             .callback(files[0])
             .send()
             .then(response => {
-                this.init();
+                if(isDetail) {
+                    this.detailInit(id);
+                } else {
+                    this.init();
+                }
                 if (typeof callback === 'function') {
                     callback();
                 }
