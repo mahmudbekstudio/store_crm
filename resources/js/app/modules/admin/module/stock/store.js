@@ -9,23 +9,38 @@ store.registerModule('stock', {
         list: [],
         errors: '',
         filter: {
-            /*region: {list: [], value: 'All'},
-            district: {list: [], value: 'All'},
-            school: {list: [], value: 'All'},
-            teacher_computer: {list: [], value: 'All'},
-            student_computer: {list: [], value: 'All'},
+            item: {list: [], value: 'All'},
+            unit: {list: [], value: 'All'},
 
-            survey: {list: [], value: 'All'},
-            out_wh: {list: [], value: 'All'},
-            site_arrival_inspection: {list: [], value: 'All'},
-            installation: {list: [], value: 'All'},
-            oat_training: {list: [], value: 'All'},
+            wh_01_in: {list: [], value: 'All'},
+            wh_01_out: {list: [], value: 'All'},
+            wh_01_total_ab: {list: [], value: 'All'},
 
-            oac: {list: [], value: 'All'},
-            mac: {list: [], value: 'All'},
-            warranty_completion: {list: [], value: 'All'},
-            installed_quantity_ecc: {list: [], value: 'All'},
-            installed_quantity_pc: {list: [], value: 'All'},*/
+            wh_02_in: {list: [], value: 'All'},
+            wh_02_out: {list: [], value: 'All'},
+            wh_02_total_ab: {list: [], value: 'All'},
+
+            wh_03_in: {list: [], value: 'All'},
+            wh_03_out: {list: [], value: 'All'},
+            wh_03_total_ab: {list: [], value: 'All'},
+
+            wh_04_in: {list: [], value: 'All'},
+            wh_04_out: {list: [], value: 'All'},
+            wh_04_total_ab: {list: [], value: 'All'},
+
+            wh_05_in: {list: [], value: 'All'},
+            wh_05_out: {list: [], value: 'All'},
+            wh_05_total_ab: {list: [], value: 'All'},
+
+            wh_06_in: {list: [], value: 'All'},
+            wh_06_out: {list: [], value: 'All'},
+            wh_06_total_ab: {list: [], value: 'All'},
+
+            wh_07_in: {list: [], value: 'All'},
+            wh_07_out: {list: [], value: 'All'},
+            wh_07_total_ab: {list: [], value: 'All'},
+
+            total_stock: {list: [], value: 'All'},
         }
     },
 
@@ -35,65 +50,31 @@ store.registerModule('stock', {
         },
         changeList(state, list) {
             for (let i = 0; i < list.length; i++) {
-                /*if (state.filterMain.region.list.indexOf(list[i]['region']) === -1) {
-                    state.filterMain.region.list.push(list[i]['region']);
+                if (state.filter.item.list.indexOf(list[i]['item']) === -1) {
+                    state.filter.item.list.push(list[i]['item']);
                 }
 
-                if (state.filterMain.teacher_computer.list.indexOf(list[i]['teacher_computer']) === -1) {
-                    state.filterMain.teacher_computer.list.push(list[i]['teacher_computer']);
+                if (state.filter.unit.list.indexOf(list[i]['unit']) === -1) {
+                    state.filter.unit.list.push(list[i]['unit']);
                 }
 
-                if (state.filterMain.student_computer.list.indexOf(list[i]['student_computer']) === -1) {
-                    state.filterMain.student_computer.list.push(list[i]['student_computer']);
+                for(let i = 1; i <= 7; i++) {
+                    if (state.filter['wh_0' + i + '_in'].list.indexOf(list[i]['wh_0' + i + '_in']) === -1) {
+                        state.filter['wh_0' + i + '_in'].list.push(list[i]['wh_0' + i + '_in']);
+                    }
+
+                    if (state.filter['wh_0' + i + '_out'].list.indexOf(list[i]['wh_0' + i + '_out']) === -1) {
+                        state.filter['wh_0' + i + '_out'].list.push(list[i]['wh_0' + i + '_out']);
+                    }
+
+                    if (state.filter['wh_0' + i + '_total_ab'].list.indexOf(list[i]['wh_0' + i + '_total_ab']) === -1) {
+                        state.filter['wh_0' + i + '_total_ab'].list.push(list[i]['wh_0' + i + '_total_ab']);
+                    }
                 }
 
-                if (state.filterMain.total_pc.list.indexOf(list[i]['total_pc']) === -1) {
-                    state.filterMain.total_pc.list.push(list[i]['total_pc']);
+                if (state.filter.total_stock.list.indexOf(list[i]['total_stock']) === -1) {
+                    state.filter.total_stock.list.push(list[i]['total_stock']);
                 }
-
-                if (state.filterMain.survey.list.indexOf(list[i]['survey']) === -1) {
-                    state.filterMain.survey.list.push(list[i]['survey']);
-                }
-
-                if (state.filterMain.out_wh.list.indexOf(list[i]['out_wh']) === -1) {
-                    state.filterMain.out_wh.list.push(list[i]['out_wh']);
-                }
-
-                if (state.filterMain.site_arrival_inspection.list.indexOf(list[i]['site_arrival_inspection']) === -1) {
-                    state.filterMain.site_arrival_inspection.list.push(list[i]['site_arrival_inspection']);
-                }
-
-                if (state.filterMain.oat_training.list.indexOf(list[i]['oat_training']) === -1) {
-                    state.filterMain.oat_training.list.push(list[i]['oat_training']);
-                }
-
-                if (state.filterMain.oac.list.indexOf(list[i]['oac']) === -1) {
-                    state.filterMain.oac.list.push(list[i]['oac']);
-                }
-
-                if (state.filterMain.mac.list.indexOf(list[i]['mac']) === -1) {
-                    state.filterMain.mac.list.push(list[i]['mac']);
-                }
-
-                if (state.filterMain.warranty_completion.list.indexOf(list[i]['warranty_completion']) === -1) {
-                    state.filterMain.warranty_completion.list.push(list[i]['warranty_completion']);
-                }
-
-                if (state.filterMain.installed_quantity_ecc.list.indexOf(list[i]['installed_quantity_ecc']) === -1) {
-                    state.filterMain.installed_quantity_ecc.list.push(list[i]['installed_quantity_ecc']);
-                }
-
-                if (state.filterMain.installed_quantity_pc.list.indexOf(list[i]['installed_quantity_pc']) === -1) {
-                    state.filterMain.installed_quantity_pc.list.push(list[i]['installed_quantity_pc']);
-                }
-
-                if (state.filterMain.progress_rate_ecc.list.indexOf(list[i]['progress_rate_ecc']) === -1) {
-                    state.filterMain.progress_rate_ecc.list.push(list[i]['progress_rate_ecc']);
-                }
-
-                if (state.filterMain.progress_rate_pc.list.indexOf(list[i]['progress_rate_pc']) === -1) {
-                    state.filterMain.progress_rate_pc.list.push(list[i]['progress_rate_pc']);
-                }*/
             }
             state.list = list;
         },

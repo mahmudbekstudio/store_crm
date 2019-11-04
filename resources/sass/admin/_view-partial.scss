@@ -43,13 +43,13 @@
 }
 
 .top-header {
-  background-image: url("/img/logo.jpg");
+  // background-image: url("/img/logo.jpg");
   background-size: auto 100%;
   background-position: center top;
 
 
   @media (max-width: 560px) {
-    background-image: url("/img/logo-small.jpg");
+    // background-image: url("/img/logo-small.jpg");
   }
 
 }
