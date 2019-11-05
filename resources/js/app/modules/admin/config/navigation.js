@@ -10,6 +10,7 @@ export default {
         {text: 'Defects', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},
         {text: 'Progress rate', icon: 'mdi-progress-check', route: {name: 'progressrate.list'}},
         {text: 'Stock', icon: 'mdi-inbox-multiple', route: {name: 'stock.list'}},
+        {text: 'Shipment progress', icon: 'mdi-progress-clock', route: {name: 'shipment-progress.list'}},
         /*{ divider: true },
         { heading: 'Labels' },
         {text: 'Users', icon: 'mdi-account-group-outline', route: {name: 'admin.user'}},

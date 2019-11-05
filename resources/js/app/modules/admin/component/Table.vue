@@ -4,6 +4,7 @@
             :headers="headers"
 
             class="elevation-1"
+            :items-per-page="5"
 
             @click:row="clickRow"
             @current-items="currentItems"

@@ -137,6 +137,7 @@
                 :headers="headers"
                 :items="items"
                 class="elevation-1"
+                :items-per-page="5"
         >
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>

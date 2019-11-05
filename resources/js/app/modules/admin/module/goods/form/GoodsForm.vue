@@ -4,6 +4,7 @@
                 :headers="headers"
                 :items="desserts"
                 class="elevation-1"
+                :items-per-page="5"
         >
             <template v-slot:item.action="{ item }">
                 <v-icon

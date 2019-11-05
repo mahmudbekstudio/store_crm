@@ -111,9 +111,19 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
         Route::put('change-field-check-list', 'ProgressRateController@changeFieldCheckList')->name('change-field-check-list');*/
     });
 
+    Route::group(['prefix' => 'shipment-progress', 'as' => 'shipment-progress.'], function() {
+        Route::get('list/{id?}', 'ShipmentProgressController@list')->name('list');
+        //Route::get('detail/{id}', 'StockController@details')->name('detail');
+        //Route::put('change-field', 'StockController@changeField')->name('change-field');
+
+        /*Route::get('check-list', 'ProgressRateController@checkList')->name('check-list');
+        Route::put('change-field-check-list', 'ProgressRateController@changeFieldCheckList')->name('change-field-check-list');*/
+    });
+
     Route::group(['prefix' => 'import', 'as' => 'import.'], function() {
         Route::post('defect', 'ImportController@defect')->name('defect');
         Route::post('progressrate', 'ImportController@progressRate')->name('progressrate');
         Route::post('stock', 'ImportController@stock')->name('stock');
+        Route::post('shipment-progress', 'ImportController@shipmentProgress')->name('shipment-progress');
     });
 });

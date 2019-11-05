@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1\Admin;
 use App\Http\Controllers\Controller;
 use App\Imports\DefectImport;
 use App\Imports\ProgressRateImport;
+use App\Imports\ShipmentProgressImport;
 use App\Imports\StockImport;
 use App\Models\Region;
 use Illuminate\Http\Request;
@@ -29,6 +30,12 @@ class ImportController extends Controller
     public function stock(Request $request)
     {
         Excel::import(new StockImport, request()->file('file'));
+        return responseData(true);
+    }
+
+    public function shipmentProgress(Request $request)
+    {
+        Excel::import(new ShipmentProgressImport, request()->file('file'));
         return responseData(true);
     }
 }

@@ -4,7 +4,7 @@
                 :headers="headers"
                 :items="items"
                 class="elevation-1"
-                hide-default-footer
+                :items-per-page="5"
         >
             <!--template v-slot:item.action="{ item }">
                 <v-icon
