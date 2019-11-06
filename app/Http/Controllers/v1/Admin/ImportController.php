@@ -35,7 +35,8 @@ class ImportController extends Controller
 
     public function shipmentProgress(Request $request)
     {
-        Excel::import(new ShipmentProgressImport, request()->file('file'));
+        $data = $request->only(['sheetNo']);
+        Excel::import(new ShipmentProgressImport($data['sheetNo']), request()->file('file'));
         return responseData(true);
     }
 }

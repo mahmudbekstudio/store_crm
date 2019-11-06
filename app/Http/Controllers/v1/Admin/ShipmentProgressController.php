@@ -22,6 +22,9 @@ class ShipmentProgressController extends Controller
         $shipmentProgress = $this->shipmentProgressRepository->with(['goods'])->findWhere(['sheet_no' => $id])->toArray();
         $list = [];
         $columns = [];
+        if(count($shipmentProgress) == 0) {
+            return responseData(true, ['list' => $list, 'columns' => $columns]);
+        }
         $shipment = json_decode($shipmentProgress[0]['shipment']);
 
         foreach($shipment as $key => $item) {
@@ -37,6 +40,7 @@ class ShipmentProgressController extends Controller
         $k = 0;
         foreach ($shipmentProgress as $item) {
             $list[$k] = [
+                'id' => $item['id'],
                 'num' => $item['num'],
                 'item' => $item['goods']['name'],
                 'unit' => $item['goods']['unit'],
@@ -51,26 +55,32 @@ class ShipmentProgressController extends Controller
                     $total += (int)$list[$k]['column_' . $item1->values[$subKey]->index];
 
                     if(empty($list[$k]['column_' . $item1->values[$subKey]->index])) {
-                        $list[$k]['column_' . $item1->values[$subKey]->index] = 'X';
+                        $list[$k]['column_' . $item1->values[$subKey]->index] = '';
                     }
                 }
             }
 
+            $contract = $item['contract'] ?? 0;
             $list[$k]['total'] = $total;
+            $list[$k]['balance'] = (int)$contract - (int)$total;
             $k++;
         }
 
         return responseData(true, ['list' => $list, 'columns' => $columns]);
     }
 
-    /*public function changeField(Request $request)
+    public function changeField(Request $request)
     {
         $data = $request->only(['id', 'key', 'val']);
 
         if (count($data) == 3) {
-            $item = $this->stockRepository->find($data['id']);
+            $item = $this->shipmentProgressRepository->find($data['id']);
 
             switch ($data['key']) {
+                case 'num':
+                    $item->tonumtal_a = $data['val'];
+                    $item->save();
+                    break;
                 case 'item':
                     $regionRepository = app(GoodsRepository::class);
                     $goods = $regionRepository->find($item->goods_id);
@@ -83,22 +93,36 @@ class ShipmentProgressController extends Controller
                     $goods->unit = $data['val'];
                     $goods->save();
                     break;
+                case 'contract':
+                    $item->contract = $data['val'];
+                    $item->save();
+                    break;
+            }
 
-                case 'total_a':
-                    $item->total_a = $data['val'];
-                    $item->save();
-                    break;
-                case 'total_b':
-                    $item->total_b = $data['val'];
-                    $item->save();
-                    break;
-                case 'remark':
-                    $item->remark = $data['val'];
-                    $item->save();
-                    break;
+            if(substr($data['key'], 0, 7) === 'column_') {
+                $shipment = json_decode($item->shipment);
+                $no = explode('_', $data['key'])[1];
+                $found = false;
+
+                foreach($shipment as $shipmentKey => $shipmentItem) {
+                    foreach($shipmentItem->values as $shipmentItemKey => $shipmentItemItem) {
+                        if($shipmentItemItem->index == $no) {
+                            $shipment{$shipmentKey}->values{$shipmentItemKey}->value = $data['val'];
+                            break;
+                            $found = true;
+                        }
+                    }
+
+                    if($found) {
+                        break;
+                    }
+                }
+
+                $item->shipment = json_encode($shipment);
+                $item->save();
             }
         }
 
         return responseData(true);
-    }*/
+    }
 }

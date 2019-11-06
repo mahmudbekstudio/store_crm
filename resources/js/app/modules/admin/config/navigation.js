@@ -1,16 +1,24 @@
 export default {
     admin: [
-        {text: 'Dashboard', icon: 'mdi-view-dashboard-outline', route: {name: 'dashboard'}},
+        {
+            icon: 'mdi-progress-clock',
+            text: 'Shipment Progress',
+            children: [
+                { text: 'PC', route: {name: 'shipment-progress.list'} },
+                { text: 'AVR', route: {name: 'shipment-progress.list2'} },
+            ],
+        }
+        // {text: 'Dashboard', icon: 'mdi-view-dashboard-outline', route: {name: 'dashboard'}},
         /*{text: 'Region', icon: 'mdi-city-variant-outline', route: {name: 'region.list'}},
         {text: 'District', icon: 'mdi-city-variant-outline', route: {name: 'district.list'}},
         {text: 'School', icon: 'mdi-school-outline', route: {name: 'school.list'}},
         {text: 'Category', icon: 'mdi-laptop', route: {name: 'category.list'}},
         {text: 'Goods', icon: 'mdi-laptop', route: {name: 'goods.list'}},*/
-        {text: 'User', icon: 'mdi-account-supervisor-outline', route: {name: 'user.list'}},
-        {text: 'Defects', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},
-        {text: 'Progress rate', icon: 'mdi-progress-check', route: {name: 'progressrate.list'}},
-        {text: 'Stock', icon: 'mdi-inbox-multiple', route: {name: 'stock.list'}},
-        {text: 'Shipment progress', icon: 'mdi-progress-clock', route: {name: 'shipment-progress.list'}},
+        // {text: 'User', icon: 'mdi-account-supervisor-outline', route: {name: 'user.list'}},
+        // {text: 'Defects', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},
+        // {text: 'Progress rate', icon: 'mdi-progress-check', route: {name: 'progressrate.list'}},
+        // {text: 'Stock', icon: 'mdi-inbox-multiple', route: {name: 'stock.list'}},
+        // {text: 'Shipment progress', icon: 'mdi-progress-clock', route: {name: 'shipment-progress.list'}},
         /*{ divider: true },
         { heading: 'Labels' },
         {text: 'Users', icon: 'mdi-account-group-outline', route: {name: 'admin.user'}},

@@ -9,6 +9,7 @@ store.registerModule('shipmentprogress', {
         list: [],
         errors: '',
         filter: {
+            num: {list: [], value: 'All'},
             item: {list: [], value: 'All'},
             unit: {list: [], value: 'All'},
         }

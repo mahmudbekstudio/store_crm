@@ -28,6 +28,7 @@ class ShipmentProgressSheetImport implements ToCollection
         $shipments = [];
         $shipmentK = -1;
         $lastShipment = '';
+        $lastColumn = '';
         for($i = 4; $i <= count($rows[3]); $i++) {
             if($rows[3][$i] === 'Total') break;
             if(!empty($rows[3][$i])) {
@@ -43,8 +44,10 @@ class ShipmentProgressSheetImport implements ToCollection
                 $shipments[$shipmentK]['values'] = [];
             }
 
-            $shipments[$shipmentK]['columns'][] = $rows[4][$i];
-            $shipments[$shipmentK]['dates'][] = !empty($rows[5][$i]) ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[5][$i])->getTimestamp()) : '';
+            $date = !empty($rows[5][$i]) ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[5][$i])->getTimestamp()) : '';
+            $shipments[$shipmentK]['dates'][] = $date;
+            $shipments[$shipmentK]['columns'][] = ($rows[4][$i] ?? $lastColumn) . ' ' . $date;
+            $lastColumn = $rows[4][$i];
             $shipments[$shipmentK]['values'][] = [
                 'value' => '',
                 'index' => $i

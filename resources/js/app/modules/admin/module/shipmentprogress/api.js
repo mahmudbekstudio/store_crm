@@ -14,9 +14,9 @@ const api = {
             this.urlParam('{id}', id);
         },
         token: true
-    },
+    },*/
     changeField: {
-        ...Route.admin('stock.change-field'),
+        ...Route.admin('shipment-progress.change-field'),
         callback: function (id, key, val) {
             this.data({
                 id,
@@ -25,12 +25,13 @@ const api = {
             });
         },
         token: true
-    },*/
+    },
     submit: {
         ...Route.admin('import.shipment-progress'),
-        callback: function (file) {
+        callback: function (file, sheetNo) {
             this.setFormData({
-                file: file
+                file: file,
+                sheetNo: sheetNo
             });
             this.headers({'Content-Type': 'multipart/form-data'});
         },

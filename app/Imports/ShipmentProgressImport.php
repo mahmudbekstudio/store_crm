@@ -6,11 +6,16 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class ShipmentProgressImport implements WithMultipleSheets
 {
+    private $sheetNo;
+    public function __construct($sheetNo)
+    {
+        $this->sheetNo = $sheetNo;
+    }
+
     public function sheets(): array
     {
         return [
-            new ShipmentProgressSheetImport(1),
-            new ShipmentProgressSheetImport(2)
+            new ShipmentProgressSheetImport($this->sheetNo)
         ];
     }
 }

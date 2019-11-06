@@ -36,7 +36,7 @@ export default class Service {
             });
     }
 
-    /*changeFieldDetail(id, key, val, isDetail, no) {
+    changeField(id, key, val, isDetail, no) {
         console.log(id, key, val);
         this.loading(true);
         app.openMessage('Saving');
@@ -44,11 +44,7 @@ export default class Service {
             .callback(id, key, val)
             .send()
             .then(response => {
-                if (isDetail) {
-                    this.detailInit(no, 'Updated');
-                } else {
-                    this.init('Updated');
-                }
+                this.init(no);
             })
             .catch(error => {
                 logger.error('stock.changeField', error);
@@ -57,20 +53,16 @@ export default class Service {
             .then(() => {
                 this.loading(false);
             });
-    }*/
+    }
 
-    submit(files, callback, isDetail, id) {
+    submit(files, callback, id) {
         logger.info('submitted', files[0]);
         this.loading(true);
         http(api.submit)
-            .callback(files[0])
+            .callback(files[0], id)
             .send()
             .then(response => {
-                if(isDetail) {
-                    this.detailInit(id);
-                } else {
-                    this.init();
-                }
+                this.init(id);
                 if (typeof callback === 'function') {
                     callback();
                 }

@@ -39,9 +39,10 @@
                 <v-list-group
                         v-else-if="item.children"
                         :key="i"
+                        :value="selectedItem.split('::')[0] == i"
                 >
                     <template v-slot:activator>
-                        <v-list-item class="test11">
+                        <v-list-item>
                             <v-list-item-action>
                                 <v-icon>{{ item.icon }}</v-icon>
                             </v-list-item-action>
@@ -55,7 +56,8 @@
                     <v-list-item
                             v-for="(child, k) in item.children"
                             :key="i + '::' + k"
-                            @click=""
+                            @click="clickItem(child, i + '::' + k)"
+                            :class="{'v-list-item--active': selectedItem == (i + '::' + k)}"
                     >
                         <v-list-item-action v-if="child.icon">
                             <v-icon>{{ child.icon }}</v-icon>
@@ -102,9 +104,17 @@
         created() {
             console.log(this.items);
             for(let i = 0; i < this.items.length; i++) {
-                if(this.$router.currentRoute.name === this.items[i].route.name) {
+                if(this.items[i].children && this.items[i].children.length) {
+                    for(let j = 0; j < this.items[i].children.length; j++) {
+                        if(this.items[i].children[j].route && this.$router.currentRoute.name === this.items[i].children[j].route.name) {
+                            this.selectedItem = i + '::' + j;
+                            return;
+                        }
+                    }
+                }
+                if(this.items[i].route && this.$router.currentRoute.name === this.items[i].route.name) {
                     this.selectedItem = i;
-                    break;
+                    return;
                 }
             }
         },
