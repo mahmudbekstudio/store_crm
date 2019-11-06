@@ -22,7 +22,8 @@ class ImportController extends Controller
 
     public function progressRate(Request $request)
     {
-        Excel::import(new ProgressRateImport, request()->file('file'));
+        $data = $request->only(['sheetNo']);
+        Excel::import(new ProgressRateImport($data['sheetNo']), request()->file('file'));
         //dd(request()->file('file'));
         return responseData(true);
     }

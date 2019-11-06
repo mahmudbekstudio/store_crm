@@ -20,12 +20,16 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class ProgressRateImport implements WithMultipleSheets
 {
+    private $sheetNo;
+    public function __construct($sheetNo)
+    {
+        $this->sheetNo = $sheetNo;
+    }
+
     public function sheets(): array
     {
         return [
-            null,
-            new ProgressRateSecondSheetImport(),
-            new ProgressRateThirdSheetImport()
+            $this->sheetNo === 'check-list' ? new ProgressRateThirdSheetImport() : new ProgressRateSecondSheetImport()
         ];
     }
 

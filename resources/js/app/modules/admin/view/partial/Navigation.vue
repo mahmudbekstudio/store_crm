@@ -39,7 +39,7 @@
                 <v-list-group
                         v-else-if="item.children"
                         :key="i"
-                        :value="selectedItem.split('::')[0] == i"
+                        :value="selectedItem.split('::').length && selectedItem.split('::')[0] == i"
                 >
                     <template v-slot:activator>
                         <v-list-item>
@@ -113,7 +113,7 @@
                     }
                 }
                 if(this.items[i].route && this.$router.currentRoute.name === this.items[i].route.name) {
-                    this.selectedItem = i;
+                    this.selectedItem = i + '';
                     return;
                 }
             }

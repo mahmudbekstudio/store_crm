@@ -37,9 +37,10 @@ const api = {
     },
     submit: {
         ...Route.admin('import.progressrate'),
-        callback: function (file) {
+        callback: function (file, sheetNo) {
             this.setFormData({
-                file: file
+                file: file,
+                sheetNo: sheetNo
             });
             this.headers({'Content-Type': 'multipart/form-data'});
         },
