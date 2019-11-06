@@ -1,10 +1,10 @@
 <template>
     <PageBox class="module-progressrate">
-        <p>
+        <!--p>
             <v-btn color="primary" :to="{ name: 'progressrate.list'}">List</v-btn>
             <v-btn color="default" :to="{ name: 'progressrate.detail'}">Detail</v-btn>
             <v-btn color="primary" :to="{ name: 'progressrate.checkList'}">Check list</v-btn>
-        </p>
+        </p-->
 
         <p>
             <File v-model="files" :extList="extensions"></File>

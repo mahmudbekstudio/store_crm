@@ -1,16 +1,16 @@
 <template>
     <PageBox class="module-progressrate">
-        <p>
+        <!--p>
             <v-btn color="default" :to="{ name: 'progressrate.list'}">List</v-btn>
             <v-btn color="primary" :to="{ name: 'progressrate.detail'}">Detail</v-btn>
             <v-btn color="primary" :to="{ name: 'progressrate.checkList'}">Check list</v-btn>
-        </p>
+        </p-->
 
         <p>
-            <File v-model="files" :extList="extensions"></File>
+            <!--File v-model="files" :extList="extensions"></File>
             <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading"
                    :loading="isLoading">{{ $t('progressrate.submit') }}
-            </v-btn>
+            </v-btn-->
             <v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn>
         </p>
 

@@ -141,7 +141,7 @@
                 if(item.route && this.$router.currentRoute.name !== item.route.name) {
                     this.$logger.info('navigation item clicked = ' + selectedKey, item);
                     this.$router.push(item.route);
-                    this.selectedItem = selectedKey;
+                    this.selectedItem = selectedKey + '';
                 }
             }
         }
