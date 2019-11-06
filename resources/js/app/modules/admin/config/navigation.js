@@ -26,6 +26,7 @@ export default {
                 { text: 'Progress in Details', route: {name: 'progressrate.detail'} },
             ],
         },
+        {text: 'Defect management', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},
         // {text: 'Dashboard', icon: 'mdi-view-dashboard-outline', route: {name: 'dashboard'}},
         /*{text: 'Region', icon: 'mdi-city-variant-outline', route: {name: 'region.list'}},
         {text: 'District', icon: 'mdi-city-variant-outline', route: {name: 'district.list'}},
