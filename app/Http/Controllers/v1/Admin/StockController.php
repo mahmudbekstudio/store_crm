@@ -23,15 +23,15 @@ class StockController extends Controller
         $goodsList = [];
 
         foreach ($stocks as $item) {
-            if(empty($goodsList[$item['goods_id']])) {
+            if (empty($goodsList[$item['goods_id']])) {
                 $goodsList[$item['goods_id']] = [];
             }
 
-            if(empty($goodsList[$item['goods_id']]['total'])) {
+            if (empty($goodsList[$item['goods_id']]['total'])) {
                 $goodsList[$item['goods_id']]['total'] = [];
             }
 
-            if(empty($goodsList[$item['goods_id']]['total'][$item['wh_no']])) {
+            if (empty($goodsList[$item['goods_id']]['total'][$item['wh_no']])) {
                 $goodsList[$item['goods_id']][$item['wh_no']] = [];
                 $goodsList[$item['goods_id']]['total'][$item['wh_no']]['in'] = 0;
                 $goodsList[$item['goods_id']]['total'][$item['wh_no']]['out'] = 0;
@@ -47,7 +47,7 @@ class StockController extends Controller
 
         $resList = [];
         $k = 0;
-        foreach($goodsList as $goodsId => $goods) {
+        foreach ($goodsList as $goodsId => $goods) {
             $k++;
             $resList[$goodsId] = [
                 'id' => $k,
@@ -55,7 +55,7 @@ class StockController extends Controller
                 'unit' => $goods['unit']
             ];
             $total = 0;
-            foreach($goods['total'] as $wh_no => $item) {
+            foreach ($goods['total'] as $wh_no => $item) {
                 $resList[$goodsId]['wh_0' . $wh_no . '_in'] = $item['in'];
                 $resList[$goodsId]['wh_0' . $wh_no . '_out'] = $item['out'];
                 $resList[$goodsId]['wh_0' . $wh_no . '_total_ab'] = $item['in'] - $item['out'];
@@ -65,7 +65,7 @@ class StockController extends Controller
             $resList[$goodsId]['total_stock'] = $total;
         }
 
-        foreach($resList as $item) {
+        foreach ($resList as $item) {
             $list[] = $item;
         }
 
@@ -110,22 +110,29 @@ class StockController extends Controller
         $stocks = $this->stockRepository->with(['goods'])->findWhere(['wh_no' => $id])->toArray();
         $list = [];
         $columns = [];
+
+        if (empty($stocks)) {
+            return responseData(true, ['list' => $list, 'columns' => $columns]);
+        }
+
         $columns['in'] = [];
         $columns['out'] = [];
-        $inObj = json_decode($stocks[0]['in_obj']);
-        $outObj = json_decode($stocks[0]['out_obj']);
+        $inObj = json_decode($stocks[0]['in_obj'], true);
+        $outObj = json_decode($stocks[0]['out_obj'], true);
 
-        foreach($inObj as $key => $item) {
+        foreach ($inObj as $key => $item) {
+            if(!isset($item['name'])) continue;
             $columns['in'][] = [
-                'text' => $item->name . ' ' . $item->date,
+                'text' => $item['name'] . ' ' . $item['date'],
                 'align' => 'center',
                 'value' => 'in_column_' . $key
             ];
         }
 
-        foreach($outObj as $key => $item) {
+        foreach ($outObj as $key => $item) {
+            if(!isset($item['name'])) continue;
             $columns['out'][] = [
-                'text' => $item->name . ' ' . $item->date,
+                'text' => $item['name'] . ' ' . $item['date'],
                 'align' => 'center',
                 'value' => 'out_column_' . $key
             ];
@@ -136,18 +143,19 @@ class StockController extends Controller
             $inObj = json_decode($item['in_obj']);
             $outObj = json_decode($item['out_obj']);
             $list[$k] = [
+                'no' => $k + 1,
                 'id' => $item['id'],
                 'item' => $item['goods']['name'],
                 'unit' => $item['goods']['unit'],
             ];
 
-            foreach($inObj as $key => $subItem) {
+            foreach ($inObj as $key => $subItem) {
                 $list[$k]['in_column_' . $key] = $subItem->value ?? '';
             }
 
             $list[$k]['total_a'] = $item['in_total'] ?? 0;
 
-            foreach($outObj as $key => $subItem) {
+            foreach ($outObj as $key => $subItem) {
                 $list[$k]['out_column_' . $key] = $subItem->value ?? '';
             }
 
@@ -182,17 +190,27 @@ class StockController extends Controller
                     break;
 
                 case 'total_a':
-                    $item->total_a = $data['val'];
+                    $item->in_total = $data['val'];
                     $item->save();
                     break;
                 case 'total_b':
-                    $item->total_b = $data['val'];
+                    $item->out_total = $data['val'];
                     $item->save();
                     break;
                 case 'remark':
                     $item->remark = $data['val'];
                     $item->save();
                     break;
+            }
+
+            if (substr($data['key'], 0, 10) === 'in_column_') {
+                $in_obj = json_decode($item->in_obj, true);
+                $keyArr = explode('_', $data['key']);
+                $no = $keyArr[count($keyArr) - 1];
+                $in_obj[$no]['value'] = $data['val'];
+
+                $item->in_obj = json_encode($in_obj);
+                $item->save();
             }
         }
 

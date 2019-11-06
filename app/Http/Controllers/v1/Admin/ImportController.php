@@ -29,7 +29,8 @@ class ImportController extends Controller
 
     public function stock(Request $request)
     {
-        Excel::import(new StockImport, request()->file('file'));
+        $data = $request->only(['sheetNo']);
+        Excel::import(new StockImport($data['sheetNo']), request()->file('file'));
         return responseData(true);
     }
 

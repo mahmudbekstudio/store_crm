@@ -1,6 +1,6 @@
 <template>
     <PageBox class="module-progressrate">
-        <p>
+        <!--p>
             <v-btn color="primary" :to="{ name: 'stock.list'}">Summary</v-btn>
             <v-btn :color="wh_no === '1' ? 'default' : 'primary'" :to="{ name: 'stock.detail1'}">W/H 1</v-btn>
             <v-btn :color="wh_no === '2' ? 'default' : 'primary'" :to="{ name: 'stock.detail2'}">W/H 2</v-btn>
@@ -9,7 +9,7 @@
             <v-btn :color="wh_no === '5' ? 'default' : 'primary'" :to="{ name: 'stock.detail5'}">W/H 5</v-btn>
             <v-btn :color="wh_no === '6' ? 'default' : 'primary'" :to="{ name: 'stock.detail6'}">W/H 6</v-btn>
             <v-btn :color="wh_no === '7' ? 'default' : 'primary'" :to="{ name: 'stock.detail7'}">W/H 7</v-btn>
-        </p>
+        </p-->
         <p>
             <File v-model="files" :extList="extensions"></File>
             <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading"
@@ -163,6 +163,456 @@
                     </template>
                 </v-edit-dialog>
             </template>
+
+            <template v-slot:item.in_column_3="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_3"
+                        @save="fieldSave(props.item.id, 'in_column_3')"
+                        large
+                > {{ props.item.in_column_3 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_3') || props.item.in_column_3"
+                                @input="changeField(props.item.id, 'in_column_3', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_4="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_4"
+                        @save="fieldSave(props.item.id, 'in_column_4')"
+                        large
+                > {{ props.item.in_column_4 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_4') || props.item.in_column_4"
+                                @input="changeField(props.item.id, 'in_column_4', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_5="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_5"
+                        @save="fieldSave(props.item.id, 'in_column_5')"
+                        large
+                > {{ props.item.in_column_5 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_5') || props.item.in_column_5"
+                                @input="changeField(props.item.id, 'in_column_5', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_6="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_6"
+                        @save="fieldSave(props.item.id, 'in_column_6')"
+                        large
+                > {{ props.item.in_column_6 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_6') || props.item.in_column_6"
+                                @input="changeField(props.item.id, 'in_column_6', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_7="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_7"
+                        @save="fieldSave(props.item.id, 'in_column_7')"
+                        large
+                > {{ props.item.in_column_7 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_7') || props.item.in_column_7"
+                                @input="changeField(props.item.id, 'in_column_7', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_8="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_8"
+                        @save="fieldSave(props.item.id, 'in_column_8')"
+                        large
+                > {{ props.item.in_column_8 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_8') || props.item.in_column_8"
+                                @input="changeField(props.item.id, 'in_column_8', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_9="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_9"
+                        @save="fieldSave(props.item.id, 'in_column_9')"
+                        large
+                > {{ props.item.in_column_9 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_9') || props.item.in_column_9"
+                                @input="changeField(props.item.id, 'in_column_9', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_10="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_10"
+                        @save="fieldSave(props.item.id, 'in_column_10')"
+                        large
+                > {{ props.item.in_column_10 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_10') || props.item.in_column_10"
+                                @input="changeField(props.item.id, 'in_column_10', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_11="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_11"
+                        @save="fieldSave(props.item.id, 'in_column_11')"
+                        large
+                > {{ props.item.in_column_11 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_11') || props.item.in_column_11"
+                                @input="changeField(props.item.id, 'in_column_11', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_12="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_12"
+                        @save="fieldSave(props.item.id, 'in_column_12')"
+                        large
+                > {{ props.item.in_column_12 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_12') || props.item.in_column_12"
+                                @input="changeField(props.item.id, 'in_column_12', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.in_column_13="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.in_column_13"
+                        @save="fieldSave(props.item.id, 'in_column_13')"
+                        large
+                > {{ props.item.in_column_13 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'in_column_13') || props.item.in_column_13"
+                                @input="changeField(props.item.id, 'in_column_13', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+
+            <template v-slot:item.out_column_6="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_6"
+                        @save="fieldSave(props.item.id, 'out_column_6')"
+                        large
+                > {{ props.item.out_column_6 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_6') || props.item.out_column_6"
+                                @input="changeField(props.item.id, 'out_column_6', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_7="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_7"
+                        @save="fieldSave(props.item.id, 'out_column_7')"
+                        large
+                > {{ props.item.out_column_7 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_7') || props.item.out_column_7"
+                                @input="changeField(props.item.id, 'out_column_7', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_8="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_8"
+                        @save="fieldSave(props.item.id, 'out_column_8')"
+                        large
+                > {{ props.item.out_column_8 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_8') || props.item.out_column_8"
+                                @input="changeField(props.item.id, 'out_column_8', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_9="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_9"
+                        @save="fieldSave(props.item.id, 'out_column_9')"
+                        large
+                > {{ props.item.out_column_9 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_9') || props.item.out_column_9"
+                                @input="changeField(props.item.id, 'out_column_9', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_10="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_10"
+                        @save="fieldSave(props.item.id, 'out_column_10')"
+                        large
+                > {{ props.item.out_column_10 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_10') || props.item.out_column_10"
+                                @input="changeField(props.item.id, 'out_column_10', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_11="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_11"
+                        @save="fieldSave(props.item.id, 'out_column_11')"
+                        large
+                > {{ props.item.out_column_11 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_11') || props.item.out_column_11"
+                                @input="changeField(props.item.id, 'out_column_11', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_12="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_12"
+                        @save="fieldSave(props.item.id, 'out_column_12')"
+                        large
+                > {{ props.item.out_column_12 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_12') || props.item.out_column_12"
+                                @input="changeField(props.item.id, 'out_column_12', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_13="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_13"
+                        @save="fieldSave(props.item.id, 'out_column_13')"
+                        large
+                > {{ props.item.out_column_13 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_13') || props.item.out_column_13"
+                                @input="changeField(props.item.id, 'out_column_13', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_14="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_14"
+                        @save="fieldSave(props.item.id, 'out_column_14')"
+                        large
+                > {{ props.item.out_column_14 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_14') || props.item.out_column_14"
+                                @input="changeField(props.item.id, 'out_column_14', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_15="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_15"
+                        @save="fieldSave(props.item.id, 'out_column_15')"
+                        large
+                > {{ props.item.out_column_15 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_15') || props.item.out_column_15"
+                                @input="changeField(props.item.id, 'out_column_15', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_16="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_16"
+                        @save="fieldSave(props.item.id, 'out_column_16')"
+                        large
+                > {{ props.item.out_column_16 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_16') || props.item.out_column_16"
+                                @input="changeField(props.item.id, 'out_column_16', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_17="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_17"
+                        @save="fieldSave(props.item.id, 'out_column_17')"
+                        large
+                > {{ props.item.out_column_17 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_17') || props.item.out_column_17"
+                                @input="changeField(props.item.id, 'out_column_17', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_18="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_18"
+                        @save="fieldSave(props.item.id, 'out_column_18')"
+                        large
+                > {{ props.item.out_column_18 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_18') || props.item.out_column_18"
+                                @input="changeField(props.item.id, 'out_column_18', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_19="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_19"
+                        @save="fieldSave(props.item.id, 'out_column_19')"
+                        large
+                > {{ props.item.out_column_19 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_19') || props.item.out_column_19"
+                                @input="changeField(props.item.id, 'out_column_19', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_20="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_20"
+                        @save="fieldSave(props.item.id, 'out_column_20')"
+                        large
+                > {{ props.item.out_column_20 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_20') || props.item.out_column_20"
+                                @input="changeField(props.item.id, 'out_column_20', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_21="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_21"
+                        @save="fieldSave(props.item.id, 'out_column_21')"
+                        large
+                > {{ props.item.out_column_21 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_21') || props.item.out_column_21"
+                                @input="changeField(props.item.id, 'out_column_21', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+            <template v-slot:item.out_column_22="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.out_column_22"
+                        @save="fieldSave(props.item.id, 'out_column_22')"
+                        large
+                > {{ props.item.out_column_22 }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'out_column_22') || props.item.out_column_22"
+                                @input="changeField(props.item.id, 'out_column_22', $event)"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
         </v-data-table>
     </PageBox>
 </template>
@@ -183,9 +633,9 @@
                 isLoading: false,
                 headers: [
                     {
-                        text: 'Id',
+                        text: 'No',
                         align: 'center',
-                        value: 'id',
+                        value: 'no',
                         width: 50
                     },
                     {

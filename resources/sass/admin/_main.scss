@@ -36,3 +36,39 @@
 .hidden {
   display: none;
 }
+
+.colored-table {
+  tbody {
+    tr {
+      td:nth-child(2n-1) {
+        background-color: #ffd964;
+      }
+
+      td:nth-child(2n) {
+        background-color: #c5dfb3;
+      }
+
+      td:nth-child(3n) {
+        background-color: #f4af82;
+      }
+
+      td:last-child {
+        background-color: #bdd7ee;
+        color: #ff0000;
+        font-weight: bold;
+      }
+
+      td:nth-child(1) {
+        background-color: transparent;
+      }
+
+      td:nth-child(2) {
+        background-color: transparent;
+      }
+
+      td:nth-child(3) {
+        background-color: transparent;
+      }
+    }
+  }
+}

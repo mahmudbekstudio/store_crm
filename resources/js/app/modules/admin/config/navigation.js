@@ -7,6 +7,15 @@ export default {
                 { text: 'PC', route: {name: 'shipment-progress.list'} },
                 { text: 'AVR', route: {name: 'shipment-progress.list2'} },
             ],
+        },
+        {
+            icon: 'mdi-inbox-multiple',
+            text: 'Stock Management',
+            children: [
+                { text: 'Summary', route: {name: 'stock.list'} },
+                { text: 'Warehouse 1 – Tashkent', route: {name: 'stock.detail1'} },
+                { text: 'Warehouse 2 – Samarkand', route: {name: 'stock.detail2'} },
+            ],
         }
         // {text: 'Dashboard', icon: 'mdi-view-dashboard-outline', route: {name: 'dashboard'}},
         /*{text: 'Region', icon: 'mdi-city-variant-outline', route: {name: 'region.list'}},

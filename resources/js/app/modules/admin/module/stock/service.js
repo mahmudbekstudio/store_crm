@@ -86,7 +86,7 @@ export default class Service {
         logger.info('submitted', files[0]);
         this.loading(true);
         http(api.submit)
-            .callback(files[0])
+            .callback(files[0], id)
             .send()
             .then(response => {
                 if(isDetail) {

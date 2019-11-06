@@ -1,6 +1,6 @@
 <template>
     <PageBox class="module-progressrate">
-        <p>
+        <!--p>
             <v-btn color="default" :to="{ name: 'stock.list'}">Summary</v-btn>
             <v-btn color="primary" :to="{ name: 'stock.detail1'}">W/H 1</v-btn>
             <v-btn color="primary" :to="{ name: 'stock.detail2'}">W/H 2</v-btn>
@@ -9,12 +9,12 @@
             <v-btn color="primary" :to="{ name: 'stock.detail5'}">W/H 5</v-btn>
             <v-btn color="primary" :to="{ name: 'stock.detail6'}">W/H 6</v-btn>
             <v-btn color="primary" :to="{ name: 'stock.detail7'}">W/H 7</v-btn>
-        </p>
+        </p-->
         <p>
-            <File v-model="files" :extList="extensions"></File>
+            <!--File v-model="files" :extList="extensions"></File>
             <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading"
                    :loading="isLoading">{{ $t('progressrate.submit') }}
-            </v-btn>
+            </v-btn-->
             <v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn>
         </p>
 
@@ -185,7 +185,7 @@
         <v-data-table
                 :headers="headers"
                 :items="items"
-                class="elevation-1"
+                class="elevation-1 colored-table"
                 :items-per-page="5"
         >
             <template v-slot:no-data>
@@ -209,7 +209,7 @@
                 isLoading: false,
                 headers: [
                     {
-                        text: 'Id',
+                        text: 'No',
                         align: 'center',
                         value: 'id',
                         width: 50
