@@ -85,8 +85,10 @@ class DocumentController extends Controller
 
         if($id == 3) {
             return [
-                'Samarkand region' => $regions['Samarkand region'],
-                'Tashkent city' => $regions['Tashkent city'],
+                'Region' => [
+                    'Samarkand region',
+                    'Tashkent city'
+                ]
             ];
         }
 
