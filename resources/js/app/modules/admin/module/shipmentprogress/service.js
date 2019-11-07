@@ -41,7 +41,7 @@ export default class Service {
         this.loading(true);
         app.openMessage('Saving');
         http(api.changeField)
-            .callback(id, key, val)
+            .callback(id, key, val, no)
             .send()
             .then(response => {
                 this.init(no);

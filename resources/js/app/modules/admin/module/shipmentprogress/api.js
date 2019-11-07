@@ -17,11 +17,12 @@ const api = {
     },*/
     changeField: {
         ...Route.admin('shipment-progress.change-field'),
-        callback: function (id, key, val) {
+        callback: function (id, key, val, no) {
             this.data({
                 id,
                 key,
-                val
+                val,
+                sheep_no: no
             });
         },
         token: true

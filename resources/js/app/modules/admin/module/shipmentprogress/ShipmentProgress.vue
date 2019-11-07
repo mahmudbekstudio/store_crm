@@ -60,6 +60,25 @@
                 </v-edit-dialog>
             </template>
 
+            <template v-slot:item.unit="props">
+                <v-edit-dialog
+                        :return-value.sync="props.item.unit"
+                        @save="fieldSave(props.item.id, 'unit')"
+                        large
+                > {{ props.item.unit }}
+                    <template v-slot:input>
+                        <v-text-field
+                                :value="getField(props.item.id, 'unit') || props.item.unit"
+                                @input="changeField(props.item.id, 'unit', $event)"
+
+                                label="Unit"
+                                single-line
+                                counter
+                        ></v-text-field>
+                    </template>
+                </v-edit-dialog>
+            </template>
+
             <template v-slot:item.contract="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.contract"

@@ -636,7 +636,7 @@
                         value: 'replacement_pc',
                     },
                     {
-                        text: 'Done',
+                        text: 'Date of done',
                         align: 'center',
                         value: 'date_done',
                     },
