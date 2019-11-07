@@ -111,6 +111,7 @@ class ProgressRateController extends Controller
         $mac = 0;
         $warranty_completion = 0;
         $installed_quantity_pc = 0;
+        $k = 0;
 
         foreach ($details as $item) {
             /*$installedQuantityEcc = empty($item['mac']) ? 0 : 1;
@@ -118,7 +119,6 @@ class ProgressRateController extends Controller
             if ($region == '') {
                 $region = $item['region']['name'];
             }
-            $k = 0;
 
             if ($region != $item['region']['name']) {
                 $k++;
