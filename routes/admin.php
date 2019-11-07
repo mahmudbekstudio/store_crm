@@ -126,4 +126,12 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
         Route::post('stock', 'ImportController@stock')->name('stock');
         Route::post('shipment-progress', 'ImportController@shipmentProgress')->name('shipment-progress');
     });
+
+    Route::group(['prefix' => 'document', 'as' => 'document.'], function() {
+        Route::get('list/{id}', 'DocumentController@list')->name('list');
+        Route::post('add/{id}', 'DocumentController@uploadFile')->name('upload');
+        Route::delete('item/{id}', 'DocumentController@deleteFile')->name('delete');
+
+        Route::get('params', 'DocumentController@params')->name('params');
+    });
 });

@@ -72,3 +72,14 @@
     }
   }
 }
+
+.document-link {
+  cursor: pointer;
+}
+
+.standart-select {
+  border: #000 solid 1px;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  -ms-progress-appearance: menulist;
+}

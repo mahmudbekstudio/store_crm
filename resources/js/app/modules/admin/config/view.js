@@ -3,7 +3,7 @@ import mainConfig from './main';
 
 export default {
     page: {
-        default: 'dashboard',
+        default: 'shipment-progress.list',
         notFound: 'error.not-found',
         login: 'auth.login'
     },

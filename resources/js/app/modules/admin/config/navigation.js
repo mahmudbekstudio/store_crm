@@ -27,6 +27,16 @@ export default {
             ],
         },
         {text: 'Defect management', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},
+        {
+            icon: 'mdi-file-document',
+            text: 'Documents',
+            children: [
+                { text: 'Survey report', route: {name: 'document.item1'} },
+                { text: 'OATC', route: {name: 'document.item2'} },
+                { text: 'Request for stock-out, each warehouse', route: {name: 'document.item3'} },
+                { text: 'Etc.', route: {name: 'document.item4'} },
+            ],
+        },
         // {text: 'Dashboard', icon: 'mdi-view-dashboard-outline', route: {name: 'dashboard'}},
         /*{text: 'Region', icon: 'mdi-city-variant-outline', route: {name: 'region.list'}},
         {text: 'District', icon: 'mdi-city-variant-outline', route: {name: 'district.list'}},

@@ -12,6 +12,7 @@ import defectRoute from './defect/route';
 import progressRateRoute from './progressrate/route';
 import stockRoute from './stock/route';
 import shipmentProgressRoute from './shipmentprogress/route';
+import documentRoute from './document/route';
 
 const routes = [
     {path: '/', redirect: {name: viewConfig.page.default}},
@@ -26,6 +27,7 @@ const routes = [
     progressRateRoute,
     shipmentProgressRoute,
     stockRoute,
+    documentRoute,
     userRoute,
     errorRoute,
     {path: '*', redirect: {name: viewConfig.page.notFound}}
