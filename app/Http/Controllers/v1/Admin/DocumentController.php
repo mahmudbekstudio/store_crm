@@ -45,22 +45,29 @@ class DocumentController extends Controller
 
         $uploadedFile = $request->file('file');
         $filename = $uploadedFile->getClientOriginalName();
-        $file = 'files/' . time() . '/'.$filename;
+        $file = time() . '/'.$filename;
 
         Storage::disk('local')->putFileAs(
-            $file,
+            'files',
             $uploadedFile,
-            $filename
+            $file
         );
 
         $documentRepository->create([
             'user_id' => auth()->user()->id,
             'district_id' => $district->id,
             'type_id' => $id,
-            'file' => $file
+            'file' => 'files/' . $file
         ]);
 
-        return Storage::url($file);
+        return responseData(true);
+        //return Storage::url('files/' . $file);
+    }
+
+    public function download($id)
+    {
+        $file = Document::find($id);
+        return Storage::download($file->file);
     }
 
     public function deleteFile($id)

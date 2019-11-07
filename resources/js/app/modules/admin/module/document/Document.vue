@@ -18,7 +18,7 @@
                     <li v-for="item of districts">
                         {{item}}
                         <div v-for="file of items[item]">
-                            <a :href="file.file" target="_blank">{{getFileName(file.file)}}</a>
+                            <a :href="'/api/admin/document/download/' + file.id" target="_blank">{{getFileName(file.file)}}</a>
                             <v-btn text icon color="default" @click="deleteFile(file)">
                                 <v-icon>mdi-delete</v-icon>
                             </v-btn>

@@ -24,6 +24,10 @@ Route::group(['middleware' => ['token:access']], function() {
     Route::any('website', 'MainController@settings')->name('website');
 });
 
+Route::group(['prefix' => 'document', 'as' => 'document.'], function() {
+    Route::get('download/{id}', 'DocumentController@download')->name('download');
+});
+
 Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]], function() {
 
     Route::group(['prefix' => 'region', 'as' => 'region.'], function() {
@@ -131,6 +135,7 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
         Route::get('list/{id}', 'DocumentController@list')->name('list');
         Route::post('add/{id}', 'DocumentController@uploadFile')->name('upload');
         Route::delete('item/{id}', 'DocumentController@deleteFile')->name('delete');
+        //Route::get('download/{id}', 'DocumentController@download')->name('download');
 
         Route::get('params', 'DocumentController@params')->name('params');
     });
