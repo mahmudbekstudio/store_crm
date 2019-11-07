@@ -33,9 +33,12 @@ class ProgressRateController extends Controller
         $checkList = $this->progressRateCheckListRepository->with(['region', 'district', 'school'])->all()->toArray();
         $list = [];
 
+        $k = 0;
         foreach ($checkList as $item) {
+            $k++;
             $list[] = [
                 'id' => $item['id'],
+                'no' => $k,
                 'region' => $item['region']['name'],
                 'district' => $item['district']['name'],
                 'school' => $item['school']['name'],
@@ -62,12 +65,15 @@ class ProgressRateController extends Controller
     {
         $details = $this->progressRateRepository->with(['region', 'district', 'school'])->all()->toArray();
         $list = [];
+        $k = 0;
 
         foreach ($details as $item) {
+            $k++;
             $installedQuantityEcc = empty($item['mac']) ? 0 : 1;
             $installedQuantityPc = ((int)$item['teacher_computer'] + (int)$item['student_computer']) * $installedQuantityEcc;
             $list[] = [
                 'id' => $item['id'],
+                'no' => $k,
                 'region' => $item['region']['name'],
                 'district' => $item['district']['name'],
                 'school' => $item['school']['name'],
@@ -112,10 +118,13 @@ class ProgressRateController extends Controller
             if ($region == '') {
                 $region = $item['region']['name'];
             }
+            $k = 0;
 
             if ($region != $item['region']['name']) {
+                $k++;
                 $list[] = [
                     'id' => $item['region']['id'],
+                    'no' => $k,
                     'region' => $region,
                     'teacher_computer' => $teachersComputer,
                     'student_computer' => $studentComputer,

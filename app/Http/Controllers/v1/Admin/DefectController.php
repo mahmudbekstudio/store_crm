@@ -25,8 +25,10 @@ class DefectController extends Controller
     {
         $defects = $this->defectRepository->with(['region', 'district', 'school', 'from_user.metas', 'received_user.metas', 'manager.metas'])->all()->toArray();
         $list = [];
+        $k = 0;
 
         foreach($defects as $item) {
+            $k++;
             $fromUserName = '';
             $fromUserPhone = '';
             $receivedUserName = '';
@@ -56,6 +58,7 @@ class DefectController extends Controller
 
             $list[] = [
                 'id' => $item['id'],
+                'no' => $k,
                 'date' => $item['date'],
                 'region' => $item['region']['name'],
                 'district' => $item['district']['name'],

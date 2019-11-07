@@ -554,9 +554,9 @@
                 isLoading: false,
                 headers: [
                     {
-                        text: 'Id',
+                        text: 'No',
                         align: 'center',
-                        value: 'id',
+                        value: 'no',
                         width: 50
                     },
                     {
