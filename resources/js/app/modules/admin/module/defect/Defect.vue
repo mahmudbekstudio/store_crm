@@ -165,7 +165,6 @@
                                         hint="YYYY-MM-DD format"
                                         persistent-hint
                                         prepend-icon="mdi-calendar"
-                                        readonly
                                         v-on="on"
                                 ></v-text-field>
                             </template>
@@ -488,7 +487,6 @@
                                         hint="YYYY-MM-DD format"
                                         persistent-hint
                                         prepend-icon="mdi-calendar"
-                                        readonly
                                         v-on="on"
                                 ></v-text-field>
                             </template>
