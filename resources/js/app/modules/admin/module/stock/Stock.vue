@@ -254,7 +254,7 @@
                         align: 'center',
                         value: 'wh_02_total_ab'
                     },
-                    {
+                    /*{
                         text: 'W/H_03 In (A)',
                         align: 'center',
                         value: 'wh_03_in'
@@ -332,7 +332,7 @@
                         text: 'W/H_07 Total (A-B)',
                         align: 'center',
                         value: 'wh_07_total_ab'
-                    },
+                    },*/
                     {
                         text: 'Total (Stock)',
                         align: 'center',
