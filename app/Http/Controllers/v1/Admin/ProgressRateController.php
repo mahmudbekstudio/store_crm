@@ -112,15 +112,18 @@ class ProgressRateController extends Controller
         $warranty_completion = 0;
         $installed_quantity_pc = 0;
         $k = 0;
+        $kk = 0;
+        $detailsCount = count($details);
 
         foreach ($details as $item) {
+            $kk++;
             /*$installedQuantityEcc = empty($item['mac']) ? 0 : 1;
             $installedQuantityPc = ($item['teacher_computer'] + $item['student_computer']) * $installedQuantityEcc;*/
             if ($region == '') {
                 $region = $item['region']['name'];
             }
 
-            if ($region != $item['region']['name']) {
+            if ($region != $item['region']['name'] || $kk == $detailsCount) {
                 $k++;
                 $list[] = [
                     'id' => $item['region']['id'],

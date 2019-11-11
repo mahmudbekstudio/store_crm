@@ -40,6 +40,7 @@ class ShipmentProgressController extends Controller
         $k = 0;
 
         $list[$k] = [
+            'no' => '',
             'id' => 0,
             'num' => '',
             'item' => '',
@@ -59,6 +60,7 @@ class ShipmentProgressController extends Controller
         $k++;
         foreach ($shipmentProgress as $item) {
             $list[$k] = [
+                'no' => $k,
                 'id' => $item['id'],
                 'num' => $item['num'],
                 'item' => $item['goods']['name'],

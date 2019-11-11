@@ -1238,6 +1238,36 @@
     import File from '../../component/File';
     import Service from './service';
 
+    const defaultHeaders = [
+        {
+            text: 'Id',
+            align: 'center',
+            value: 'no',
+            width: 50
+        },
+        {
+            text: 'No',
+            align: 'center',
+            value: 'num',
+            width: 50
+        },
+        {
+            text: 'Item',
+            align: 'center',
+            value: 'item'
+        },
+        {
+            text: 'Unit',
+            align: 'center',
+            value: 'unit'
+        },
+        {
+            text: 'Contract',
+            align: 'center',
+            value: 'contract'
+        }
+    ];
+
     export default {
         service: new Service(),
         data() {
@@ -1249,29 +1279,7 @@
                 files: [],
                 extensions: ['xlsx'],
                 isLoading: false,
-                headers: [
-                    {
-                        text: 'No',
-                        align: 'center',
-                        value: 'num',
-                        width: 50
-                    },
-                    {
-                        text: 'Item',
-                        align: 'center',
-                        value: 'item'
-                    },
-                    {
-                        text: 'Unit',
-                        align: 'center',
-                        value: 'unit'
-                    },
-                    {
-                        text: 'Contract',
-                        align: 'center',
-                        value: 'contract'
-                    }
-                ],
+                headers: [],
             }
         },
         computed: {
@@ -1310,6 +1318,10 @@
             changeRoute() {
                 let routeName = this.$router.currentRoute.name;
                 this.shipmentNo = routeName.replace('shipment-progress.list', '');
+                this.headers = [];
+                for (let key in defaultHeaders) {
+                    this.headers.push(defaultHeaders[key]);
+                }
                 this.$options.service.init(this.shipmentNo, '', columns => {
                     console.log('columns', columns);
                     this.columns = columns;
