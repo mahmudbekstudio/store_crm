@@ -50,7 +50,7 @@ class ShipmentProgressController extends Controller
 
         foreach($shipment as $key => $item1) {
             foreach($item1->columns as $subKey => $subItem) {
-                $list[$k]['column_' . $item1->values[$subKey]->index] = $item1->dates[$subKey];
+                $list[$k]['column_' . $item1->values[$subKey]->index] = $subItem;
             }
         }
 
@@ -104,7 +104,7 @@ class ShipmentProgressController extends Controller
                 foreach($item['shipment'] as $key1 => $val) {
                     foreach($val['values'] as $valKey => $valVal) {
                         if($valVal['index'] == $key) {
-                            $item['shipment'][$key1]['dates'][$valKey] = $data['val'];
+                            $item['shipment'][$key1]['columns'][$valKey] = $data['val'];
                         }
                     }
                 }

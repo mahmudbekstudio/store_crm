@@ -64,6 +64,8 @@
                 :items="items"
                 class="elevation-1"
                 :items-per-page="5"
+                @click:row="clickRow"
+                v-model="selected"
         >
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>
@@ -621,34 +623,37 @@
     import File from '../../component/File';
     import Service from './service';
 
+    const defaultHeaders = [
+        {
+            text: 'No',
+            align: 'center',
+            value: 'no',
+            width: 50
+        },
+        {
+            text: 'Item',
+            align: 'center',
+            value: 'item'
+        },
+        {
+            text: 'Unit',
+            align: 'center',
+            value: 'unit'
+        }
+    ];
+
     export default {
         service: new Service(),
         data() {
             return {
+                selected: [],
                 changedFields: {},
                 wh_no: 0,
                 filterShow: false,
                 files: [],
                 extensions: ['xlsx'],
                 isLoading: false,
-                headers: [
-                    {
-                        text: 'No',
-                        align: 'center',
-                        value: 'no',
-                        width: 50
-                    },
-                    {
-                        text: 'Item',
-                        align: 'center',
-                        value: 'item'
-                    },
-                    {
-                        text: 'Unit',
-                        align: 'center',
-                        value: 'unit'
-                    }
-                ],
+                headers: [],
             }
         },
         computed: {
@@ -705,11 +710,25 @@
             }
         },
         methods: {
+            clickRow(item) {
+                this.$logger.info('clickrow', item);
+                const index = this.selected.indexOf(item);
+                if(index > -1) {
+                    this.selected.splice(index, 1);
+                } else {
+                    this.selected.push(item);
+                }
+            },
             changeWh() {
                 let routeName = this.$router.currentRoute.name;
                 this.wh_no = routeName.replace('stock.detail', '');
 
                 this.$store.commit('stock/changeDetail', []);
+                this.headers = [];
+                for (let key in defaultHeaders) {
+                    this.headers.push(defaultHeaders[key]);
+                }
+
                 this.$options.service.detailInit(this.wh_no, '', columns => {
                     console.log('columns', columns);
                     for (let key in columns.in) {

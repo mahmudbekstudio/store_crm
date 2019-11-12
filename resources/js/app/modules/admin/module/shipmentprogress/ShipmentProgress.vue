@@ -17,6 +17,8 @@
                 :items="items"
                 class="elevation-1"
                 :items-per-page="5"
+                @click:row="clickRow"
+                v-model="selected"
         >
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>
@@ -1240,17 +1242,17 @@
 
     const defaultHeaders = [
         {
-            text: 'Id',
+            text: 'No',
             align: 'center',
             value: 'no',
             width: 50
         },
-        {
+        /*{
             text: 'No',
             align: 'center',
             value: 'num',
             width: 50
-        },
+        },*/
         {
             text: 'Item',
             align: 'center',
@@ -1272,6 +1274,7 @@
         service: new Service(),
         data() {
             return {
+                selected:[],
                 columns: [],
                 shipmentNo: '',
                 changedFields: {},
@@ -1315,6 +1318,15 @@
             }
         },
         methods: {
+            clickRow(item) {
+                this.$logger.info('clickrow', item);
+                const index = this.selected.indexOf(item);
+                if(index > -1) {
+                    this.selected.splice(index, 1);
+                } else {
+                    this.selected.push(item);
+                }
+            },
             changeRoute() {
                 let routeName = this.$router.currentRoute.name;
                 this.shipmentNo = routeName.replace('shipment-progress.list', '');

@@ -14,11 +14,12 @@ const api = {
     },
     changeField: {
         ...Route.admin('stock.change-field'),
-        callback: function (id, key, val) {
+        callback: function (id, key, val, no) {
             this.data({
                 id,
                 key,
-                val
+                val,
+                no
             });
         },
         token: true

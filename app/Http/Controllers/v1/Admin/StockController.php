@@ -120,30 +120,49 @@ class StockController extends Controller
         $inObj = json_decode($stocks[0]['in_obj'], true);
         $outObj = json_decode($stocks[0]['out_obj'], true);
 
+        $k = 0;
+
+        $list[$k] = [
+            'no' => '',
+            'id' => 0,
+            'item' => '',
+            'unit' => '',
+        ];
+
         foreach ($inObj as $key => $item) {
             if(!isset($item['name'])) continue;
             $columns['in'][] = [
-                'text' => $item['name'] . ' ' . $item['date'],
+                'text' => $item['name']/* . ' ' . $item['date']*/,
                 'align' => 'center',
                 'value' => 'in_column_' . $key
             ];
+
+            $list[$k]['in_column_' . $key] = $item['name'];
         }
+
+        $list[$k]['in_total_a'] = '';
 
         foreach ($outObj as $key => $item) {
             if(!isset($item['name'])) continue;
             $columns['out'][] = [
-                'text' => $item['name'] . ' ' . $item['date'],
+                'text' => $item['name']/* . ' ' . $item['date']*/,
                 'align' => 'center',
                 'value' => 'out_column_' . $key
             ];
+
+            $list[$k]['out_column_' . $key] = $item['name'];
         }
 
-        $k = 0;
+        $list[$k]['in_total_b'] = '';
+        $list[$k]['remark'] = '';
+
+
+        $k++;
         foreach ($stocks as $item) {
             $inObj = json_decode($item['in_obj']);
             $outObj = json_decode($item['out_obj']);
             $list[$k] = [
-                'no' => $k + 1,
+                'no' => $k,
                 'id' => $item['id'],
                 'item' => $item['goods']['name'],
                 'unit' => $item['goods']['unit'],
@@ -170,9 +189,28 @@ class StockController extends Controller
 
     public function changeField(Request $request)
     {
-        $data = $request->only(['id', 'key', 'val']);
+        $data = $request->only(['id', 'key', 'val', 'no']);
 
-        if (count($data) == 3) {
+        if (count($data) >= 3) {
+            if($data['id'] == 0) {
+                $stock = $this->stockRepository->findWhere(['wh_no' => $data['no']]);
+                $itemObj = $stock->first();
+                $item = $itemObj->toArray();
+
+                if(substr($data['key'], 0, 2) === 'in') {
+                    $key = str_replace('in_column_', '', $data['key']);
+                    $item['in_obj'] = json_decode($item['in_obj'], true);
+                    $item['in_obj'][$key]['name'] = $data['val'];
+                    $itemObj->in_obj = json_encode($item['in_obj']);
+                } elseif(substr($data['key'], 0, 3) === 'out') {
+                    $key = str_replace('out_column_', '', $data['key']);
+                    $item['out_obj'] = json_decode($item['out_obj'], true);
+                    $item['out_obj'][$key]['name'] = $data['val'];
+                    $itemObj->out_obj = json_encode($item['out_obj']);
+                }
+                $itemObj->save();
+                return responseData(true);
+            }
             $item = $this->stockRepository->find($data['id']);
 
             switch ($data['key']) {
