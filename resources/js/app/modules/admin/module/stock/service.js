@@ -59,7 +59,7 @@ export default class Service {
             });
     }
 
-    changeFieldDetail(id, key, val, isDetail, no) {
+    changeFieldDetail(id, key, val, isDetail, no, callback) {
         console.log(id, key, val);
         this.loading(true);
         app.openMessage('Saving');
@@ -68,7 +68,7 @@ export default class Service {
             .send()
             .then(response => {
                 if (isDetail) {
-                    this.detailInit(no, 'Updated');
+                    this.detailInit(no, 'Updated', callback);
                 } else {
                     this.init('Updated');
                 }
@@ -82,7 +82,7 @@ export default class Service {
             });
     }
 
-    submit(files, callback, isDetail, id) {
+    submit(files, callback, isDetail, id, initCallback) {
         logger.info('submitted', files[0]);
         this.loading(true);
         http(api.submit)
@@ -90,7 +90,7 @@ export default class Service {
             .send()
             .then(response => {
                 if(isDetail) {
-                    this.detailInit(id);
+                    this.detailInit(id, '', initCallback);
                 } else {
                     this.init();
                 }

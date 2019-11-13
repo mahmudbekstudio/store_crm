@@ -36,7 +36,7 @@ export default class Service {
             });
     }
 
-    changeField(id, key, val, isDetail, no) {
+    changeField(id, key, val, isDetail, no, callback) {
         console.log(id, key, val);
         this.loading(true);
         app.openMessage('Saving');
@@ -44,7 +44,7 @@ export default class Service {
             .callback(id, key, val, no)
             .send()
             .then(response => {
-                this.init(no);
+                this.init(no, '', callback);
             })
             .catch(error => {
                 logger.error('stock.changeField', error);
@@ -55,14 +55,14 @@ export default class Service {
             });
     }
 
-    submit(files, callback, id) {
+    submit(files, callback, id, initCallback) {
         logger.info('submitted', files[0]);
         this.loading(true);
         http(api.submit)
             .callback(files[0], id)
             .send()
             .then(response => {
-                this.init(id);
+                this.init(id, initCallback);
                 if (typeof callback === 'function') {
                     callback();
                 }

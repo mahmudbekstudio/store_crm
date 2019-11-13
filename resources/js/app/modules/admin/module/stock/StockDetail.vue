@@ -16,6 +16,7 @@
                    :loading="isLoading">{{ $t('progressrate.submit') }}
             </v-btn>
             <v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn>
+            <span class="d-inline-block"><v-switch v-model="isEditMode" label="Edit" color="primary"></v-switch></span>
         </p>
         <div v-show="filterShow">
             <v-container class="grey lighten-5">
@@ -63,7 +64,6 @@
                 :headers="headers"
                 :items="items"
                 class="elevation-1"
-                :items-per-page="5"
                 @click:row="clickRow"
                 v-model="selected"
         >
@@ -646,6 +646,7 @@
         service: new Service(),
         data() {
             return {
+                isEditMode: false,
                 selected: [],
                 changedFields: {},
                 wh_no: 0,
@@ -654,11 +655,20 @@
                 extensions: ['xlsx'],
                 isLoading: false,
                 headers: [],
+                columns: []
             }
         },
         computed: {
             items() {
                 return this.$store.state.stock.detail.filter(item => {
+                    if(parseInt(item.id) === 0) {
+                        return this.isEditMode;
+                    }
+
+                    if(this.isEditMode) {
+                        return false;
+                    }
+
                     if (
                         this.filter.item.value !== 'All' &&
                         this.filter.item.value !== item.item
@@ -707,6 +717,9 @@
         watch: {
             '$route'() {
                 this.changeWh();
+            },
+            isEditMode() {
+                this.changeColumns();
             }
         },
         methods: {
@@ -719,34 +732,46 @@
                     this.selected.push(item);
                 }
             },
-            changeWh() {
-                let routeName = this.$router.currentRoute.name;
-                this.wh_no = routeName.replace('stock.detail', '');
-
-                this.$store.commit('stock/changeDetail', []);
+            changeColumns() {
+                let columns = this.columns;
                 this.headers = [];
-                for (let key in defaultHeaders) {
-                    this.headers.push(defaultHeaders[key]);
+                if(!this.isEditMode) {
+                    for (let key in defaultHeaders) {
+                        this.headers.push(defaultHeaders[key]);
+                    }
                 }
 
-                this.$options.service.detailInit(this.wh_no, '', columns => {
-                    console.log('columns', columns);
-                    for (let key in columns.in) {
-                        console.log(columns.in[key]);
-                        this.headers.push(columns.in[key]);
+                for (let key in columns.in) {
+                    console.log(columns.in[key]);
+                    let item = Object.assign({}, columns.in[key]);
+
+                    if(this.isEditMode) {
+                        item.text = '';
                     }
 
+                    this.headers.push(item);
+                }
+
+                if(!this.isEditMode) {
                     this.headers.push({
                         text: 'Total (A)',
                         align: 'center',
                         value: 'total_a'
                     });
+                }
 
-                    for (let key in columns.out) {
-                        console.log(columns.out[key]);
-                        this.headers.push(columns.out[key]);
+                for (let key in columns.out) {
+                    console.log(columns.out[key]);
+                    let item = Object.assign({}, columns.out[key]);
+
+                    if(this.isEditMode) {
+                        item.text = '';
                     }
 
+                    this.headers.push(item);
+                }
+
+                if(!this.isEditMode) {
                     this.headers.push({
                         text: 'Total (B)',
                         align: 'center',
@@ -764,6 +789,19 @@
                         align: 'center',
                         value: 'remark'
                     });
+                }
+            },
+            changeWh() {
+                let routeName = this.$router.currentRoute.name;
+                this.wh_no = routeName.replace('stock.detail', '');
+
+                this.$store.commit('stock/changeDetail', []);
+
+
+                this.$options.service.detailInit(this.wh_no, '', columns => {
+                    console.log('columns', columns);
+                    this.columns = columns;
+                    this.changeColumns();
                 });
             },
             changeField(id, key, val, send) {
@@ -778,7 +816,11 @@
             fieldSave(id, key) {
                 if(typeof this.changedFields[id] !== 'undefined' && typeof this.changedFields[id][key] !== 'undefined') {
                     this.$logger.info('changed field', id, key, this.changedFields[id][key]);
-                    this.$options.service.changeFieldDetail(id, key, this.changedFields[id][key], true, this.wh_no);
+                    this.$options.service.changeFieldDetail(id, key, this.changedFields[id][key], true, this.wh_no, columns => {
+                        console.log('columns', columns);
+                        this.columns = columns;
+                        this.changeColumns();
+                    });
                 }
                 this.changedFields = {};
             },
@@ -787,7 +829,11 @@
                 this.$options.service.submit(this.files, () => {
                     this.files = [];
                     this.isLoading = false;
-                }, true, this.wh_no);
+                }, true, this.wh_no, columns => {
+                    console.log('columns', columns);
+                    this.columns = columns;
+                    this.changeColumns();
+                });
             },
             filterChanged(val, key) {
                 const newFilter = Object.assign({}, this.filter);
