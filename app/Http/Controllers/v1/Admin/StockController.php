@@ -172,13 +172,13 @@ class StockController extends Controller
                 $list[$k]['in_column_' . $key] = $subItem->value ?? '';
             }
 
-            $list[$k]['total_a'] = $item['in_total'] ?? 0;
+            $list[$k]['total_a'] = (int)$item['in_total'] ?: 0;
 
             foreach ($outObj as $key => $subItem) {
                 $list[$k]['out_column_' . $key] = $subItem->value ?? '';
             }
 
-            $list[$k]['total_b'] = $item['out_total'] ?? 0;
+            $list[$k]['total_b'] = (int)$item['out_total'] ?: 0;
             $list[$k]['total_ab'] = $list[$k]['total_a'] - $list[$k]['total_b'];
             $list[$k]['remark'] = $item['remark'] ?? '';
             $k++;
