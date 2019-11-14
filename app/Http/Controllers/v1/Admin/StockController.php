@@ -182,6 +182,8 @@ class StockController extends Controller
 
             $item['in_total'] = is_int($item['out_total']) ? $item['out_total'] : 0;
             $list[$k]['total_b'] = (int)$item['out_total'] ?: 0;
+            $list[$k]['total_a'] = is_int($list[$k]['total_a']) ? $list[$k]['total_a'] : 0;
+            $list[$k]['total_b'] = is_int($list[$k]['total_b']) ? $list[$k]['total_b'] : 0;
             $list[$k]['total_ab'] = $list[$k]['total_a'] - $list[$k]['total_b'];
             $list[$k]['remark'] = $item['remark'] ?? '';
             $k++;
