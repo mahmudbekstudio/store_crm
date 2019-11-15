@@ -7,8 +7,9 @@
  * @author   Taylor Otwell <taylor@laravel.com>
  */
 
-ini_set('max_execution_time', 1900);
-set_time_limit(1900);
+ini_set('max_execution_time', 3900);
+ini_set('memory_limit', '256M');
+set_time_limit(3900);
 
 define('LARAVEL_START', microtime(true));
 
