@@ -10,6 +10,56 @@
                    :loading="isLoading">{{ $t('shipmentprogress.submit') }}
             </v-btn>
             <span class="d-inline-block"><v-switch v-model="isEditMode" label="Edit" color="primary"></v-switch></span>
+            <v-dialog
+                    v-model="editColumnPopup"
+                    width="500"
+            >
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                            color="default"
+                            v-on="on"
+                    >
+                        Add column
+                    </v-btn>
+                </template>
+
+                <v-card>
+                    <v-card-title
+                            class="headline grey lighten-2"
+                            primary-title
+                    >
+                        Add column
+                    </v-card-title>
+
+                    <v-card-text>
+                        <draggable tag="ul" :list="columnsList" draggable=".list-group-item" class="list-group draggable-list" handle=".handle">
+                            <li
+                                    class="list-group-item"
+                                    v-for="(element, idx) in columnsList"
+                                    :key="element.value"
+                            >
+                                <v-icon class="handle">mdi-menu</v-icon>
+                                <v-text-field class="name-input" v-model="element.text"></v-text-field>
+                                <v-icon class="close" @click="removeColumn(idx)">mdi-close</v-icon>
+                            </li>
+                            <button slot="footer" @click="addColumn">Add</button>
+                        </draggable>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                                color="primary"
+                                text
+                                @click="saveEditColumn"
+                        >
+                            Save
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
             <!--v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn-->
         </p>
         <div v-show="filterShow"></div>
@@ -1236,6 +1286,7 @@
     </PageBox>
 </template>
 <script>
+    import draggable from 'vuedraggable'
     import PageBox from '../../view/partial/PageBox';
     import File from '../../component/File';
     import Service from './service';
@@ -1274,9 +1325,10 @@
         service: new Service(),
         data() {
             return {
+                columnsList: [],
+                editColumnPopup: false,
                 isEditMode: false,
                 selected:[],
-                columns: [],
                 shipmentNo: '',
                 changedFields: {},
                 filterShow: false,
@@ -1328,9 +1380,32 @@
             },
             isEditMode() {
                 this.changeColumns();
+            },
+            columns(val) {
+                this.columnsList = val;
             }
         },
         methods: {
+            saveEditColumn() {
+                this.$options.service.changeColumn(this.columnsList, this.shipmentNo || 1, columns => {
+                    console.log('columns', columns);
+                    this.columns = columns;
+                    this.changeColumns();
+                    this.editColumnPopup = false;
+                });
+            },
+            removeColumn(idx) {
+                this.columnsList.splice(idx, 1);
+            },
+            addColumn() {
+                this.columnsList.push({
+                    "text":"",
+                    "align":"center",
+                    "width":"115px",
+                    "value":"column_" + (new Date()).getTime(),
+                    "sortable":false
+                });
+            },
             clickRow(item) {
                 this.$logger.info('clickrow', item);
                 const index = this.selected.indexOf(item);
@@ -1432,6 +1507,7 @@
             }
         },
         components: {
+            draggable,
             PageBox,
             File
         }

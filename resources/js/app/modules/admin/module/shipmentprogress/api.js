@@ -27,6 +27,16 @@ const api = {
         },
         token: true
     },
+    changeColumn: {
+        ...Route.admin('shipment-progress.change-column'),
+        callback: function (list, no) {
+            this.data({
+                list,
+                sheep_no: no
+            });
+        },
+        token: true
+    },
     submit: {
         ...Route.admin('import.shipment-progress'),
         callback: function (file, sheetNo) {

@@ -118,6 +118,7 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
     Route::group(['prefix' => 'shipment-progress', 'as' => 'shipment-progress.'], function() {
         Route::get('list/{id?}', 'ShipmentProgressController@list')->name('list');
         Route::put('change-field', 'ShipmentProgressController@changeField')->name('change-field');
+        Route::put('change-column', 'ShipmentProgressController@changeColumn')->name('change-column');
 
         //Route::get('detail/{id}', 'StockController@details')->name('detail');
         /*Route::get('check-list', 'ProgressRateController@checkList')->name('check-list');

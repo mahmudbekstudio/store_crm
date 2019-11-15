@@ -46,7 +46,7 @@ class ShipmentProgressSheetImport implements ToCollection
 
             $date = !empty($rows[5][$i]) ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[5][$i])->getTimestamp()) : '';
             $shipments[$shipmentK]['dates'][] = $date;
-            $shipments[$shipmentK]['columns'][] = ($rows[4][$i] ?? $lastColumn);
+            $shipments[$shipmentK]['columns'][] = $lastShipment . ' ' . ($rows[4][$i] ?? $lastColumn);
             $lastColumn = $rows[4][$i];
             $shipments[$shipmentK]['values'][] = [
                 'value' => '',

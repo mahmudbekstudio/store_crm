@@ -1,11 +1,12 @@
 export default {
     admin: [
+        {text: 'ECC Survey', icon: 'mdi-progress-check', route: {name: 'progressrate.checkList'}},
         {
-            icon: 'mdi-progress-clock',
-            text: 'Shipment Progress',
+            icon: 'mdi-progress-check',
+            text: 'Installation Progress',
             children: [
-                { text: 'PC', route: {name: 'shipment-progress.list'} },
-                { text: 'AVR', route: {name: 'shipment-progress.list2'} },
+                { text: 'Summary Progress', route: {name: 'progressrate.list'} },
+                { text: 'Progress in Details', route: {name: 'progressrate.detail'} },
             ],
         },
         {
@@ -17,13 +18,12 @@ export default {
                 { text: 'Warehouse 2 – Samarkand', route: {name: 'stock.detail2'} },
             ],
         },
-        {text: 'ECC Survey', icon: 'mdi-progress-check', route: {name: 'progressrate.checkList'}},
         {
-            icon: 'mdi-progress-check',
-            text: 'Installation Progress',
+            icon: 'mdi-progress-clock',
+            text: 'Shipment Progress',
             children: [
-                { text: 'Summary Progress', route: {name: 'progressrate.list'} },
-                { text: 'Progress in Details', route: {name: 'progressrate.detail'} },
+                { text: 'PC', route: {name: 'shipment-progress.list'} },
+                { text: 'AVR', route: {name: 'shipment-progress.list2'} },
             ],
         },
         {text: 'Defect management', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},

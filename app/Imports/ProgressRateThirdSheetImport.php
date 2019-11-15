@@ -33,7 +33,7 @@ class ProgressRateThirdSheetImport implements ToCollection
                 break;
             }
 
-            if($item[1] == $regionBottom) {
+            if($item[1] == $regionBottom || $item[0] == $regionBottom || empty($item[2]) || empty($item[0])) {
                 continue;
             }
 
@@ -41,6 +41,10 @@ class ProgressRateThirdSheetImport implements ToCollection
             $region = $regionRepository->firstOrCreate(['name' => $item[0]]);
 
             $lastDistrict = $item[1] ?? $lastDistrict;
+
+            if(empty($lastDistrict)) {
+                continue;
+            }
 
             //district_id
             $district = $districtRepository->firstOrCreate(['region_id' => $region->id, 'name' => $lastDistrict]);

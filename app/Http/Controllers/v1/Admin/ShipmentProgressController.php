@@ -30,8 +30,10 @@ class ShipmentProgressController extends Controller
         foreach($shipment as $key => $item) {
             foreach($item->columns as $subKey => $subItem) {
                 $columns[] = [
-                    'text' => $item->name . ' ' . $subItem,
+                    'text' => $subItem,
                     'align' => 'center',
+                    'width' => '115px',
+                    'sortable' => false,
                     'value' => 'column_' . $item->values[$subKey]->index
                 ];
             }
@@ -160,6 +162,26 @@ class ShipmentProgressController extends Controller
 
                 $item->shipment = json_encode($shipment);
                 $item->save();
+            }
+        }
+
+        return responseData(true);
+    }
+
+    public function changeColumn(Request $request)
+    {
+        $data = $request->only(['list', 'sheep_no']);
+
+        dd($data);
+        $shipmentProgress = $this->shipmentProgressRepository->with(['goods'])->findWhere(['sheet_no' => $data['sheep_no']]);
+
+        foreach ($shipmentProgress as $item) {
+            $shipment = json_decode($item->shipment);
+
+            foreach($shipment as $key => $item1) {
+                foreach($item1->columns as $subKey => $subItem) {
+                    //
+                }
             }
         }
 

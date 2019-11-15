@@ -55,6 +55,24 @@ export default class Service {
             });
     }
 
+    changeColumn(list, no, callback) {
+        this.loading(true);
+        app.openMessage('Saving');
+        http(api.changeColumn)
+            .callback(list, no)
+            .send()
+            .then(response => {
+                this.init(no, '', callback);
+            })
+            .catch(error => {
+                logger.error('stock.changeColumn', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                this.loading(false);
+            });
+    }
+
     submit(files, callback, id, initCallback) {
         logger.info('submitted', files[0]);
         this.loading(true);
