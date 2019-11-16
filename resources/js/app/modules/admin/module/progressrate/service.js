@@ -52,6 +52,32 @@ export default class Service {
             });
     }
 
+    addRecord(list, isCheckList, callback) {
+        this.loading(true);
+        app.openMessage('Saving');
+        let route = isCheckList ? api.addRecordCheckList : api.addRecord;
+        http(route)
+            .callback(list)
+            .send()
+            .then(response => {
+                if(isCheckList) {
+                    this.checkListInit('Updated');
+                } else {
+                    this.detailInit('Updated');
+                }
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            })
+            .catch(error => {
+                logger.error('Error.addRecord', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                this.loading(false);
+            });
+    }
+
     init(text) {
         this.loading(true);
         !text && app.openMessage('Loading');

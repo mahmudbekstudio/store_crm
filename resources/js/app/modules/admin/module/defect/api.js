@@ -16,6 +16,15 @@ const api = {
         },
         token: true
     },
+    addRecord: {
+        ...Route.admin('defect.add-record'),
+        callback: function (list) {
+            this.data({
+                list
+            });
+        },
+        token: true
+    },
     submit: {
         ...Route.admin('import.defect'),
         callback: function(file) {

@@ -24,6 +24,16 @@ const api = {
         },
         token: true
     },
+    addRecord: {
+        ...Route.admin('stock.add-record'),
+        callback: function (list, no) {
+            this.data({
+                list,
+                wh_no: no
+            });
+        },
+        token: true
+    },
     changeColumn: {
         ...Route.admin('stock.change-column'),
         callback: function (list, no, isIn) {

@@ -10,6 +10,50 @@
             <File v-model="files" :extList="extensions"></File>
             <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading" :loading="isLoading">{{ $t('progressrate.submit') }}</v-btn>
             <v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn>
+            <v-dialog
+                    v-model="addRowPopup"
+                    width="500"
+            >
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                            color="default"
+                            v-on="on"
+                    >
+                        Add record
+                    </v-btn>
+                </template>
+                <v-card>
+                    <v-card-title
+                            class="headline grey lighten-2"
+                            primary-title
+                    >
+                        Add record
+                    </v-card-title>
+
+                    <v-card-text>
+                        <v-text-field
+                                v-for="(item, index) in newRecordFields"
+                                v-model="item.value"
+                                :label="item.label"
+                                :key="index"
+                                type="text"
+                        ></v-text-field>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                                color="primary"
+                                text
+                                @click="saveNewColumn"
+                        >
+                            Save
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </p>
 
         <div v-show="filterShow">
@@ -439,6 +483,9 @@
         service: new Service(),
         data() {
             return {
+                addRowPopup: false,
+                newRecordFields: [],
+                newRecordExceptFields: ['no'],
                 changedFields: {},
                 filterShow: false,
                 files: [],
@@ -651,8 +698,21 @@
         },
         created() {
             this.$options.service.checkListInit();
+            for(let key in this.headers) {
+                if(this.newRecordExceptFields.indexOf(this.headers[key].value) === -1) {
+                    this.newRecordFields.push({
+                        label: this.headers[key].text,
+                        value: ''
+                    });
+                }
+            }
         },
         methods: {
+            saveNewColumn() {
+                this.$options.service.addRecord(this.newRecordFields, true, () => {
+                    this.addRowPopup = false;
+                });
+            },
             changeField(id, key, val, send) {
                 this.$logger.info(id, key, val);
                 this.changedFields[id] = this.changedFields[id] || {};

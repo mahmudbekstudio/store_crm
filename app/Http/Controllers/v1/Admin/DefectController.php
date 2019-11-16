@@ -9,6 +9,7 @@ use App\Repositories\DistrictRepository;
 use App\Repositories\RegionRepository;
 use App\Repositories\SchoolRepository;
 use App\Repositories\UserMetaRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class DefectController extends Controller
@@ -241,6 +242,104 @@ class DefectController extends Controller
                     break;
             }
         }
+
+        return responseData(true);
+    }
+
+    public function addRecord(Request $request)
+    {
+        $list = $request->only(['list'])['list'];
+        $regionRepository = app(RegionRepository::class);
+        $districtRepository = app(DistrictRepository::class);
+        $schoolRepository = app(SchoolRepository::class);
+        $userRepository = app(UserRepository::class);
+        $userMetaRepository = app(UserMetaRepository::class);
+        $defectRepository = app(DefectRepository::class);
+
+        $region = $regionRepository->firstOrCreate(['name' => $list[1]['value']]);
+        $district = $districtRepository->firstOrCreate(['region_id' => $region->id, 'name' => $list[2]['value']]);
+        $school = $schoolRepository->firstOrCreate(['district_id' => $district->id, 'name' => $list[3]['value']]);
+        $userMeta = UserMeta::where(['meta_key' => 'full_name', 'meta_value' => $list[4]['value']])->first();
+        if(!$userMeta) {
+            $user = $userRepository->firstOrCreate(['status' => 1, 'email' => $list[4]['value'] . '@gmail.com', 'password' => '123456']);
+            $userName = explode(' ', $list[4]['value']);
+            $userName[1] = $userName[1] ?? '';
+            $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'full_name', 'meta_value' => $list[4]['value'], 'lang' => 'en']);
+            $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'first_name', 'meta_value' => $userName[0], 'lang' => 'en']);
+            $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'last_name', 'meta_value' => $userName[1], 'lang' => 'en']);
+            $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'phone', 'meta_value' => $list[5]['value'], 'lang' => 'en']);
+            $userId = $user->id;
+        } else {
+            $userId = $userMeta->user_id;
+        }
+
+        $receivedUserMeta = UserMeta::where(['meta_key' => 'full_name', 'meta_value' => $list[6]['value']])->first();
+        if(!$receivedUserMeta) {
+            $user = $userRepository->firstOrCreate(['status' => 1, 'email' => $list[6]['value'] . '@gmail.com', 'password' => '123456']);
+            $userName = explode(' ', $list[6]['value']);
+            $userName[1] = $userName[1] ?? '';
+            $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'full_name', 'meta_value' => $list[6]['value'], 'lang' => 'en']);
+            $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'first_name', 'meta_value' => $userName[0], 'lang' => 'en']);
+            $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'last_name', 'meta_value' => $userName[1], 'lang' => 'en']);
+            $receivedUserId = $user->id;
+        } else {
+            $receivedUserId = $receivedUserMeta->user_id;
+        }
+
+        $product1 = !empty($list[7]['value']);
+        $product2 = !empty($list[8]['value']);
+        $product3 = !empty($list[9]['value']);
+        $product4 = !empty($list[10]['value']);
+        $product5 = !empty($list[11]['value']);
+        $product6 = !empty($list[12]['value']);
+        $product7 = !empty($list[13]['value']);
+
+        $comment = $list[14]['value'] ?? '';
+        $replacementOfPart = !empty($list[15]['value']);
+        $recovery = !empty($list[16]['value']);
+        $replacementOfPc = !empty($list[17]['value']);
+        $dateOfDone = $list[18]['value'];
+
+
+        if(empty($list[19]['value']) || is_null($list[19]['value'])) {
+            $managerUserId = 0;
+        } else {
+            $managerUserMeta = UserMeta::where(['meta_key' => 'full_name', 'meta_value' => $list[19]['value']])->first();
+            if(!$managerUserMeta) {
+                $user = $userRepository->firstOrCreate(['status' => 1, 'email' => $list[19]['value'] . '@gmail.com', 'password' => '123456', 'role' => 'manager']);
+                $userName = explode(' ', $list[19]['value']);
+                $userName[1] = $userName[1] ?? '';
+                $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'full_name', 'meta_value' => $list[19]['value'], 'lang' => 'en']);
+                $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'first_name', 'meta_value' => $userName[0], 'lang' => 'en']);
+                $userMetaRepository->firstOrCreate(['user_id' => $user->id, 'meta_format' => 'string', 'meta_key' => 'last_name', 'meta_value' => $userName[1], 'lang' => 'en']);
+                $managerUserId = $user->id;
+            } else {
+                $managerUserId = $managerUserMeta->user_id;
+            }
+        }
+
+        $defectRepository->create([
+            'user_id' => auth()->user()->id,
+            'date' => $list[0]['value'],
+            'region_id' => $region->id,
+            'district_id' => $district->id,
+            'school_id' => $school->id,
+            'from_user_id' => $userId,
+            'received_user_id' => $receivedUserId,
+            'goods1_id' => $product1,
+            'goods2_id' => $product2,
+            'goods3_id' => $product3,
+            'goods4_id' => $product4,
+            'goods5_id' => $product5,
+            'goods6_id' => $product6,
+            'goods7_id' => $product7,
+            'comment' => $comment,
+            'replacement_of_part' => $replacementOfPart,
+            'recovery' => $recovery,
+            'replacement_of_pc' => $replacementOfPc,
+            'date_of_done' => $dateOfDone,
+            'manager_id' => $managerUserId
+        ]);
 
         return responseData(true);
     }

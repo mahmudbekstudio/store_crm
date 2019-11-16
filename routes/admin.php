@@ -83,6 +83,7 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
     Route::group(['prefix' => 'defect', 'as' => 'defect.'], function() {
         Route::get('list', 'DefectController@list')->name('list');
         Route::put('change-field', 'DefectController@changeField')->name('change-field');
+        Route::put('add-record', 'DefectController@addRecord')->name('add-record');
         /*Route::post('add', 'UserController@add')->name('add');
         Route::get('item/{id}', 'UserController@item')->name('item');
         Route::put('item/{id}', 'UserController@edit')->name('edit');
@@ -98,6 +99,9 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
 
         Route::get('check-list', 'ProgressRateController@checkList')->name('check-list');
         Route::put('change-field-check-list', 'ProgressRateController@changeFieldCheckList')->name('change-field-check-list');
+
+        Route::put('add-record', 'ProgressRateController@addRecord')->name('add-record');
+        Route::put('add-record-check-list', 'ProgressRateController@addRecordCheckList')->name('add-record-check-list');
         /*Route::post('add', 'UserController@add')->name('add');
         Route::get('item/{id}', 'UserController@item')->name('item');
         Route::put('item/{id}', 'UserController@edit')->name('edit');
@@ -111,6 +115,7 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
         Route::get('detail/{id}', 'StockController@details')->name('detail');
         Route::put('change-field', 'StockController@changeField')->name('change-field');
         Route::put('change-column', 'StockController@changeColumn')->name('change-column');
+        Route::put('add-record', 'StockController@addRecord')->name('add-record');
 
         /*Route::get('check-list', 'ProgressRateController@checkList')->name('check-list');
         Route::put('change-field-check-list', 'ProgressRateController@changeFieldCheckList')->name('change-field-check-list');*/
@@ -120,6 +125,7 @@ Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]],
         Route::get('list/{id?}', 'ShipmentProgressController@list')->name('list');
         Route::put('change-field', 'ShipmentProgressController@changeField')->name('change-field');
         Route::put('change-column', 'ShipmentProgressController@changeColumn')->name('change-column');
+        Route::put('add-record', 'ShipmentProgressController@addRecord')->name('add-record');
 
         //Route::get('detail/{id}', 'StockController@details')->name('detail');
         /*Route::get('check-list', 'ProgressRateController@checkList')->name('check-list');

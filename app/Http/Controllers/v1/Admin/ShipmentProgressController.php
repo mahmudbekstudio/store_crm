@@ -180,6 +180,45 @@ class ShipmentProgressController extends Controller
         return responseData(true);
     }
 
+    public function addRecord(Request $request)
+    {
+        $data = $request->only(['list', 'sheep_no']);
+        $shipmentProgressRepository = app(ShipmentProgressRepository::class);
+        $firstItem = $shipmentProgressRepository->findWhere(['sheet_no' => $data['sheep_no']])[0]->toArray();
+        $shipment = json_decode($firstItem['shipment'], true);
+        $listIndex = 0;
+        foreach($shipment as $shipKey => $shipItem) {
+            foreach($shipItem['columns'] as $columnKey => $columnVal) {
+                for($i = $listIndex; $i < count($data['list']); $i++) {
+                    if($data['list'][$i]['label'] == $columnVal) {
+                        $shipment[$shipKey]['values'][$columnKey]['value'] = $data['list'][$i]['value'];
+                        $listIndex = $i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        $goodsRepository = app(GoodsRepository::class);
+        $goods = $goodsRepository->firstOrCreate(['name' => $data['list'][0]['value']]);
+
+        if($goods->unit != $data['list'][1]['value']) {
+            $goods->unit = $data['list'][1]['value'];
+            $goods->save();
+        }
+
+        $shipmentProgressRepository->create([
+            'user_id' => auth()->user()->id,
+            'sheet_no' => $data['sheep_no'],
+            'num' => '',
+            'goods_id' => $goods->id,
+            'contract' => $data['list'][2]['value'],
+            'shipment' => json_encode($shipment),
+        ]);
+
+        return responseData(true);
+    }
+
     public function changeColumn(Request $request)
     {
         $data = $request->only(['list', 'sheep_no']);

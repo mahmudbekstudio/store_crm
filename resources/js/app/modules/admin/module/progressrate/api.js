@@ -35,6 +35,24 @@ const api = {
         },
         token: true
     },
+    addRecord: {
+        ...Route.admin('progressrate.add-record'),
+        callback: function (list) {
+            this.data({
+                list
+            });
+        },
+        token: true
+    },
+    addRecordCheckList: {
+        ...Route.admin('progressrate.add-record-check-list'),
+        callback: function (list) {
+            this.data({
+                list
+            });
+        },
+        token: true
+    },
     submit: {
         ...Route.admin('import.progressrate'),
         callback: function (file, sheetNo) {

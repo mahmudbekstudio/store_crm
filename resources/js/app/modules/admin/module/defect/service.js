@@ -74,6 +74,27 @@ export default class Service {
             });
     }
 
+    addRecord(list, callback) {
+        this.loading(true);
+        app.openMessage('Saving');
+        http(api.addRecord)
+            .callback(list)
+            .send()
+            .then(response => {
+                this.init('Updated');
+                if(typeof callback === 'function') {
+                    callback();
+                }
+            })
+            .catch(error => {
+                logger.error('defect.addRecord', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                this.loading(false);
+            });
+    }
+
     loading(isStart) {
         app.loading(isStart);
         store.commit('defect/changeIsLoading', isStart);

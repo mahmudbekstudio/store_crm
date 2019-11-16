@@ -100,6 +100,24 @@ export default class Service {
             });
     }
 
+    addRecord(list, no, callback) {
+        this.loading(true);
+        app.openMessage('Saving');
+        http(api.addRecord)
+            .callback(list, no)
+            .send()
+            .then(response => {
+                this.detailInit(no, '', callback);
+            })
+            .catch(error => {
+                logger.error('stock.addRecord', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                this.loading(false);
+            });
+    }
+
     submit(files, callback, isDetail, id, initCallback) {
         logger.info('submitted', files[0]);
         this.loading(true);

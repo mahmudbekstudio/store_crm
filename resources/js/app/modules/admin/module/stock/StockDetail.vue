@@ -18,6 +18,50 @@
             <v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn>
             <span class="d-inline-block"><v-switch v-model="isEditMode" label="Edit" color="primary"></v-switch></span>
             <v-dialog
+                    v-model="addRowPopup"
+                    width="500"
+            >
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                            color="default"
+                            v-on="on"
+                    >
+                        Add record
+                    </v-btn>
+                </template>
+                <v-card>
+                    <v-card-title
+                            class="headline grey lighten-2"
+                            primary-title
+                    >
+                        Add record
+                    </v-card-title>
+
+                    <v-card-text>
+                        <v-text-field
+                                v-for="(item, index) in newRecordFields"
+                                v-model="item.value"
+                                :label="item.label"
+                                :key="index"
+                                type="text"
+                        ></v-text-field>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                                color="primary"
+                                text
+                                @click="saveNewColumn"
+                        >
+                            Save
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+            <v-dialog
                     v-model="editInColumnPopup"
                     width="500"
             >
@@ -748,6 +792,7 @@
         service: new Service(),
         data() {
             return {
+                addRowPopup: false,
                 inColumnsList: [],
                 editInColumnPopup: false,
                 outColumnsList: [],
@@ -761,6 +806,8 @@
                 extensions: ['xlsx'],
                 isLoading: false,
                 headers: [],
+                newRecordFields: [],
+                newRecordExceptFields: ['no', 'total_ab'],
                 columns: []
             }
         },
@@ -830,9 +877,28 @@
             columns(val) {
                 this.inColumnsList = val.in;
                 this.outColumnsList = val.out;
+            },
+            headers(val) {
+                this.newRecordFields = [];
+                for(let key in val) {
+                    if(this.newRecordExceptFields.indexOf(val[key].value) === -1) {
+                        this.newRecordFields.push({
+                            label: val[key].text,
+                            value: ''
+                        });
+                    }
+                }
             }
         },
         methods: {
+            saveNewColumn() {
+                this.$options.service.addRecord(this.newRecordFields, this.wh_no, columns => {
+                    console.log('columns', columns);
+                    this.columns = columns;
+                    this.changeColumns();
+                    this.addRowPopup = false;
+                });
+            },
             saveEditInColumn() {
                 this.$options.service.changeColumn(this.inColumnsList, this.wh_no, true, columns => {
                     console.log('columns', columns);

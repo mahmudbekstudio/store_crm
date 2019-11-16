@@ -363,4 +363,82 @@ class ProgressRateController extends Controller
 
         return responseData(true);
     }
+
+    public function addRecord(Request $request)
+    {
+        $data = $request->only(['list']);
+        $regionRepository = app(RegionRepository::class);
+        $districtRepository = app(DistrictRepository::class);
+        $schoolRepository = app(SchoolRepository::class);
+        $progressRateRepository = app(ProgressRateRepository::class);
+
+        //region_id
+        $region = $regionRepository->firstOrCreate(['name' => $data['list'][0]['value']]);
+
+        //district_id
+        $district = $districtRepository->firstOrCreate(['region_id' => $region->id, 'name' => $data['list'][1]['value']]);
+
+        //school_id
+        $school = $schoolRepository->firstOrCreate(['district_id' => $district->id, 'name' => $data['list'][2]['value']]);
+
+        $progressRateRepository->create([
+            'user_id' => auth()->user()->id,
+            'region_id' => $region->id,
+            'district_id' => $district->id,
+            'school_id' => $school->id,
+            'teacher_computer' => $data['list'][3]['value'] ?? '',
+            'student_computer' => $data['list'][4]['value'] ?? '',
+            'survey' => $data['list'][5]['value'] ?? '',
+            'out_wh' => $data['list'][6]['value'] ?? '',
+            'site_arrival_inspection' => $data['list'][7]['value'] ?? '',
+            'installation' => $data['list'][8]['value'] ?? '',
+            'oat_training' => $data['list'][9]['value'] ?? '',
+            'oac' => $data['list'][10]['value'] ?? '',
+            'mac' => $data['list'][11]['value'] ?? '',
+            'warranty_completion' => $data['list'][12]['value'] ?? '',
+            //- installed_quantity_ecc
+            //- installed_quantity_pc
+            'remark' => $data['list'][13]['value'] ?? ''
+        ]);
+        return responseData(true);
+    }
+
+    public function addRecordCheckList(Request $request)
+    {
+        $data = $request->only(['list']);
+        $regionRepository = app(RegionRepository::class);
+        $districtRepository = app(DistrictRepository::class);
+        $schoolRepository = app(SchoolRepository::class);
+        $progressRateCheckListRepository = app(ProgressRateCheckListRepository::class);
+
+        //region_id
+        $region = $regionRepository->firstOrCreate(['name' => $data['list'][0]['value']]);
+
+        //district_id
+        $district = $districtRepository->firstOrCreate(['region_id' => $region->id, 'name' => $data['list'][1]['value']]);
+
+        //school_id
+        $school = $schoolRepository->firstOrCreate(['district_id' => $district->id, 'name' => $data['list'][2]['value']]);
+
+        $progressRateCheckListRepository->create([
+            'user_id' => auth()->user()->id,
+            'region_id' => $region->id,
+            'district_id' => $district->id,
+            'school_id' => $school->id,
+            'teacher_computer' => $data['list'][3]['value'] ?? '',
+            'student_computer' => $data['list'][4]['value'] ?? '',
+            'quantity_teacher_desk' => $data['list'][5]['value'] ?? '',
+            'quantity_student_desk' => $data['list'][6]['value'] ?? '',
+            'size_ecc_length' => $data['list'][7]['value'] ?? '',
+            'size_ecc_width' => $data['list'][8]['value'] ?? '',
+            'power_socket_l' => $data['list'][9]['value'] ?? '',
+            'power_socket_r' => $data['list'][10]['value'] ?? '',
+            'power_socket_f' => $data['list'][11]['value'] ?? '',
+            'power_socket_b' => $data['list'][12]['value'] ?? '',
+            'circuit_breaker' => $data['list'][13]['value'] ?? '',
+            'internet' => $data['list'][14]['value'] ?? '',
+            'remark' => $data['list'][15]['value'] ?? '',
+        ]);
+        return responseData(true);
+    }
 }
