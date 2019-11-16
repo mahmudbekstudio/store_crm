@@ -24,6 +24,17 @@ const api = {
         },
         token: true
     },
+    changeColumn: {
+        ...Route.admin('stock.change-column'),
+        callback: function (list, no, isIn) {
+            this.data({
+                list,
+                wh_no: no,
+                isIn
+            });
+        },
+        token: true
+    },
     submit: {
         ...Route.admin('import.stock'),
         callback: function (file, sheetNo) {

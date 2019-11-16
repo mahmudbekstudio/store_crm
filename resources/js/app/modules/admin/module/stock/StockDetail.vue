@@ -17,6 +17,107 @@
             </v-btn>
             <v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn>
             <span class="d-inline-block"><v-switch v-model="isEditMode" label="Edit" color="primary"></v-switch></span>
+            <v-dialog
+                    v-model="editInColumnPopup"
+                    width="500"
+            >
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                            color="default"
+                            v-on="on"
+                    >
+                        Add in column
+                    </v-btn>
+                </template>
+
+                <v-card>
+                    <v-card-title
+                            class="headline grey lighten-2"
+                            primary-title
+                    >
+                        Add column
+                    </v-card-title>
+
+                    <v-card-text>
+                        <draggable tag="ul" :list="inColumnsList" draggable=".list-group-item" class="list-group draggable-list" handle=".handle">
+                            <li
+                                    class="list-group-item"
+                                    v-for="(element, idx) in inColumnsList"
+                                    :key="element.value"
+                            >
+                                <v-icon class="handle">mdi-menu</v-icon>
+                                <v-text-field class="name-input" v-model="element.text"></v-text-field>
+                                <v-icon class="close" @click="removeInColumn(idx)">mdi-close</v-icon>
+                            </li>
+                            <button slot="footer" @click="addInColumn">Add</button>
+                        </draggable>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                                color="primary"
+                                text
+                                @click="saveEditInColumn"
+                        >
+                            Save
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
+            <v-dialog
+                    v-model="editOutColumnPopup"
+                    width="500"
+            >
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                            color="default"
+                            v-on="on"
+                    >
+                        Add out column
+                    </v-btn>
+                </template>
+
+                <v-card>
+                    <v-card-title
+                            class="headline grey lighten-2"
+                            primary-title
+                    >
+                        Add column
+                    </v-card-title>
+
+                    <v-card-text>
+                        <draggable tag="ul" :list="outColumnsList" draggable=".list-group-item" class="list-group draggable-list" handle=".handle">
+                            <li
+                                    class="list-group-item"
+                                    v-for="(element, idx) in outColumnsList"
+                                    :key="element.value"
+                            >
+                                <v-icon class="handle">mdi-menu</v-icon>
+                                <v-text-field class="name-input" v-model="element.text"></v-text-field>
+                                <v-icon class="close" @click="removeOutColumn(idx)">mdi-close</v-icon>
+                            </li>
+                            <button slot="footer" @click="addOutColumn">Add</button>
+                        </draggable>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                                color="primary"
+                                text
+                                @click="saveEditOutColumn"
+                        >
+                            Save
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </p>
         <div v-show="filterShow">
             <v-container class="grey lighten-5">
@@ -619,6 +720,7 @@
     </PageBox>
 </template>
 <script>
+    import draggable from 'vuedraggable'
     import PageBox from '../../view/partial/PageBox';
     import File from '../../component/File';
     import Service from './service';
@@ -646,6 +748,10 @@
         service: new Service(),
         data() {
             return {
+                inColumnsList: [],
+                editInColumnPopup: false,
+                outColumnsList: [],
+                editOutColumnPopup: false,
                 isEditMode: false,
                 selected: [],
                 changedFields: {},
@@ -720,9 +826,53 @@
             },
             isEditMode() {
                 this.changeColumns();
+            },
+            columns(val) {
+                this.inColumnsList = val.in;
+                this.outColumnsList = val.out;
             }
         },
         methods: {
+            saveEditInColumn() {
+                this.$options.service.changeColumn(this.inColumnsList, this.wh_no, true, columns => {
+                    console.log('columns', columns);
+                    this.columns = columns;
+                    this.changeColumns();
+                    this.editInColumnPopup = false;
+                });
+            },
+            removeInColumn(idx) {
+                this.inColumnsList.splice(idx, 1);
+            },
+            addInColumn() {
+                this.inColumnsList.push({
+                    "text":"",
+                    "align":"center",
+                    "width":"115px",
+                    "value":"column_" + (new Date()).getTime(),
+                    "sortable":false
+                });
+            },
+            saveEditOutColumn() {
+                this.$options.service.changeColumn(this.outColumnsList, this.wh_no, false, columns => {
+                    console.log('columns', columns);
+                    this.columns = columns;
+                    this.changeColumns();
+                    this.editOutColumnPopup = false;
+                });
+            },
+            removeOutColumn(idx) {
+                this.outColumnsList.splice(idx, 1);
+            },
+            addOutColumn() {
+                this.outColumnsList.push({
+                    "text":"",
+                    "align":"center",
+                    "width":"115px",
+                    "value":"column_" + (new Date()).getTime(),
+                    "sortable":false
+                });
+            },
             clickRow(item) {
                 this.$logger.info('clickrow', item);
                 const index = this.selected.indexOf(item);
@@ -850,7 +1000,8 @@
         },
         components: {
             PageBox,
-            File
+            File,
+            draggable
         }
     }
 </script>

@@ -22,12 +22,18 @@ class ShipmentProgressController extends Controller
         $shipmentProgress = $this->shipmentProgressRepository->with(['goods'])->findWhere(['sheet_no' => $id])->toArray();
         $list = [];
         $columns = [];
+        $editColumns = [];
         if(count($shipmentProgress) == 0) {
             return responseData(true, ['list' => $list, 'columns' => $columns]);
         }
         $shipment = json_decode($shipmentProgress[0]['shipment']);
+        $k = 0;
 
         foreach($shipment as $key => $item) {
+            $editColumns[$k] = [
+                'shipment' => ['index' => $key, 'name' => $item->name],
+                'columns' => []
+            ];
             foreach($item->columns as $subKey => $subItem) {
                 $columns[] = [
                     'text' => $subItem,
@@ -36,7 +42,13 @@ class ShipmentProgressController extends Controller
                     'sortable' => false,
                     'value' => 'column_' . $item->values[$subKey]->index
                 ];
+
+                $editColumns[$k]['columns'][] = [
+                    'text' => $subItem,
+                    'value' => $item->values[$subKey]->index
+                ];
             }
+            $k++;
         }
 
         $k = 0;
@@ -89,7 +101,7 @@ class ShipmentProgressController extends Controller
             $k++;
         }
 
-        return responseData(true, ['list' => $list, 'columns' => $columns]);
+        return responseData(true, ['list' => $list, 'columns' => $columns, 'editColumns' => $editColumns]);
     }
 
     public function changeField(Request $request)
@@ -172,17 +184,49 @@ class ShipmentProgressController extends Controller
     {
         $data = $request->only(['list', 'sheep_no']);
 
-        dd($data);
         $shipmentProgress = $this->shipmentProgressRepository->with(['goods'])->findWhere(['sheet_no' => $data['sheep_no']]);
 
         foreach ($shipmentProgress as $item) {
             $shipment = json_decode($item->shipment);
+            $result = [];
 
+            $columns = [];
+            $dates = [];
+            $values = [];
+            $lastIndex = 0;
             foreach($shipment as $key => $item1) {
-                foreach($item1->columns as $subKey => $subItem) {
-                    //
+                foreach($item1->values as $subKey => $subItem) {
+                    $columns[$subItem->index] = $item1->columns[$subKey];
+                    $values[$subItem->index] = $subItem->value;
+                    $dates[$subItem->index] = $item1->dates[$subKey];
+
+                    if($lastIndex < $subItem->index) {
+                        $lastIndex = $subItem->index;
+                    }
                 }
             }
+
+            $result[0] = [
+                'name' => '',
+                'columns' => [],
+                'dates' => [],
+                'values' => [],
+                'quantity' => 0
+            ];
+
+            foreach($data['list'] as $listItem) {
+                $index = str_replace('column_', '', $listItem['value']);
+                if(!isset($values[$index])) {
+                    $lastIndex++;
+                    $index = $lastIndex;
+                }
+                $result[0]['columns'][] = $listItem['text'];
+                $result[0]['dates'][] = $dates[$index] ?? '';
+                $result[0]['values'][] = ['value' => $values[$index] ?? '', 'index' => $index];//$values[$index] ?? '';//{"value":"","index":4},
+            }
+
+            $item->shipment = json_encode($result);
+            $item->save();
         }
 
         return responseData(true);

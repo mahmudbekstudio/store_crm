@@ -147,7 +147,9 @@ class StockController extends Controller
             $columns['out'][] = [
                 'text' => $item['name']/* . ' ' . $item['date']*/,
                 'align' => 'center',
-                'value' => 'out_column_' . $key
+                'width' => '115px',
+                'value' => 'out_column_' . $key,
+                'sortable' => false
             ];
 
             $list[$k]['out_column_' . $key] = $item['name'];
@@ -172,7 +174,7 @@ class StockController extends Controller
                 $list[$k]['in_column_' . $key] = $subItem->value ?? '';
             }
 
-            $item['in_total'] = is_int($item['in_total']) ? $item['in_total'] : 0;
+            $item['in_total'] = is_int((int)$item['in_total']) ? $item['in_total'] : 0;
 
             $list[$k]['total_a'] = (int)$item['in_total'] ?: 0;
 
@@ -180,7 +182,7 @@ class StockController extends Controller
                 $list[$k]['out_column_' . $key] = $subItem->value ?? '';
             }
 
-            $item['in_total'] = is_int($item['out_total']) ? $item['out_total'] : 0;
+            $item['out_total'] = is_int((int)$item['out_total']) ? $item['out_total'] : 0;
             $list[$k]['total_b'] = (int)$item['out_total'] ?: 0;
             $list[$k]['total_a'] = is_int($list[$k]['total_a']) ? $list[$k]['total_a'] : 0;
             $list[$k]['total_b'] = is_int($list[$k]['total_b']) ? $list[$k]['total_b'] : 0;
@@ -190,6 +192,51 @@ class StockController extends Controller
         }
 
         return responseData(true, ['list' => $list, 'columns' => $columns]);
+    }
+
+    public function changeColumn(Request $request)
+    {
+        $data = $request->only(['list', 'wh_no', 'isIn']);
+        $stocks = $this->stockRepository->with(['goods'])->findWhere(['wh_no' => $data['wh_no']]);
+        $result = [];
+
+        foreach($stocks as $item) {
+            $obj = $data['isIn'] ? json_decode($item->in_obj, true) : json_decode($item->out_obj, true);
+            $lastIndex = 0;
+
+            foreach($obj as $key => $val) {
+                if($lastIndex < $key) {
+                    $lastIndex = $key;
+                }
+            }
+
+            foreach($data['list'] as $listItem) {
+                $index = str_replace(($data['isIn'] ? 'in_column_' : 'out_column_'), '', $listItem['value']);
+
+                if(!isset($obj[$index])) {
+                    $lastIndex++;
+                    $index = $lastIndex;
+                    $obj[$index] = [
+                        'name' => '',
+                        'date' => '',
+                        'value' => ''
+                    ];
+                }
+
+                $result[$index] = $obj[$index];
+                $result[$index]['name'] = $listItem['text'];
+            }
+
+            if($data['isIn']) {
+                $item->in_obj = json_encode($result);
+            } else {
+                $item->out_obj = json_encode($result);
+            }
+
+            $item->save();
+        }
+
+        return responseData(true);
     }
 
     public function changeField(Request $request)
@@ -253,6 +300,16 @@ class StockController extends Controller
                 $in_obj[$no]['value'] = $data['val'];
 
                 $item->in_obj = json_encode($in_obj);
+                $item->save();
+            }
+
+            if (substr($data['key'], 0, 11) === 'out_column_') {
+                $out_obj = json_decode($item->out_obj, true);
+                $keyArr = explode('_', $data['key']);
+                $no = $keyArr[count($keyArr) - 1];
+                $out_obj[$no]['value'] = $data['val'];
+
+                $item->out_obj = json_encode($out_obj);
                 $item->save();
             }
         }
