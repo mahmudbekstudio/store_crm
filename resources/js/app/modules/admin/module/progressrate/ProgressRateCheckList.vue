@@ -7,10 +7,11 @@
         </p-->
 
         <p>
-            <File v-model="files" :extList="extensions"></File>
-            <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading" :loading="isLoading">{{ $t('progressrate.submit') }}</v-btn>
+            <File v-if="$store.state.view.website.user.role === 'admin'" v-model="files" :extList="extensions"></File>
+            <v-btn v-if="$store.state.view.website.user.role === 'admin'" @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading" :loading="isLoading">{{ $t('progressrate.submit') }}</v-btn>
             <v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn>
             <v-dialog
+                    v-if="$store.state.view.website.user.role === 'admin'"
                     v-model="addRowPopup"
                     width="500"
             >
@@ -168,7 +169,7 @@
                 <div class="text-center">No Data</div>
             </template>
 
-            <template v-slot:item.region="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.region="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.region"
                         @save="fieldSave(props.item.id, 'region')"
@@ -187,7 +188,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.district="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.district="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.district"
                         @save="fieldSave(props.item.id, 'district')"
@@ -206,7 +207,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.school="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.school="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.school"
                         @save="fieldSave(props.item.id, 'school')"
@@ -225,7 +226,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.teacher_computer="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.teacher_computer="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.teacher_computer"
                         @save="fieldSave(props.item.id, 'teacher_computer')"
@@ -244,7 +245,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.student_computer="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.student_computer="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.student_computer"
                         @save="fieldSave(props.item.id, 'student_computer')"
@@ -263,7 +264,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.quantity_teacher_desk="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.quantity_teacher_desk="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.quantity_teacher_desk"
                         @save="fieldSave(props.item.id, 'quantity_teacher_desk')"
@@ -282,7 +283,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.quantity_student_desk="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.quantity_student_desk="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.quantity_student_desk"
                         @save="fieldSave(props.item.id, 'quantity_student_desk')"
@@ -301,7 +302,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.size_ecc_length="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.size_ecc_length="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.size_ecc_length"
                         @save="fieldSave(props.item.id, 'size_ecc_length')"
@@ -320,7 +321,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.size_ecc_width="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.size_ecc_width="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.size_ecc_width"
                         @save="fieldSave(props.item.id, 'size_ecc_width')"
@@ -339,7 +340,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.power_socket_l="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.power_socket_l="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.power_socket_l"
                         @save="fieldSave(props.item.id, 'power_socket_l')"
@@ -358,7 +359,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.power_socket_r="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.power_socket_r="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.power_socket_r"
                         @save="fieldSave(props.item.id, 'power_socket_r')"
@@ -377,7 +378,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.power_socket_f="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.power_socket_f="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.power_socket_f"
                         @save="fieldSave(props.item.id, 'power_socket_f')"
@@ -396,7 +397,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.power_socket_b="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.power_socket_b="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.power_socket_b"
                         @save="fieldSave(props.item.id, 'power_socket_b')"
@@ -415,7 +416,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.circuit_breaker="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.circuit_breaker="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.circuit_breaker"
                         @save="fieldSave(props.item.id, 'circuit_breaker')"
@@ -434,7 +435,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.internet="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.internet="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.internet"
                         @save="fieldSave(props.item.id, 'internet')"
@@ -453,7 +454,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.remark="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.remark="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.remark"
                         @save="fieldSave(props.item.id, 'remark')"

@@ -13,8 +13,8 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
 
     const ROLE_ADMIN = 'admin';
-    const ROLE_ANALYTIC = 'analytic';
-    const ROLE_VIEWER = 'viewer';
+    const ROLE_MINISTER = 'minister';
+    const ROLE_GUEST = 'guest';
     const ROLE_MANAGER = 'manager';
     const ROLE_PUBLISHER = 'publisher';
     const ROLE_USER = 'user';
@@ -43,8 +43,8 @@ class User extends Authenticatable implements JWTSubject
             self::ROLE_ADMIN,
             self::ROLE_MANAGER,
             self::ROLE_PUBLISHER,
-            self::ROLE_ANALYTIC,
-            self::ROLE_VIEWER,
+            self::ROLE_MINISTER,
+            self::ROLE_GUEST,
             self::ROLE_USER
         ];
     }
@@ -53,8 +53,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [
             self::ROLE_ADMIN,
-            self::ROLE_ANALYTIC,
-            self::ROLE_VIEWER
+            self::ROLE_MINISTER,
+            self::ROLE_GUEST
         ];
     }
 

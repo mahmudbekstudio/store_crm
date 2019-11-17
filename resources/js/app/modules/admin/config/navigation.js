@@ -67,11 +67,63 @@ export default {
             ],
         },*/
     ],
-    analytic: [
+    minister: [
         {text: 'ECC Survey', icon: 'mdi-progress-check', route: {name: 'progressrate.checkList'}},
+        {
+            icon: 'mdi-progress-check',
+            text: 'Installation Progress',
+            children: [
+                { text: 'Summary Progress', route: {name: 'progressrate.list'} },
+                { text: 'Progress in Details', route: {name: 'progressrate.detail'} },
+            ],
+        },
+        {
+            icon: 'mdi-progress-clock',
+            text: 'Shipment Progress',
+            children: [
+                { text: 'PC', route: {name: 'shipment-progress.list'} },
+                { text: 'AVR', route: {name: 'shipment-progress.list2'} },
+            ],
+        },
     ],
-    viewer: [
+    guest: [
+        {text: 'ECC Survey', icon: 'mdi-progress-check', route: {name: 'progressrate.checkList'}},
+        {
+            icon: 'mdi-progress-check',
+            text: 'Installation Progress',
+            children: [
+                { text: 'Summary Progress', route: {name: 'progressrate.list'} },
+                { text: 'Progress in Details', route: {name: 'progressrate.detail'} },
+            ],
+        },
+        {
+            icon: 'mdi-inbox-multiple',
+            text: 'Stock Management',
+            children: [
+                { text: 'Summary', route: {name: 'stock.list'} },
+                { text: 'Warehouse 1 – Tashkent', route: {name: 'stock.detail1'} },
+                { text: 'Warehouse 2 – Samarkand', route: {name: 'stock.detail2'} },
+            ],
+        },
+        {
+            icon: 'mdi-progress-clock',
+            text: 'Shipment Progress',
+            children: [
+                { text: 'PC', route: {name: 'shipment-progress.list'} },
+                { text: 'AVR', route: {name: 'shipment-progress.list2'} },
+            ],
+        },
         {text: 'Defect management', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},
+        {
+            icon: 'mdi-file-document',
+            text: 'Documents',
+            children: [
+                { text: 'Survey report', route: {name: 'document.item1'} },
+                { text: 'OATC', route: {name: 'document.item2'} },
+                { text: 'Request for stock-out, each warehouse', route: {name: 'document.item3'} },
+                { text: 'Etc.', route: {name: 'document.item4'} },
+            ],
+        },
     ]
 };
 /*export default [

@@ -5,12 +5,13 @@
             <v-btn :color="shipmentNo === '2' ? 'default' : 'primary'" :to="{ name: 'shipment-progress.list2'}">Shipment progress AVR</v-btn>
         </p-->
         <p>
-            <File v-model="files" :extList="extensions"></File>
-            <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading"
+            <File v-if="$store.state.view.website.user.role === 'admin'" v-model="files" :extList="extensions"></File>
+            <v-btn v-if="$store.state.view.website.user.role === 'admin'" @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading"
                    :loading="isLoading">{{ $t('shipmentprogress.submit') }}
             </v-btn>
-            <span class="d-inline-block"><v-switch v-model="isEditMode" label="Edit" color="primary"></v-switch></span>
+            <span v-if="$store.state.view.website.user.role === 'admin'" class="d-inline-block"><v-switch v-model="isEditMode" label="Edit" color="primary"></v-switch></span>
             <v-dialog
+                    v-if="$store.state.view.website.user.role === 'admin'"
                     v-model="addRowPopup"
                     width="500"
             >
@@ -55,6 +56,7 @@
                 </v-card>
             </v-dialog>
             <v-dialog
+                    v-if="$store.state.view.website.user.role === 'admin'"
                     v-model="editColumnPopup"
                     width="500"
             >
@@ -118,7 +120,7 @@
                 <div class="text-center">No Data</div>
             </template>
 
-            <template v-slot:item.num="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.num="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.num"
                         @save="fieldSave(props.item.id, 'num')"
@@ -137,7 +139,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.item="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.item="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.item"
                         @save="fieldSave(props.item.id, 'item')"
@@ -156,7 +158,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.unit="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.unit="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.unit"
                         @save="fieldSave(props.item.id, 'unit')"
@@ -175,7 +177,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.contract="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.contract="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.contract"
                         @save="fieldSave(props.item.id, 'contract')"
@@ -194,7 +196,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.column_4="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_4="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_4"
                         @save="fieldSave(props.item.id, 'column_4')"
@@ -211,7 +213,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_5="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_5="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_5"
                         @save="fieldSave(props.item.id, 'column_5')"
@@ -228,7 +230,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_6="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_6="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_6"
                         @save="fieldSave(props.item.id, 'column_6')"
@@ -245,7 +247,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_7="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_7="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_7"
                         @save="fieldSave(props.item.id, 'column_7')"
@@ -262,7 +264,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_8="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_8="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_8"
                         @save="fieldSave(props.item.id, 'column_8')"
@@ -279,7 +281,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_9="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_9="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_9"
                         @save="fieldSave(props.item.id, 'column_9')"
@@ -297,7 +299,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.column_10="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_10="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_10"
                         @save="fieldSave(props.item.id, 'column_10')"
@@ -314,7 +316,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_11="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_11="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_11"
                         @save="fieldSave(props.item.id, 'column_11')"
@@ -331,7 +333,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_12="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_12="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_12"
                         @save="fieldSave(props.item.id, 'column_12')"
@@ -348,7 +350,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_13="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_13="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_13"
                         @save="fieldSave(props.item.id, 'column_13')"
@@ -365,7 +367,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_14="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_14="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_14"
                         @save="fieldSave(props.item.id, 'column_14')"
@@ -382,7 +384,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_15="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_15="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_15"
                         @save="fieldSave(props.item.id, 'column_15')"
@@ -399,7 +401,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_16="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_16="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_16"
                         @save="fieldSave(props.item.id, 'column_16')"
@@ -416,7 +418,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_17="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_17="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_17"
                         @save="fieldSave(props.item.id, 'column_17')"
@@ -433,7 +435,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_18="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_18="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_18"
                         @save="fieldSave(props.item.id, 'column_18')"
@@ -450,7 +452,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_19="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_19="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_19"
                         @save="fieldSave(props.item.id, 'column_19')"
@@ -470,7 +472,7 @@
 
 
 
-            <template v-slot:item.column_20="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_20="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_20"
                         @save="fieldSave(props.item.id, 'column_20')"
@@ -487,7 +489,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_21="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_21="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_21"
                         @save="fieldSave(props.item.id, 'column_21')"
@@ -504,7 +506,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_22="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_22="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_22"
                         @save="fieldSave(props.item.id, 'column_22')"
@@ -521,7 +523,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_23="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_23="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_23"
                         @save="fieldSave(props.item.id, 'column_23')"
@@ -538,7 +540,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_24="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_24="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_24"
                         @save="fieldSave(props.item.id, 'column_24')"
@@ -555,7 +557,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_25="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_25="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_25"
                         @save="fieldSave(props.item.id, 'column_25')"
@@ -572,7 +574,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_26="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_26="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_26"
                         @save="fieldSave(props.item.id, 'column_26')"
@@ -589,7 +591,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_27="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_27="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_27"
                         @save="fieldSave(props.item.id, 'column_27')"
@@ -606,7 +608,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_28="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_28="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_28"
                         @save="fieldSave(props.item.id, 'column_28')"
@@ -623,7 +625,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_29="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_29="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_29"
                         @save="fieldSave(props.item.id, 'column_29')"
@@ -641,7 +643,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.column_30="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_30="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_30"
                         @save="fieldSave(props.item.id, 'column_30')"
@@ -658,7 +660,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_31="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_31="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_31"
                         @save="fieldSave(props.item.id, 'column_31')"
@@ -675,7 +677,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_32="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_32="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_32"
                         @save="fieldSave(props.item.id, 'column_32')"
@@ -692,7 +694,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_33="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_33="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_33"
                         @save="fieldSave(props.item.id, 'column_33')"
@@ -709,7 +711,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_34="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_34="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_34"
                         @save="fieldSave(props.item.id, 'column_34')"
@@ -726,7 +728,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_35="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_35="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_35"
                         @save="fieldSave(props.item.id, 'column_35')"
@@ -743,7 +745,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_36="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_36="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_36"
                         @save="fieldSave(props.item.id, 'column_36')"
@@ -760,7 +762,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_37="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_37="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_37"
                         @save="fieldSave(props.item.id, 'column_37')"
@@ -777,7 +779,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_38="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_38="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_38"
                         @save="fieldSave(props.item.id, 'column_38')"
@@ -794,7 +796,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_39="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_39="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_39"
                         @save="fieldSave(props.item.id, 'column_39')"
@@ -812,7 +814,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.column_40="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_40="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_40"
                         @save="fieldSave(props.item.id, 'column_40')"
@@ -829,7 +831,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_41="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_41="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_41"
                         @save="fieldSave(props.item.id, 'column_41')"
@@ -846,7 +848,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_42="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_42="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_42"
                         @save="fieldSave(props.item.id, 'column_42')"
@@ -863,7 +865,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_43="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_43="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_43"
                         @save="fieldSave(props.item.id, 'column_43')"
@@ -880,7 +882,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_44="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_44="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_44"
                         @save="fieldSave(props.item.id, 'column_44')"
@@ -897,7 +899,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_45="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_45="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_45"
                         @save="fieldSave(props.item.id, 'column_45')"
@@ -914,7 +916,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_46="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_46="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_46"
                         @save="fieldSave(props.item.id, 'column_46')"
@@ -931,7 +933,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_47="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_47="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_47"
                         @save="fieldSave(props.item.id, 'column_47')"
@@ -948,7 +950,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_48="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_48="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_48"
                         @save="fieldSave(props.item.id, 'column_48')"
@@ -965,7 +967,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_49="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_49="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_49"
                         @save="fieldSave(props.item.id, 'column_49')"
@@ -983,7 +985,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.column_50="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_50="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_50"
                         @save="fieldSave(props.item.id, 'column_50')"
@@ -1000,7 +1002,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_51="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_51="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_51"
                         @save="fieldSave(props.item.id, 'column_51')"
@@ -1017,7 +1019,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_52="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_52="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_52"
                         @save="fieldSave(props.item.id, 'column_52')"
@@ -1034,7 +1036,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_53="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_53="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_53"
                         @save="fieldSave(props.item.id, 'column_53')"
@@ -1051,7 +1053,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_54="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_54="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_54"
                         @save="fieldSave(props.item.id, 'column_54')"
@@ -1068,7 +1070,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_55="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_55="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_55"
                         @save="fieldSave(props.item.id, 'column_55')"
@@ -1085,7 +1087,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_56="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_56="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_56"
                         @save="fieldSave(props.item.id, 'column_56')"
@@ -1102,7 +1104,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_57="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_57="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_57"
                         @save="fieldSave(props.item.id, 'column_57')"
@@ -1119,7 +1121,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_58="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_58="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_58"
                         @save="fieldSave(props.item.id, 'column_58')"
@@ -1136,7 +1138,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_59="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_59="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_59"
                         @save="fieldSave(props.item.id, 'column_59')"
@@ -1154,7 +1156,7 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.column_60="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_60="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_60"
                         @save="fieldSave(props.item.id, 'column_60')"
@@ -1171,7 +1173,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_61="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_61="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_61"
                         @save="fieldSave(props.item.id, 'column_61')"
@@ -1188,7 +1190,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_62="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_62="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_62"
                         @save="fieldSave(props.item.id, 'column_62')"
@@ -1205,7 +1207,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_63="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_63="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_63"
                         @save="fieldSave(props.item.id, 'column_63')"
@@ -1222,7 +1224,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_64="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_64="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_64"
                         @save="fieldSave(props.item.id, 'column_64')"
@@ -1239,7 +1241,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_65="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_65="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_65"
                         @save="fieldSave(props.item.id, 'column_65')"
@@ -1256,7 +1258,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_66="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_66="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_66"
                         @save="fieldSave(props.item.id, 'column_66')"
@@ -1273,7 +1275,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_67="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_67="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_67"
                         @save="fieldSave(props.item.id, 'column_67')"
@@ -1290,7 +1292,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_68="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_68="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_68"
                         @save="fieldSave(props.item.id, 'column_68')"
@@ -1307,7 +1309,7 @@
                     </template>
                 </v-edit-dialog>
             </template>
-            <template v-slot:item.column_69="props">
+            <template v-if="$store.state.view.website.user.role === 'admin'" v-slot:item.column_69="props">
                 <v-edit-dialog
                         :return-value.sync="props.item.column_69"
                         @save="fieldSave(props.item.id, 'column_69')"
