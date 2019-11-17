@@ -27,7 +27,7 @@ class AuthService extends BaseService {
         $credential = $request->only(['email', 'password']);
         $token = auth()->attempt($credential);
 
-        if($token && $role && (!in_array($role, User::getRoles()) || $role != auth()->user()->role)) {
+        if($token/* && $role*/ && (!in_array($role, User::getRoles())/* || $role != auth()->user()->role*/)) {
             auth()->logout();
             return responseMessage(false, ['email' => [__('message.you_do_not_have_permission')]]);
         }

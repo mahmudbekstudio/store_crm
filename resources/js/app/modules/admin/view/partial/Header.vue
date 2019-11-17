@@ -119,7 +119,7 @@
                 return viewConfig.companyName;
             },
             fullname() {
-                return 'testing Max';
+                return this.$store.state.view.website.meta.first_name + ' ' + this.$store.state.view.website.meta.last_name;
             },
             menuArrow() {
                 return !this.menuIsOpen ? 'mdi-arrow-down-drop-circle-outline' : 'mdi-arrow-up-drop-circle-outline';

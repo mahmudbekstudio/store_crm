@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddUserRequest;
+use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use App\Models\UserMeta;
 use App\Repositories\UserMetaRepository;
@@ -45,7 +46,7 @@ class UserController extends Controller
             }
         });
 
-        $this->userRepository->all()->map(function($item) use(&$list, $names, $phones) {
+        $this->userRepository->findWhereIn('role', User::getAccessRoles())->map(function($item) use(&$list, $names, $phones) {
             $list[] = [
                 'id'        => $item->id,
                 'name'      => $names[$item->id] ?? $item->id,
@@ -62,7 +63,12 @@ class UserController extends Controller
 
     public function params()
     {
-        return responseData(true, ['roles' => User::getRoles(), 'statuses' => User::getStatuses()]);
+        $roles = [];
+        foreach(User::getAccessRoles() as $item) {
+            $roles[$item] = ucfirst($item);
+        }
+
+        return responseData(true, ['roles' => $roles, 'statuses' => User::getStatuses()]);
     }
 
     public function add(AddUserRequest $request)
@@ -112,10 +118,15 @@ class UserController extends Controller
         /*return responseData(true, ['item' => $this->schoolRepository->find($id), 'regions' => $this->regionRepository->all()]);*/
     }
 
-    public function edit($id, Request $request)
+    public function edit($id, EditUserRequest $request)
     {
         $metaData = $request->only(['firstName', 'lastName']);
         $userData = $request->only(['email', 'password', 'status', 'role']);
+
+        if($userData['password'] === '') {
+            unset($userData['password']);
+        }
+
         $this->userRepository->update($userData, $id);
 
         $this->userMetaRepository->deleteWhere(['user_id' => $id, 'meta_key' => 'first_name']);
@@ -139,7 +150,7 @@ class UserController extends Controller
         $this->userMetaRepository->create([
             'user_id' => $id,
             'meta_format' => 'string',
-            'meta_key' => 'last_name',
+            'meta_key' => 'full_name',
             'meta_value' => $metaData['firstName'] . ' ' . $metaData['lastName'],
             'lang' => 'en'
         ]);

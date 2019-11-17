@@ -28,7 +28,7 @@ Route::group(['prefix' => 'document', 'as' => 'document.'], function() {
     Route::get('download/{id}', 'DocumentController@download')->name('download');
 });
 
-Route::group(['middleware' => ['token:access.' . \App\Models\User::ROLE_ADMIN]], function() {
+Route::group(['middleware' => ['token:access']], function() {
 
     Route::group(['prefix' => 'region', 'as' => 'region.'], function() {
         Route::get('list', 'RegionController@list')->name('list');

@@ -13,6 +13,8 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
 
     const ROLE_ADMIN = 'admin';
+    const ROLE_ANALYTIC = 'analytic';
+    const ROLE_VIEWER = 'viewer';
     const ROLE_MANAGER = 'manager';
     const ROLE_PUBLISHER = 'publisher';
     const ROLE_USER = 'user';
@@ -41,7 +43,18 @@ class User extends Authenticatable implements JWTSubject
             self::ROLE_ADMIN,
             self::ROLE_MANAGER,
             self::ROLE_PUBLISHER,
+            self::ROLE_ANALYTIC,
+            self::ROLE_VIEWER,
             self::ROLE_USER
+        ];
+    }
+
+    public static function getAccessRoles()
+    {
+        return [
+            self::ROLE_ADMIN,
+            self::ROLE_ANALYTIC,
+            self::ROLE_VIEWER
         ];
     }
 

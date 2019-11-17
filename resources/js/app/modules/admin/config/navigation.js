@@ -43,7 +43,7 @@ export default {
         {text: 'School', icon: 'mdi-school-outline', route: {name: 'school.list'}},
         {text: 'Category', icon: 'mdi-laptop', route: {name: 'category.list'}},
         {text: 'Goods', icon: 'mdi-laptop', route: {name: 'goods.list'}},*/
-        // {text: 'User', icon: 'mdi-account-supervisor-outline', route: {name: 'user.list'}},
+        {text: 'User', icon: 'mdi-account-supervisor-outline', route: {name: 'user.list'}},
         // {text: 'Defects', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},
         // {text: 'Progress rate', icon: 'mdi-progress-check', route: {name: 'progressrate.list'}},
         // {text: 'Stock', icon: 'mdi-inbox-multiple', route: {name: 'stock.list'}},
@@ -67,16 +67,11 @@ export default {
             ],
         },*/
     ],
-    manager: [
-        {text: 'Dashboard', icon: 'dashboard', route: {name: 'manager.dashboard'}},
-        {text: 'Tasks', icon: 'group', route: {name: 'default-login'}},
-        {text: 'Settings', icon: 'settings', route: {name: 'manager.settings'}}
+    analytic: [
+        {text: 'ECC Survey', icon: 'mdi-progress-check', route: {name: 'progressrate.checkList'}},
     ],
-    publisher: [
-        {text: 'Dashboard', icon: 'dashboard', route: {name: 'publisher.dashboard'}},
-        {text: 'Tasks', icon: 'dashboard', route: {name: 'publisher.dashboard'}},
-        //{text: 'Test', icon: 'group', route: {name: 'default-login'}},
-        {text: 'Settings', icon: 'settings', route: {name: 'publisher.settings'}}
+    viewer: [
+        {text: 'Defect management', icon: 'mdi-image-broken-variant', route: {name: 'defect'}},
     ]
 };
 /*export default [

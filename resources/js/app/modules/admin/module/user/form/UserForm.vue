@@ -92,7 +92,8 @@
         },
 
         created () {
-            this.form = {firstName: {
+            this.form = {
+                firstName: {
                     label: i18n.t('translations.words.first_name'),
                     value: '',
                     rules: [configValidation.required(i18n.t('translations.words.first_name'))]
@@ -133,15 +134,16 @@
             this.$options.service.getParams();
             
             if(this.$router.currentRoute.params.id) {
-                this.form.password.rules.push(configValidation.required(i18n.t('translations.words.password')));
-                this.form.password2.rules.push(configValidation.required(i18n.t('translations.words.password2')));
-
                 this.isEdit = true;
                 this.$options.service.init(this.$router.currentRoute.params.id, (item) => {
                     for(let i in item) {
-                        this.form[i].value = item[i];
+                        this.form[i].value = item[i] + '';
                     }
+                    this.$logger.info('init', this.form);
                 });
+            } else {
+                this.form.password.rules.push(configValidation.required(i18n.t('translations.words.password')));
+                this.form.password2.rules.push(configValidation.required(i18n.t('translations.words.password2')));
             }
 
             this.actionsList.push(getPageBoxAction('Back', '', {color: 'default'}, {
@@ -171,7 +173,7 @@
                             let form = {};
 
                             for(let key in this.form) {
-                                form[key] = this.form[key].value;
+                                form[key] = this.form[key].value + '';
                             }
                             this.$logger.info('edit form', form);
                             this.$options.service.edit(this.$router.currentRoute.params.id, form, () => {

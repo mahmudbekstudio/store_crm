@@ -6,6 +6,7 @@ import viewConfig from '../config/view';
 import http from './Http';
 import logger from './Logger';
 import { SNACKBAR_COLORS } from '../constants';
+import navigation from '../config/navigation';
 
 class App {
     install(Vue) {
@@ -71,7 +72,11 @@ class App {
     }
 
     login(token, redirect = true) {
-        auth.login(token);
+        const user = auth.login(token);
+        if(navigation[user.role]) {
+            router.push({name: navigation[user.role][0].route.name});
+            return;
+        }
         redirect && router.push({name: viewConfig.page.default});
     }
 

@@ -1,32 +1,62 @@
 <template>
     <PageBox class="module-document">
-        <div>
-            <select class="standart-select" v-model="seletedDistrict">
-                <optgroup v-for="(districts, region) of params" :label="region">
-                    <option v-for="item of districts">{{item}}</option>
-                </optgroup>
-            </select>
+        <div v-if="selected.district">
             <File v-model="files" :extList="[]"></File>
             <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading"
                    :loading="isLoading">Upload
             </v-btn>
         </div>
-        <ol>
-            <li v-for="(districts, region) of params">
-                <span @click="regionClick(region)" class="document-link">{{region}}</span>
-                <ul v-show="activeRegion === region">
-                    <li v-for="item of districts">
-                        {{item}}
-                        <div v-for="file of items[item]">
-                            <a :href="'/api/admin/document/download/' + file.id" target="_blank">{{getFileName(file.file)}}</a>
-                            <v-btn text icon color="default" @click="deleteFile(file)">
-                                <v-icon>mdi-delete</v-icon>
-                            </v-btn>
+        <div v-if="!selected.region" class="folder-list">
+            <h2>Regions list</h2>
+            <div v-for="(districts, region) of params" class="folder-item" @click="clickSelectRegion(region)">
+                <v-icon>mdi-folder-outline</v-icon>
+                <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                        <div class="folder-name" v-on="on">
+                            {{ region }}
                         </div>
-                    </li>
-                </ul>
-            </li>
-        </ol>
+                    </template>
+                    <span>{{ region }}</span>
+                </v-tooltip>
+            </div>
+        </div>
+        <div v-if="selected.region && !selected.district" class="folder-list">
+            <h4 v-if="regionsLength > 1">Selected region: {{ selected.region }}</h4>
+            <h2><v-btn v-if="regionsLength > 1" color="default" icon @click="selected.region = ''"><v-icon>mdi-keyboard-backspace</v-icon></v-btn> Districts list</h2>
+            <div v-for="district of params[selected.region]" class="folder-item" @click="clickSelectDistrict(district)">
+                <v-icon>mdi-folder-outline</v-icon>
+                <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                        <div class="folder-name" v-on="on">
+                            {{ district }}
+                        </div>
+                    </template>
+                    <span>{{ district }}</span>
+                </v-tooltip>
+            </div>
+        </div>
+        <div v-if="selected.district" class="folder-list">
+            <h4 v-if="regionsLength > 1">Selected region: {{ selected.region }}</h4>
+            <h4>Selected district: {{ selected.district }}</h4>
+            <h2><v-btn color="default" icon @click="selected.district = ''"><v-icon>mdi-keyboard-backspace</v-icon></v-btn> Files list</h2>
+
+            <div v-for="file of items[selected.district]" class="folder-item">
+                <v-btn text icon color="default" class="delete-btn" @click="deleteFile(file)">
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+                <a :href="'/api/admin/document/download/' + file.id" target="_blank">
+                    <v-icon>mdi-file-outline</v-icon>
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on }">
+                            <div class="folder-name" v-on="on">
+                                {{getFileName(file.file)}}
+                            </div>
+                        </template>
+                        <span>{{getFileName(file.file)}}</span>
+                    </v-tooltip>
+                </a>
+            </div>
+        </div>
     </PageBox>
 </template>
 <script>
@@ -38,11 +68,14 @@
         service: new Service(),
         data() {
             return {
-                seletedDistrict: '',
+                selected: {
+                    region: '',
+                    district: ''
+                },
                 isLoading: false,
-                activeRegion: '',
                 typeId: '',
                 files: [],
+                regionsLength: 0,
             };
         },
         computed: {
@@ -51,12 +84,6 @@
             },
             params() {
                 const params = this.$store.state.document.params;
-
-                /*for(let val in params) {
-                    for(let subVal in params[val]) {
-                        this.files[params[val][subVal]] = [];
-                    }
-                }*/
 
                 return params;
             }
@@ -67,12 +94,31 @@
         watch: {
             '$route'() {
                 this.changeRoute();
+            },
+            params(val) {
+                this.regionsLength = 0;
+                let lastKey = '';
+
+                for(let key in val) {
+                    this.regionsLength++;
+                    lastKey = key;
+                }
+
+                if(this.regionsLength === 1) {
+                    this.selected.region = lastKey;
+                }
             }
         },
 
         methods: {
             getFileName(fileName) {
                 return fileName.split('/').pop();
+            },
+            clickSelectRegion(region) {
+                this.selected.region = region;
+            },
+            clickSelectDistrict(district) {
+                this.selected.district = district;
             },
             deleteFile(file) {
                 this.isLoading = true;
@@ -84,20 +130,15 @@
                 let routeName = this.$router.currentRoute.name;
                 this.typeId = routeName.replace('document.item', '');
                 this.$options.service.init(this.typeId);
-            },
-            regionClick(region) {
-                if(this.activeRegion === region) {
-                    this.activeRegion = '';
-                } else {
-                    this.activeRegion = region;
-                }
+                this.selected.region = '';
+                this.selected.district = '';
             },
             submitSelectedFile() {
                 this.isLoading = true;
                 this.$options.service.submit(this.files, () => {
                     this.files = [];
                     this.isLoading = false;
-                }, this.seletedDistrict, this.typeId);
+                }, this.selected.district, this.typeId);
             }
         },
         components: {

@@ -82,3 +82,51 @@
     }
   }
 }
+
+.folder-list {
+  .folder-item {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #CCC;
+    vertical-align: middle;
+    margin: 5px;
+    box-shadow: 2px 2px 3px #999;
+    border-radius: 5px;
+    background-color: #FFF;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 4px 4px 3px #999;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      &:hover {
+        background-color: #999;
+      }
+
+      .v-icon {
+        vertical-align: baseline;
+      }
+    }
+
+    .v-icon {
+      display: block;
+      font-size: 60px;
+      text-align: center;
+    }
+
+    .folder-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 14px;
+    }
+  }
+}

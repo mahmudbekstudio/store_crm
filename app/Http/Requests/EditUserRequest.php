@@ -6,7 +6,7 @@ use App\Http\Requests\Traits\JsonResponseValidation;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddUserRequest extends FormRequest
+class EditUserRequest extends FormRequest
 {
     use JsonResponseValidation;
     /**
@@ -26,14 +26,19 @@ class AddUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'firstName' => 'required',
             'lastName' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
-            'password2' => 'same:password',
             'status' => 'required|in:' . implode(',', array_keys(User::getStatuses())),
             'role' => 'required|in:' . implode(',', User::getRoles())
         ];
+
+        if(implode(request()->only(['password', 'password2']))) {
+            $rules['password'] = 'required';
+            $rules['password2'] = 'same:password';
+        }
+
+        return $rules;
     }
 }

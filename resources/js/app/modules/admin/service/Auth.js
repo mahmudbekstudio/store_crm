@@ -20,6 +20,7 @@ class Auth {
     delete tokenObj.user;
     store.commit('storage/changeToken', tokenObj);
     store.commit('storage/changeUser', user);
+    return user;
   }
 
   getTokenObj() {

@@ -24,7 +24,7 @@ class UserService extends BaseService {
 
         if($authedUser) {
             $user = $authedUser->toArray();
-            $metas = $this->userMeta->getMetas($user['id'], ['firstname', 'lastname'])->toArray();
+            $metas = $this->userMeta->getMetas($user['id'], ['first_name', 'last_name'])->toArray();
 
             foreach($metas as $val) {
                 $metasList[$val['meta_key']] = $val['meta_value'];
