@@ -1,6 +1,6 @@
 <template>
     <PageBox class="module-document">
-        <div v-if="selected.district">
+        <div v-if="selected.district && $store.state.view.website.user.role === 'admin'">
             <File v-model="files" :extList="[]"></File>
             <v-btn @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading"
                    :loading="isLoading">Upload
