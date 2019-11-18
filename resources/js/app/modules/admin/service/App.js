@@ -24,9 +24,9 @@ class App {
     }
 
     checkInit(successCallback = null) {
-        //if (store.state.view.website) {
+        if (store.state.view.website) {
             store.commit('view/websiteInit');
-        //} else {
+        } else {
             http('default.website')
                 .send()
                 .then(response => {
@@ -56,7 +56,7 @@ class App {
                 .then(() => {
                     store.commit('view/websiteInit');
                 });
-        //}
+        }
     }
 
     loading(isStart) {
@@ -73,14 +73,11 @@ class App {
 
     login(token, redirect = true) {
         const user = auth.login(token);
-        this.checkInit(() => {
-            window.location.href = '';
-            /*if(navigation[user.role]) {
-                router.push({name: navigation[user.role][0].route.name});
-                return;
-            }
-            redirect && router.push({name: viewConfig.page.default});*/
-        });
+        if(navigation[user.role]) {
+            router.push({name: navigation[user.role][0].route.name});
+            return;
+        }
+        redirect && router.push({name: viewConfig.page.default});
     }
 
     logout() {
