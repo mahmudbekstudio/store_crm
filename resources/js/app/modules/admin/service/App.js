@@ -24,9 +24,9 @@ class App {
     }
 
     checkInit(successCallback = null) {
-        if (store.state.view.website) {
+        //if (store.state.view.website) {
             store.commit('view/websiteInit');
-        } else {
+        //} else {
             http('default.website')
                 .send()
                 .then(response => {
@@ -56,7 +56,7 @@ class App {
                 .then(() => {
                     store.commit('view/websiteInit');
                 });
-        }
+        //}
     }
 
     loading(isStart) {
