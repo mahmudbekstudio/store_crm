@@ -73,11 +73,15 @@ class App {
 
     login(token, redirect = true) {
         const user = auth.login(token);
-        if(navigation[user.role]) {
-            router.push({name: navigation[user.role][0].route.name});
-            return;
-        }
-        redirect && router.push({name: viewConfig.page.default});
+        this.settings(() => {
+            if(navigation[user.role]) {
+                router.push({name: navigation[user.role][0].route.name});
+            } else {
+                redirect && router.push({name: viewConfig.page.default});
+            }
+
+            window.location.reload();
+        });
     }
 
     logout() {
