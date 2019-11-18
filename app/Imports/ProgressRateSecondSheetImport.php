@@ -47,6 +47,7 @@ class ProgressRateSecondSheetImport implements ToCollection
 
             //school_id
             $school = $schoolRepository->firstOrCreate(['district_id' => $district->id, 'name' => $item[2]]);
+            //$date = date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[])->getTimestamp());
 
             $progressRateRepository->create([
                 'user_id' => auth()->user()->id,
@@ -55,14 +56,16 @@ class ProgressRateSecondSheetImport implements ToCollection
                 'school_id' => $school->id,
                 'teacher_computer' => $item[3] ?? '',
                 'student_computer' => $item[4] ?? '',
-                'survey' => $item[5] ?? '',
-                'out_wh' => $item[6] ?? '',
-                'site_arrival_inspection' => $item[7] ?? '',
-                'installation' => $item[8] ?? '',
-                'oat_training' => $item[9] ?? '',
-                'oac' => $item[10] ?? '',
-                'mac' => $item[11] ?? '',
-                'warranty_completion' => $item[12] ?? '',
+
+                'survey' => $item[5] ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[5])->getTimestamp()) : '',
+                'out_wh' => $item[6] ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[6])->getTimestamp()) : '',
+                'site_arrival_inspection' => $item[7] ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[7])->getTimestamp()) : '',
+                'installation' => $item[8] ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[8])->getTimestamp()) : '',
+                'oat_training' => $item[9] ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[9])->getTimestamp()) : '',
+                'oac' => $item[10] ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[10])->getTimestamp()) : '',
+                'mac' => $item[11] ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[11])->getTimestamp()) : '',
+                'warranty_completion' => $item[12] ? date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[12])->getTimestamp()) : '',
+
                 //- installed_quantity_ecc
                 //- installed_quantity_pc
                 'remark' => $item[15] ?? ''
