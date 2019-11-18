@@ -74,7 +74,7 @@ class App {
     login(token, redirect = true) {
         const user = auth.login(token);
         this.checkInit(() => {
-            window.location.reload();
+            window.location.href = '';
             /*if(navigation[user.role]) {
                 router.push({name: navigation[user.role][0].route.name});
                 return;
