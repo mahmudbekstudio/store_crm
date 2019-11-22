@@ -5,6 +5,8 @@
                 :items="items"
                 class="elevation-1"
                 :footer-props="{itemsPerPageOptions:[30,45,60,-1]}"
+                :fixed-header="true"
+                :height="420"
         >
             <template v-slot:item.action="{ item }">
                 <!--v-icon
