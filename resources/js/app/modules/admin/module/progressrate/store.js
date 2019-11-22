@@ -11,7 +11,7 @@ store.registerModule('progressrate', {
         checkList: [],
         errors: '',
         filterCheckList: {
-            region: {list: [], value: 'All'},
+            region: {list: [], value: []},
             district: {list: [], value: 'All'},
             school: {list: [], value: 'All'},
             teacher_computer: {list: [], value: 'All'},
@@ -28,7 +28,7 @@ store.registerModule('progressrate', {
             internet: {list: [], value: 'All'},
         },
         filter: {
-            region: {list: [], value: 'All'},
+            region: {list: [], value: []},
             district: {list: [], value: 'All'},
             school: {list: [], value: 'All'},
             teacher_computer: {list: [], value: 'All'},
@@ -47,7 +47,7 @@ store.registerModule('progressrate', {
             installed_quantity_pc: {list: [], value: 'All'},
         },
         filterMain: {
-            region: {list: [], value: 'All'},
+            region: {list: [], value: []},
             teacher_computer: {list: [], value: 'All'},
             student_computer: {list: [], value: 'All'},
             total_pc: {list: [], value: 'All'},
@@ -219,50 +219,62 @@ store.registerModule('progressrate', {
                     state.filterMain.region.list.push(list[i]['region']);
                 }
 
+                list[i]['teacher_computer'] = list[i]['teacher_computer'].format();
                 if (state.filterMain.teacher_computer.list.indexOf(list[i]['teacher_computer']) === -1) {
                     state.filterMain.teacher_computer.list.push(list[i]['teacher_computer']);
                 }
 
+                list[i]['student_computer'] = list[i]['student_computer'].format();
                 if (state.filterMain.student_computer.list.indexOf(list[i]['student_computer']) === -1) {
                     state.filterMain.student_computer.list.push(list[i]['student_computer']);
                 }
 
+                list[i]['total_pc'] = list[i]['total_pc'].format();
                 if (state.filterMain.total_pc.list.indexOf(list[i]['total_pc']) === -1) {
                     state.filterMain.total_pc.list.push(list[i]['total_pc']);
                 }
 
+                list[i]['survey'] = list[i]['survey'].format();
                 if (state.filterMain.survey.list.indexOf(list[i]['survey']) === -1) {
                     state.filterMain.survey.list.push(list[i]['survey']);
                 }
 
+                list[i]['out_wh'] = list[i]['out_wh'].format();
                 if (state.filterMain.out_wh.list.indexOf(list[i]['out_wh']) === -1) {
                     state.filterMain.out_wh.list.push(list[i]['out_wh']);
                 }
 
+                list[i]['site_arrival_inspection'] = list[i]['site_arrival_inspection'].format();
                 if (state.filterMain.site_arrival_inspection.list.indexOf(list[i]['site_arrival_inspection']) === -1) {
                     state.filterMain.site_arrival_inspection.list.push(list[i]['site_arrival_inspection']);
                 }
 
+                list[i]['oat_training'] = list[i]['oat_training'].format();
                 if (state.filterMain.oat_training.list.indexOf(list[i]['oat_training']) === -1) {
                     state.filterMain.oat_training.list.push(list[i]['oat_training']);
                 }
 
+                list[i]['oac'] = list[i]['oac'].format();
                 if (state.filterMain.oac.list.indexOf(list[i]['oac']) === -1) {
                     state.filterMain.oac.list.push(list[i]['oac']);
                 }
 
+                list[i]['mac'] = list[i]['mac'].format();
                 if (state.filterMain.mac.list.indexOf(list[i]['mac']) === -1) {
                     state.filterMain.mac.list.push(list[i]['mac']);
                 }
 
+                list[i]['warranty_completion'] = list[i]['warranty_completion'].format();
                 if (state.filterMain.warranty_completion.list.indexOf(list[i]['warranty_completion']) === -1) {
                     state.filterMain.warranty_completion.list.push(list[i]['warranty_completion']);
                 }
 
+                list[i]['installed_quantity_ecc'] = list[i]['installed_quantity_ecc'].format();
                 if (state.filterMain.installed_quantity_ecc.list.indexOf(list[i]['installed_quantity_ecc']) === -1) {
                     state.filterMain.installed_quantity_ecc.list.push(list[i]['installed_quantity_ecc']);
                 }
 
+                list[i]['installed_quantity_pc'] = list[i]['installed_quantity_pc'].format();
                 if (state.filterMain.installed_quantity_pc.list.indexOf(list[i]['installed_quantity_pc']) === -1) {
                     state.filterMain.installed_quantity_pc.list.push(list[i]['installed_quantity_pc']);
                 }

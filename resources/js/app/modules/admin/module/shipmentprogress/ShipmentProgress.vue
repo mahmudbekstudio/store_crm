@@ -115,6 +115,7 @@
                 class="elevation-1"
                 @click:row="clickRow"
                 v-model="selected"
+                :footer-props="{itemsPerPageOptions:[30,45,60,-1]}"
         >
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>

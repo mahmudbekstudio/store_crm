@@ -4,6 +4,7 @@
                 :headers="headers"
                 :items="items"
                 class="elevation-1"
+                :footer-props="{itemsPerPageOptions:[30,45,60,-1]}"
         >
             <template v-slot:item.action="{ item }">
                 <!--v-icon
