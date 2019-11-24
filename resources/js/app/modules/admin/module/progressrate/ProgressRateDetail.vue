@@ -699,7 +699,7 @@
                 return this.$store.state.progressrate.detailList.filter(item => {
                     if (
                         this.filter.region.value.length &&
-                        this.filter.region.valueindexOf(item.region) === -1
+                        this.filter.region.value.indexOf(item.region) === -1
                     ) {
                         return false;
                     }
