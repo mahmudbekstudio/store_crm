@@ -25,8 +25,9 @@
                         <v-select
                                 :value="filter.item.value"
                                 @input="filterChanged($event, 'item')"
-                                :items="['All', ...filter.item.list]"
+                                :items="filter.item.list"
                                 label="Item"
+                                :multiple="true"
                         ></v-select>
                         <v-select
                                 :value="filter.unit.value"
@@ -186,6 +187,9 @@
                 :headers="headers"
                 :items="items"
                 class="elevation-1 colored-table"
+                :footer-props="{itemsPerPageOptions:[30,45,60,-1]}"
+                :fixed-header="true"
+                :height="420"
         >
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>
@@ -344,8 +348,8 @@
             items() {
                 return this.$store.state.stock.list.filter(item => {
                     if (
-                        this.filter.item.value !== 'All' &&
-                        this.filter.item.value !== item.item
+                        this.filter.item.value.length &&
+                        this.filter.item.value.indexOf(item.item) === -1
                     ) {
                         return false;
                     }

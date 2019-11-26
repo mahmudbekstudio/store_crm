@@ -10,14 +10,14 @@ store.registerModule('stock', {
         detail: [],
         errors: '',
         detailFilter: {
-            item: {list: [], value: 'All'},
+            item: {list: [], value: []},
             unit: {list: [], value: 'All'},
             total_a: {list: [], value: 'All'},
             total_b: {list: [], value: 'All'},
             total_ab: {list: [], value: 'All'},
         },
         filter: {
-            item: {list: [], value: 'All'},
+            item: {list: [], value: []},
             unit: {list: [], value: 'All'},
 
             wh_01_in: {list: [], value: 'All'},
@@ -127,7 +127,7 @@ store.registerModule('stock', {
         },
         resetFilter(state) {
             for (let key in state.filter) {
-                state.filter[key].value = 'All';
+                state.filter[key].value = [];
             }
         },
         changeDetailFilter(state, val) {
@@ -135,7 +135,7 @@ store.registerModule('stock', {
         },
         resetDetailFilter(state) {
             for (let key in state.filter) {
-                state.detailFilter[key].value = 'All';
+                state.detailFilter[key].value = [];
             }
         },
     },

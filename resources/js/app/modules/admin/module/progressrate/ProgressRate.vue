@@ -21,8 +21,9 @@
                         <v-select
                                 :value="filter.region.value"
                                 @input="filterChanged($event, 'region')"
-                                :items="['All', ...filter.region.list]"
+                                :items="filter.region.list"
                                 label="Region"
+                                :multiple="true"
                         ></v-select>
                         <v-select
                                 :value="filter.teacher_computer.value"
@@ -121,6 +122,9 @@
                 :headers="headers"
                 :items="items"
                 class="elevation-1"
+                :footer-props="{itemsPerPageOptions:[30,45,60,-1]}"
+                :fixed-header="true"
+                :height="420"
         >
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>
@@ -174,11 +178,11 @@
                         align: 'center',
                         value: 'survey',
                     },
-                    {
+                    /*{
                         text: 'Out W/H',
                         align: 'center',
                         value: 'out_wh',
-                    },
+                    },*/
                     {
                         text: 'Site Arrival Inspection',
                         align: 'center',
@@ -205,12 +209,12 @@
                         value: 'warranty_completion',
                     },
                     {
-                        text: 'Installed Q-ty of Ecc',
+                        text: 'ECC Done',
                         align: 'center',
                         value: 'installed_quantity_ecc',
                     },
                     {
-                        text: 'Installed Q-ty of PC',
+                        text: 'PC Done',
                         align: 'center',
                         value: 'installed_quantity_pc',
                     },
@@ -231,8 +235,8 @@
             items() {
                 return this.$store.state.progressrate.list.filter(item => {
                     if (
-                        this.filter.region.value !== 'All' &&
-                        this.filter.region.value !== item.region
+                        this.filter.region.value.length &&
+                        this.filter.region.value.indexOf(item.region) === -1
                     ) {
                         return false;
                     }

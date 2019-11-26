@@ -10,7 +10,7 @@ store.registerModule('defect', {
         errors: '',
         filter: {
             date: {list: [], value: 'All'},
-            region: {list: [], value: 'All'},
+            region: {list: [], value: []},
             district: {list: [], value: 'All'},
             school: {list: [], value: 'All'},
             from_user: {list: [], value: 'All'},

@@ -173,8 +173,9 @@
                         <v-select
                                 :value="filter.item.value"
                                 @input="filterChanged($event, 'item')"
-                                :items="['All', ...filter.item.list]"
+                                :items="filter.item.list"
                                 label="Item"
+                                :multiple="true"
                         ></v-select>
                         <v-select
                                 :value="filter.unit.value"
@@ -214,6 +215,9 @@
                 class="elevation-1"
                 @click:row="clickRow"
                 v-model="selected"
+                :footer-props="{itemsPerPageOptions:[30,45,60,-1]}"
+                :fixed-header="true"
+                :height="420"
         >
             <template v-slot:no-data>
                 <div class="text-center">No Data</div>
@@ -826,8 +830,8 @@
                     }
 
                     if (
-                        this.filter.item.value !== 'All' &&
-                        this.filter.item.value !== item.item
+                        this.filter.item.value.length &&
+                        this.filter.item.value.indexOf(item.item) === -1
                     ) {
                         return false;
                     }
