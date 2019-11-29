@@ -261,44 +261,6 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.total_a="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.total_a"
-                        @save="fieldSave(props.item.id, 'total_a')"
-                        large
-                > {{ props.item.total_a }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'total_a') || props.item.total_a"
-                                @input="changeField(props.item.id, 'total_a', $event)"
-
-                                label="Total (A)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-
-            <template v-slot:item.total_b="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.total_b"
-                        @save="fieldSave(props.item.id, 'total_b')"
-                        large
-                > {{ props.item.total_b }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'total_b') || props.item.total_b"
-                                @input="changeField(props.item.id, 'total_b', $event)"
-
-                                label="Total (B)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-
             <template v-slot:item.remark="props" v-if="$store.state.view.website.user.role === 'admin'">
                 <v-edit-dialog
                         :return-value.sync="props.item.remark"

@@ -173,17 +173,15 @@ class StockController extends Controller
             foreach ($inObj as $key => $subItem) {
                 $list[$k]['in_column_' . $key] = $subItem->value ?? '';
             }
-
             $item['in_total'] = is_int((int)$item['in_total']) ? $item['in_total'] : 0;
-
             $list[$k]['total_a'] = (int)$item['in_total'] ?: 0;
 
             foreach ($outObj as $key => $subItem) {
                 $list[$k]['out_column_' . $key] = $subItem->value ?? '';
             }
-
             $item['out_total'] = is_int((int)$item['out_total']) ? $item['out_total'] : 0;
             $list[$k]['total_b'] = (int)$item['out_total'] ?: 0;
+
             $list[$k]['total_a'] = is_int($list[$k]['total_a']) ? $list[$k]['total_a'] : 0;
             $list[$k]['total_b'] = is_int($list[$k]['total_b']) ? $list[$k]['total_b'] : 0;
             $list[$k]['total_ab'] = $list[$k]['total_a'] - $list[$k]['total_b'];
@@ -279,14 +277,14 @@ class StockController extends Controller
                     $goods->save();
                     break;
 
-                case 'total_a':
+                /*case 'total_a':
                     $item->in_total = $data['val'];
                     $item->save();
                     break;
                 case 'total_b':
                     $item->out_total = $data['val'];
                     $item->save();
-                    break;
+                    break;*/
                 case 'remark':
                     $item->remark = $data['val'];
                     $item->save();
@@ -299,6 +297,13 @@ class StockController extends Controller
                 $no = $keyArr[count($keyArr) - 1];
                 $in_obj[$no]['value'] = $data['val'];
 
+                $inTotal = 0;
+                foreach($in_obj as $inItem) {
+                    $val = $inItem['value'] > 0 ? $inItem['value'] : 0;
+                    $inTotal += $val;
+                }
+                $item->in_total = $inTotal;
+
                 $item->in_obj = json_encode($in_obj);
                 $item->save();
             }
@@ -308,6 +313,13 @@ class StockController extends Controller
                 $keyArr = explode('_', $data['key']);
                 $no = $keyArr[count($keyArr) - 1];
                 $out_obj[$no]['value'] = $data['val'];
+
+                $outTotal = 0;
+                foreach($out_obj as $outItem) {
+                    $val = $outItem['value'] > 0 ? $outItem['value'] : 0;
+                    $outTotal += $val;
+                }
+                $item->out_total = $outTotal;
 
                 $item->out_obj = json_encode($out_obj);
                 $item->save();
@@ -364,8 +376,8 @@ class StockController extends Controller
             'wh_no' => $data['wh_no'],
             'in_obj' => json_encode($inObj),
             'out_obj' => json_encode($outObj),
-            'in_total' => $inTotal,
-            'out_total' => $outTotal,
+            //'in_total' => $inTotal,
+            //'out_total' => $outTotal,
             'remark' => $data['list'][count($data['list']) - 1]['value']
         ]);
         return responseData(true);
