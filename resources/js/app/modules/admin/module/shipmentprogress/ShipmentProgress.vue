@@ -1330,6 +1330,13 @@
                 </v-edit-dialog>
             </template>
 
+            <template v-slot:item.total="props">
+                {{ parseFloat(props.item.total).format() }}
+            </template>
+            <template v-slot:item.balance="props">
+                {{ parseFloat(props.item.balance).format() }}
+            </template>
+
 
         </v-data-table>
     </PageBox>
