@@ -69,7 +69,7 @@ class ProgressRateController extends Controller
 
         foreach ($details as $item) {
             $k++;
-            $installedQuantityEcc = empty($item['mac']) ? 0 : 1;
+            $installedQuantityEcc = empty($item['oac']) ? 0 : 1;
             $installedQuantityPc = ((int)$item['teacher_computer'] + (int)$item['student_computer']) * $installedQuantityEcc;
             $list[] = [
                 'id' => $item['id'],
@@ -141,7 +141,7 @@ class ProgressRateController extends Controller
                     'warranty_completion' => $warranty_completion,
                     'installed_quantity_ecc' => $mac,
                     'installed_quantity_pc' => $installed_quantity_pc,
-                    'progress_rate_ecc' => (round($mac / $teachersComputer * 10000) / 100) . '%',
+                    'progress_rate_ecc' => (round($oac / $teachersComputer * 10000) / 100) . '%',
                     'progress_rate_pc' => (round($installed_quantity_pc / ($teachersComputer + $studentComputer) * 10000) / 100) . '%'
                 ];
 
@@ -166,7 +166,7 @@ class ProgressRateController extends Controller
                 $studentComputer += (int)$item['student_computer'];
             }
 
-            if (!empty($item['teacher_computer']) && !empty($item['student_computer']) && !empty($item['mac'])) {
+            if (!empty($item['teacher_computer']) && !empty($item['student_computer']) && !empty($item['oac'])) {
                 $installed_quantity_pc += $item['teacher_computer'] + $item['student_computer'];
             }
 
