@@ -280,176 +280,16 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.in_column_3="props" v-if="$store.state.view.website.user.role === 'admin'">
+            <template v-for="inItem of inColumnsCells" v-slot:[inItem.key]="props" v-if="$store.state.view.website.user.role === 'admin'">
                 <v-edit-dialog
-                        :return-value.sync="props.item.in_column_3"
-                        @save="fieldSave(props.item.id, 'in_column_3')"
+                        :return-value.sync="props.item[inItem.name]"
+                        @save="fieldSave(props.item.id, inItem.name)"
                         large
-                > {{ props.item.in_column_3 }}
+                > {{ props.item[inItem.name] }}
                     <template v-slot:input>
                         <v-text-field
-                                :value="getField(props.item.id, 'in_column_3') || props.item.in_column_3"
-                                @input="changeField(props.item.id, 'in_column_3', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_4="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_4"
-                        @save="fieldSave(props.item.id, 'in_column_4')"
-                        large
-                > {{ props.item.in_column_4 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_4') || props.item.in_column_4"
-                                @input="changeField(props.item.id, 'in_column_4', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_5="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_5"
-                        @save="fieldSave(props.item.id, 'in_column_5')"
-                        large
-                > {{ props.item.in_column_5 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_5') || props.item.in_column_5"
-                                @input="changeField(props.item.id, 'in_column_5', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_6="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_6"
-                        @save="fieldSave(props.item.id, 'in_column_6')"
-                        large
-                > {{ props.item.in_column_6 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_6') || props.item.in_column_6"
-                                @input="changeField(props.item.id, 'in_column_6', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_7="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_7"
-                        @save="fieldSave(props.item.id, 'in_column_7')"
-                        large
-                > {{ props.item.in_column_7 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_7') || props.item.in_column_7"
-                                @input="changeField(props.item.id, 'in_column_7', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_8="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_8"
-                        @save="fieldSave(props.item.id, 'in_column_8')"
-                        large
-                > {{ props.item.in_column_8 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_8') || props.item.in_column_8"
-                                @input="changeField(props.item.id, 'in_column_8', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_9="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_9"
-                        @save="fieldSave(props.item.id, 'in_column_9')"
-                        large
-                > {{ props.item.in_column_9 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_9') || props.item.in_column_9"
-                                @input="changeField(props.item.id, 'in_column_9', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_10="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_10"
-                        @save="fieldSave(props.item.id, 'in_column_10')"
-                        large
-                > {{ props.item.in_column_10 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_10') || props.item.in_column_10"
-                                @input="changeField(props.item.id, 'in_column_10', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_11="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_11"
-                        @save="fieldSave(props.item.id, 'in_column_11')"
-                        large
-                > {{ props.item.in_column_11 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_11') || props.item.in_column_11"
-                                @input="changeField(props.item.id, 'in_column_11', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_12="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_12"
-                        @save="fieldSave(props.item.id, 'in_column_12')"
-                        large
-                > {{ props.item.in_column_12 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_12') || props.item.in_column_12"
-                                @input="changeField(props.item.id, 'in_column_12', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.in_column_13="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.in_column_13"
-                        @save="fieldSave(props.item.id, 'in_column_13')"
-                        large
-                > {{ props.item.in_column_13 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'in_column_13') || props.item.in_column_13"
-                                @input="changeField(props.item.id, 'in_column_13', $event)"
+                                :value="getField(props.item.id, inItem.name) || props.item[inItem.name]"
+                                @input="changeField(props.item.id, inItem.name, $event)"
                                 single-line
                                 counter
                         ></v-text-field>
@@ -457,272 +297,16 @@
                 </v-edit-dialog>
             </template>
 
-            <template v-slot:item.out_column_6="props" v-if="$store.state.view.website.user.role === 'admin'">
+            <template v-for="item of outColumnsCells" v-slot:[item.key]="props" v-if="$store.state.view.website.user.role === 'admin'">
                 <v-edit-dialog
-                        :return-value.sync="props.item.out_column_6"
-                        @save="fieldSave(props.item.id, 'out_column_6')"
+                        :return-value.sync="props.item[item.name]"
+                        @save="fieldSave(props.item.id, item.name)"
                         large
-                > {{ props.item.out_column_6 }}
+                > {{ props.item[item.name] }}
                     <template v-slot:input>
                         <v-text-field
-                                :value="getField(props.item.id, 'out_column_6') || props.item.out_column_6"
-                                @input="changeField(props.item.id, 'out_column_6', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_7="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_7"
-                        @save="fieldSave(props.item.id, 'out_column_7')"
-                        large
-                > {{ props.item.out_column_7 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_7') || props.item.out_column_7"
-                                @input="changeField(props.item.id, 'out_column_7', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_8="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_8"
-                        @save="fieldSave(props.item.id, 'out_column_8')"
-                        large
-                > {{ props.item.out_column_8 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_8') || props.item.out_column_8"
-                                @input="changeField(props.item.id, 'out_column_8', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_9="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_9"
-                        @save="fieldSave(props.item.id, 'out_column_9')"
-                        large
-                > {{ props.item.out_column_9 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_9') || props.item.out_column_9"
-                                @input="changeField(props.item.id, 'out_column_9', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_10="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_10"
-                        @save="fieldSave(props.item.id, 'out_column_10')"
-                        large
-                > {{ props.item.out_column_10 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_10') || props.item.out_column_10"
-                                @input="changeField(props.item.id, 'out_column_10', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_11="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_11"
-                        @save="fieldSave(props.item.id, 'out_column_11')"
-                        large
-                > {{ props.item.out_column_11 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_11') || props.item.out_column_11"
-                                @input="changeField(props.item.id, 'out_column_11', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_12="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_12"
-                        @save="fieldSave(props.item.id, 'out_column_12')"
-                        large
-                > {{ props.item.out_column_12 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_12') || props.item.out_column_12"
-                                @input="changeField(props.item.id, 'out_column_12', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_13="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_13"
-                        @save="fieldSave(props.item.id, 'out_column_13')"
-                        large
-                > {{ props.item.out_column_13 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_13') || props.item.out_column_13"
-                                @input="changeField(props.item.id, 'out_column_13', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_14="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_14"
-                        @save="fieldSave(props.item.id, 'out_column_14')"
-                        large
-                > {{ props.item.out_column_14 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_14') || props.item.out_column_14"
-                                @input="changeField(props.item.id, 'out_column_14', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_15="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_15"
-                        @save="fieldSave(props.item.id, 'out_column_15')"
-                        large
-                > {{ props.item.out_column_15 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_15') || props.item.out_column_15"
-                                @input="changeField(props.item.id, 'out_column_15', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_16="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_16"
-                        @save="fieldSave(props.item.id, 'out_column_16')"
-                        large
-                > {{ props.item.out_column_16 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_16') || props.item.out_column_16"
-                                @input="changeField(props.item.id, 'out_column_16', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_17="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_17"
-                        @save="fieldSave(props.item.id, 'out_column_17')"
-                        large
-                > {{ props.item.out_column_17 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_17') || props.item.out_column_17"
-                                @input="changeField(props.item.id, 'out_column_17', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_18="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_18"
-                        @save="fieldSave(props.item.id, 'out_column_18')"
-                        large
-                > {{ props.item.out_column_18 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_18') || props.item.out_column_18"
-                                @input="changeField(props.item.id, 'out_column_18', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_19="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_19"
-                        @save="fieldSave(props.item.id, 'out_column_19')"
-                        large
-                > {{ props.item.out_column_19 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_19') || props.item.out_column_19"
-                                @input="changeField(props.item.id, 'out_column_19', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_20="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_20"
-                        @save="fieldSave(props.item.id, 'out_column_20')"
-                        large
-                > {{ props.item.out_column_20 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_20') || props.item.out_column_20"
-                                @input="changeField(props.item.id, 'out_column_20', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_21="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_21"
-                        @save="fieldSave(props.item.id, 'out_column_21')"
-                        large
-                > {{ props.item.out_column_21 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_21') || props.item.out_column_21"
-                                @input="changeField(props.item.id, 'out_column_21', $event)"
-                                single-line
-                                counter
-                        ></v-text-field>
-                    </template>
-                </v-edit-dialog>
-            </template>
-            <template v-slot:item.out_column_22="props" v-if="$store.state.view.website.user.role === 'admin'">
-                <v-edit-dialog
-                        :return-value.sync="props.item.out_column_22"
-                        @save="fieldSave(props.item.id, 'out_column_22')"
-                        large
-                > {{ props.item.out_column_22 }}
-                    <template v-slot:input>
-                        <v-text-field
-                                :value="getField(props.item.id, 'out_column_22') || props.item.out_column_22"
-                                @input="changeField(props.item.id, 'out_column_22', $event)"
+                                :value="getField(props.item.id, item.name) || props.item[item.name]"
+                                @input="changeField(props.item.id, item.name, $event)"
                                 single-line
                                 counter
                         ></v-text-field>
@@ -761,6 +345,8 @@
         service: new Service(),
         data() {
             return {
+                outColumnsCells: [],
+                inColumnsCells: [],
                 addRowPopup: false,
                 inColumnsList: [],
                 editInColumnPopup: false,
@@ -834,6 +420,12 @@
             }
         },
         created() {
+            for(let i = 6; i <= 350; i++) {
+                this.outColumnsCells.push({key: 'item.out_column_' + i, name: 'out_column_' + i});
+            }
+            for(let i = 3; i <= 350; i++) {
+                this.inColumnsCells.push({key: 'item.in_column_' + i, name: 'in_column_' + i});
+            }
             this.changeWh();
         },
         watch: {
