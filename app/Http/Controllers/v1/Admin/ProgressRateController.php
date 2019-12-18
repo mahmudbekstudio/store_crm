@@ -213,20 +213,49 @@ class ProgressRateController extends Controller
                 case 'region':
                     $regionRepository = app(RegionRepository::class);
                     $region = $regionRepository->find($item->region_id);
-                    $region->name = $data['val'];
-                    $region->save();
+
+                    if(count($this->progressRateRepository->findWhere(['region_id' => $item->region_id])->toArray()) > 1) {
+                        $region = $regionRepository->withUser()->create([
+                            'name' => $data['val']
+                        ]);
+                        $item->region_id = $region->id;
+                        $item->save();
+                    } else {
+                        $region->name = $data['val'];
+                        $region->save();
+                    }
                     break;
                 case 'district':
                     $districtRepository = app(DistrictRepository::class);
                     $district = $districtRepository->find($item->district_id);
-                    $district->name = $data['val'];
-                    $district->save();
+
+                    if(count($this->progressRateRepository->findWhere(['district_id' => $item->district_id])->toArray()) > 1) {
+                        $region = $districtRepository->withUser()->create([
+                            'region_id' => $district->region_id,
+                            'name' => $data['val']
+                        ]);
+                        $item->district_id = $region->id;
+                        $item->save();
+                    } else {
+                        $district->name = $data['val'];
+                        $district->save();
+                    }
                     break;
                 case 'school':
                     $schoolRepository = app(SchoolRepository::class);
                     $school = $schoolRepository->find($item->school_id);
-                    $school->name = $data['val'];
-                    $school->save();
+
+                    if(count($this->progressRateRepository->findWhere(['school_id' => $item->school_id])->toArray()) > 1) {
+                        $region = $schoolRepository->withUser()->create([
+                            'district_id' => $school->district_id,
+                            'name' => $data['val']
+                        ]);
+                        $item->school_id = $region->id;
+                        $item->save();
+                    } else {
+                        $school->name = $data['val'];
+                        $school->save();
+                    }
                     break;
                 case 'teacher_computer':
                     $item->teacher_computer = $data['val'];

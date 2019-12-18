@@ -267,14 +267,36 @@ class StockController extends Controller
                 case 'item':
                     $regionRepository = app(GoodsRepository::class);
                     $goods = $regionRepository->find($item->goods_id);
-                    $goods->name = $data['val'];
-                    $goods->save();
+
+                    if(count($this->stockRepository->findWhere(['goods_id' => $item->goods_id])->toArray()) > 1) {
+                        $region = $regionRepository->withUser()->create([
+                            'goods_category_id' => $goods->goods_category_id,
+                            'name' => $data['val'],
+                            'unit' => $goods->unit
+                        ]);
+                        $item->goods_id = $region->id;
+                        $item->save();
+                    } else {
+                        $goods->name = $data['val'];
+                        $goods->save();
+                    }
                     break;
                 case 'unit':
                     $districtRepository = app(GoodsRepository::class);
                     $goods = $districtRepository->find($item->goods_id);
-                    $goods->unit = $data['val'];
-                    $goods->save();
+
+                    if(count($this->stockRepository->findWhere(['goods_id' => $item->goods_id])->toArray()) > 1) {
+                        $region = $districtRepository->withUser()->create([
+                            'goods_category_id' => $goods->goods_category_id,
+                            'name' => $goods->name,
+                            'unit' => $data['val']
+                        ]);
+                        $item->goods_id = $region->id;
+                        $item->save();
+                    } else {
+                        $goods->unit = $data['val'];
+                        $goods->save();
+                    }
                     break;
 
                 /*case 'total_a':
