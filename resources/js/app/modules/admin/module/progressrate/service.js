@@ -85,7 +85,37 @@ export default class Service {
             .send()
             .then(response => {
                 logger.info('progressrate.list', response);
-                store.commit('progressrate/changeList', response.data.list);
+                let list = response.data.list;
+                if(list.length) {
+                    let total = {
+                        id: '',
+                        no: '',
+                        region: ''
+                    };
+                    for(let key in list) {
+                        let item = list[key];
+                        let startGet = false;
+
+                        for(let field in item) {
+                            if(!startGet) {
+                                if(field === 'region') {
+                                    startGet = true;
+                                }
+                                continue;
+                            }
+
+                            if(typeof total[field] === 'undefined') {
+                                total[field] = 0;
+                            }
+
+                            let fieldVal = parseFloat(item[field]);
+                            total[field] += isNaN(fieldVal) ? 0 : fieldVal;
+                        }
+                    }
+
+                    list.push(total);
+                }
+                store.commit('progressrate/changeList', list);
                 text && app.openMessage(text);
                 !text && app.openMessage('Loaded');
             })
