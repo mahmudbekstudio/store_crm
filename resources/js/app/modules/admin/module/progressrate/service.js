@@ -90,7 +90,7 @@ export default class Service {
                     let total = {
                         id: '',
                         no: '',
-                        region: ''
+                        region: 'Total'
                     };
                     for(let key in list) {
                         let item = list[key];
@@ -113,6 +113,8 @@ export default class Service {
                         }
                     }
 
+                    total['progress_rate_ecc'] = (Math.round(total['oac'] / total['teacher_computer'] * 10000) / 100) + '%';
+                    total['progress_rate_pc'] = ((Math.round(total['installed_quantity_pc'] / total['total_pc'] * 10000) / 100) + '%';
                     list.push(total);
                 }
                 store.commit('progressrate/changeList', list);
