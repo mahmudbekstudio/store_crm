@@ -139,7 +139,7 @@ class ProgressRateController extends Controller
                     'oac' => $oac,
                     'mac' => $mac,
                     'warranty_completion' => $warranty_completion,
-                    'installed_quantity_ecc' => $mac,
+                    'installed_quantity_ecc' => $oac,
                     'installed_quantity_pc' => $installed_quantity_pc,
                     'progress_rate_ecc' => (round($oac / $teachersComputer * 10000) / 100) . '%',
                     'progress_rate_pc' => (round($installed_quantity_pc / ($teachersComputer + $studentComputer) * 10000) / 100) . '%'
