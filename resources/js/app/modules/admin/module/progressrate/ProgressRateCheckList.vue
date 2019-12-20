@@ -84,13 +84,13 @@
                                 :value="filter.teacher_computer.value"
                                 @input="filterChanged($event, 'teacher_computer')"
                                 :items="['All', ...filter.teacher_computer.list]"
-                                label="Teacher computer"
+                                label="T-PC"
                         ></v-select>
                         <v-select
                                 :value="filter.student_computer.value"
                                 @input="filterChanged($event, 'student_computer')"
                                 :items="['All', ...filter.student_computer.list]"
-                                label="Student computer"
+                                label="S-PC"
                         ></v-select>
                     </v-col>
                     <v-col cols="12" sm="4">
@@ -241,7 +241,7 @@
                                 :value="getField(props.item.id, 'teacher_computer') || props.item.teacher_computer"
                                 @input="changeField(props.item.id, 'teacher_computer', $event, false, 'int')"
 
-                                label="Teacher computer"
+                                label="T-PC"
                                 single-line
                                 counter
                         ></v-text-field>
@@ -260,7 +260,7 @@
                                 :value="getField(props.item.id, 'student_computer') || props.item.student_computer"
                                 @input="changeField(props.item.id, 'student_computer', $event, false, 'int')"
 
-                                label="Student computer"
+                                label="S-PC"
                                 single-line
                                 counter
                         ></v-text-field>
@@ -519,12 +519,12 @@
                         value: 'school',
                     },
                     {
-                        text: 'Teacher computer',
+                        text: 'T-PC',
                         align: 'center',
                         value: 'teacher_computer',
                     },
                     {
-                        text: 'Student computer',
+                        text: 'S-PC',
                         align: 'center',
                         value: 'student_computer',
                     },

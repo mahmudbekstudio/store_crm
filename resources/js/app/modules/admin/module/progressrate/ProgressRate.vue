@@ -29,13 +29,13 @@
                                 :value="filter.teacher_computer.value"
                                 @input="filterChanged($event, 'teacher_computer')"
                                 :items="['All', ...filter.teacher_computer.list]"
-                                label="Teacher computer"
+                                label="T-PC"
                         ></v-select>
                         <v-select
                                 :value="filter.student_computer.value"
                                 @input="filterChanged($event, 'student_computer')"
                                 :items="['All', ...filter.student_computer.list]"
-                                label="Student computer"
+                                label="S-PC"
                         ></v-select>
                         <v-select
                                 :value="filter.total_pc.value"
@@ -61,7 +61,7 @@
                                 :value="filter.site_arrival_inspection.value"
                                 @input="filterChanged($event, 'site_arrival_inspection')"
                                 :items="['All', ...filter.site_arrival_inspection.list]"
-                                label="Site Arrival Inspection"
+                                label="A-Inspection"
                         ></v-select>
                         <v-select
                                 :value="filter.oat_training.value"
@@ -159,12 +159,12 @@
                         value: 'region',
                     },
                     {
-                        text: 'Teacher computer',
+                        text: 'T-PC',
                         align: 'center',
                         value: 'teacher_computer',
                     },
                     {
-                        text: 'Student computer',
+                        text: 'S-PC',
                         align: 'center',
                         value: 'student_computer',
                     },
@@ -184,7 +184,7 @@
                         value: 'out_wh',
                     },*/
                     {
-                        text: 'Site Arrival Inspection',
+                        text: 'A-Inspection',
                         align: 'center',
                         value: 'site_arrival_inspection',
                     },

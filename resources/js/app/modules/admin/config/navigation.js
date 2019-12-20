@@ -14,8 +14,8 @@ export default {
             text: 'Stock Management',
             children: [
                 { text: 'Summary', route: {name: 'stock.list'} },
-                { text: 'Warehouse 1 – Tashkent', route: {name: 'stock.detail1'} },
-                { text: 'Warehouse 2 – Samarkand', route: {name: 'stock.detail2'} },
+                { text: 'W/H-1- Tashkent (ET)', route: {name: 'stock.detail1'} },
+                { text: 'W/H-2- Tashkent (NAV)', route: {name: 'stock.detail2'} },
             ],
         },
         {
@@ -101,8 +101,8 @@ export default {
             text: 'Stock Management',
             children: [
                 { text: 'Summary', route: {name: 'stock.list'} },
-                { text: 'Warehouse 1 – Tashkent', route: {name: 'stock.detail1'} },
-                { text: 'Warehouse 2 – Samarkand', route: {name: 'stock.detail2'} },
+                { text: 'W/H-1- Tashkent (ET)', route: {name: 'stock.detail1'} },
+                { text: 'W/H-2- Tashkent (NAV)', route: {name: 'stock.detail2'} },
             ],
         },
         {
