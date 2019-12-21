@@ -266,7 +266,7 @@ class StockController extends Controller
 
                 if(count($keyArr) == 3 && in_array($keyName, ['in', 'out'])) {
                     $keyId = $keyArr[2];
-                    $item = $this->stockRepository->first();
+                    $item = $this->stockRepository->findWhere(['wh_no' => $data['no']])->first();
 
                     if($keyName == 'in') {
                         $obj = json_decode($item->in_obj, true);
