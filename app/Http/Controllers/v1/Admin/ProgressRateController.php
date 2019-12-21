@@ -215,7 +215,7 @@ class ProgressRateController extends Controller
                     $region = $regionRepository->find($item->region_id);
 
                     if(count($this->progressRateRepository->findWhere(['region_id' => $item->region_id])->toArray()) > 1) {
-                        $region = $regionRepository->withUser()->create([
+                        $region = $regionRepository->withUser()->firstOrCreate([
                             'name' => $data['val']
                         ]);
                         $item->region_id = $region->id;
@@ -230,7 +230,7 @@ class ProgressRateController extends Controller
                     $district = $districtRepository->find($item->district_id);
 
                     if(count($this->progressRateRepository->findWhere(['district_id' => $item->district_id])->toArray()) > 1) {
-                        $region = $districtRepository->withUser()->create([
+                        $region = $districtRepository->withUser()->firstOrCreate([
                             'region_id' => $district->region_id,
                             'name' => $data['val']
                         ]);
@@ -246,7 +246,7 @@ class ProgressRateController extends Controller
                     $school = $schoolRepository->find($item->school_id);
 
                     if(count($this->progressRateRepository->findWhere(['school_id' => $item->school_id])->toArray()) > 1) {
-                        $region = $schoolRepository->withUser()->create([
+                        $region = $schoolRepository->withUser()->firstOrCreate([
                             'district_id' => $school->district_id,
                             'name' => $data['val']
                         ]);

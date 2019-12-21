@@ -11,7 +11,7 @@ class Document extends Model
 
     protected $fillable = ['user_id', 'district_id', 'file', 'type_id'];
 
-    public function district() {
-        return $this->hasOne(District::class, 'id', 'district_id');
+    public function region() {
+        return $this->hasOne(DocumentRegion::class, 'id', 'district_id');
     }
 }

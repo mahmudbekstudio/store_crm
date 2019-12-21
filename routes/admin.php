@@ -146,5 +146,10 @@ Route::group(['middleware' => ['token:access']], function() {
         //Route::get('download/{id}', 'DocumentController@download')->name('download');
 
         Route::get('params', 'DocumentController@params')->name('params');
+
+        Route::post('add-region/{id}', 'DocumentController@addRegion')->name('add-region');
+        Route::post('add-district/{id}', 'DocumentController@addDistrict')->name('add-district');
+        Route::delete('delete-region/{id}', 'DocumentController@removeRegion')->name('delete-region');
+        Route::delete('delete-district/{id}', 'DocumentController@removeDistrict')->name('delete-district');
     });
 });

@@ -26,6 +26,47 @@ const api = {
             this.urlParam('{id}', id);
         },
         token: true
+    },
+    addRegion: {
+        ...Route.admin('document.add-region'),
+        callback: function(id, name) {
+            this.urlParam('{id}', id);
+            this.data({
+                name
+            });
+        },
+        token: true
+    },
+    addDistrict: {
+        ...Route.admin('document.add-district'),
+        callback: function(id, name, region) {
+            this.urlParam('{id}', id);
+            this.data({
+                name,
+                region
+            });
+        },
+        token: true
+    },
+    deleteRegion: {
+        ...Route.admin('document.delete-region'),
+        callback: function (id, region) {
+            this.urlParam('{id}', id);
+            this.data({
+                region
+            });
+        },
+        token: true
+    },
+    deleteDistrict: {
+        ...Route.admin('document.delete-district'),
+        callback: function (id, district) {
+            this.urlParam('{id}', id);
+            this.data({
+                district
+            });
+        },
+        token: true
     }
 };
 

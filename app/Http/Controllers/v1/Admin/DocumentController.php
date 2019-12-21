@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Repositories\DistrictRepository;
+use App\Repositories\DocumentRegionRepository;
 use App\Repositories\DocumentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,21 +13,24 @@ use Illuminate\Support\Facades\Storage;
 class DocumentController extends Controller
 {
     private $documentRepository;
+    private $documentRegionRepository;
 
     public function __construct(
-        DocumentRepository $documentRepository
+        DocumentRepository $documentRepository,
+        DocumentRegionRepository $documentRegionRepository
     )
     {
         $this->documentRepository = $documentRepository;
+        $this->documentRegionRepository = $documentRegionRepository;
     }
 
     public function list($id)
     {
-        $documents = $this->documentRepository->with(['district'])->findWhere(['type_id' => $id])->toArray();
+        $documents = $this->documentRepository->with(['region'])->findWhere(['type_id' => $id])->toArray();
         $list = [];
 
         foreach($documents as $item) {
-            $list[$item['district']['name']][] = [
+            $list[$item['region']['name']][] = [
                 'id' => $item['id'],
                 'file' => $item['file']
             ];
@@ -38,8 +42,7 @@ class DocumentController extends Controller
     public function uploadFile($id, Request $request)
     {
         $data = $request->all();
-        $districtRepository = app(DistrictRepository::class);
-        $district = $districtRepository->firstOrCreate(['name' => $data['district']]);
+        $district = $this->documentRegionRepository->firstOrCreate(['name' => $data['district'], 'type_id' => $id]);
         $documentRepository = app(DocumentRepository::class);
 
 
@@ -81,249 +84,65 @@ class DocumentController extends Controller
 
     public function params($id)
     {
-        $regions = $this->regions();
+        $regions = [];
+        $documentRegions = $this->documentRegionRepository->findWhere(['type_id' => $id]);
 
-        if($id == 3) {
-            return [
-                'Region' => [
-                    'Samarkand region',
-                    'Tashkent city'
-                ]
-            ];
+        foreach($documentRegions as $item) {
+            if($item->parent_id == 0) {
+                $subList = [];
+
+                foreach($documentRegions as $subItem) {
+                    if($subItem->parent_id == $item->id) {
+                        $subList[] = $subItem->name;
+                    }
+                }
+
+                $regions[$item->name] = $subList;
+            }
         }
 
         return $regions;
     }
 
-    public function regions()
+    public function addRegion($id, Request $request)
     {
-        return [
-            'Republic of Karakalpakstan' => [
-                'Amudarya district',
-                'Beruniy district',
-                'Nukus city',
-                'Kanlikul district',
-                'Karauzak district',
-                'Kegeyli district',
-                'Kungrat district',
-                'Muynak district',
-                'Nukus district',
-                'Takhtakupir district',
-                'Takhiyatash district',
-                'Turtkul district',
-                'Khodjayli district',
-                'Chimbay district',
-                'Shumanay district',
-                'Ellikkala district'
-            ],
-            'Andijon region' => [
-                'Altinkul district',
-                'Andijan district',
-                'Asaka district',
-                'Balikchi district',
-                'Boz district',
-                'Bulakbashi district',
-                'Andijan city',
-                'Karasuv city',
-                'Jalakuduk district',
-                'Izboskan district',
-                'Kurgantepa district',
-                'Markhamat district',
-                'Pakhtaadad district',
-                'Ulugnar district',
-                'Khojaabad district',
-                'Shakhrikhan district'
-            ],
-            'Bukhara region' => [
-                'Olot district',
-                'Bukhara district',
-                'Vobkent district',
-                'Bukhara city',
-                'Kogon city',
-                'Gijduvan district',
-                'Jondor district',
-                'Kagan district',
-                'Karakul district',
-                'Karavulbazar district',
-                'Peshku district',
-                'Romitan district',
-                'Shafirkan district'
-            ],
-            'Jizzakh region' => [
-                'Arnasay district',
-                'Bakhmal district',
-                'Jizzakh city',
-                'Gallaaral district',
-                'Sh.Rashidov district',
-                'Dustlik district',
-                'Zomin district',
-                'Zarbdor district',
-                'Zafarobod district',
-                'Mirzachul district',
-                'Pakhtakor district',
-                'Forish district',
-                'Yangiabad district'
-            ],
-            'Kashkadarya region' => [
-                'Karshi city',
-                'Guzar district',
-                'Dekhkanabad district',
-                'Kamashi district',
-                'Karshi district',
-                'Koson district',
-                'Kasbi district',
-                'Kitab district',
-                'Mirishkor district',
-                'Muborak district',
-                'Nishan district',
-                'Chirakchi district',
-                'Shakhrisabz district',
-                'Yakkabog district'
-            ],
-            'Navoi region' => [
-                'Zarafshan city',
-                'Navoi city',
-                'Karmana district',
-                'Konimekh district',
-                'Kiziltepa district',
-                'Navbakhor district',
-                'Nurota district',
-                'Tomdi district',
-                'Uchkuduk district',
-                'Khatirchi district'
-            ],
-            'Namangan region' => [
-                'Namangan city',
-                'Kasansay district',
-                'Mingbulak district',
-                'Namangan district',
-                'Norin district',
-                'Pop district',
-                'Turakurgan district',
-                'Uychi district',
-                'Uchkurgan district',
-                'Chortok district',
-                'Chust district',
-                'Yangikurgan district'
-            ],
-            'Samarkand region' => [
-                'Okdaryo district',
-                'Bulung`ur district',
-                'Kattakurgan city',
-                'Samarkand city',
-                'Jomboy district',
-                'Ishtikhan district',
-                'Kattakurgan district',
-                'Kushrabad district',
-                'Narpay district',
-                'Nurobod district',
-                'Payarik district',
-                'Pastdargam district',
-                'Pakhtachi district',
-                'Samarkand district',
-                'Toylok district',
-                'Urgut district'
-            ],
-            'Surkhandarya region' => [
-                'Oltinsoy district',
-                'Angor district',
-                'Boysun district',
-                'Termiz city',
-                'Denov district',
-                'Jarkurgan district',
-                'Kizirik district',
-                'Kumkurgan district',
-                'Muzrabad district',
-                'Sariosiyo district',
-                'Termez district',
-                'Uzun district',
-                'Sherabad district',
-                'Shurchi district'
-            ],
-            'Sirdarya region' => [
-                'Okoltin district',
-                'Boyovut district',
-                'Gulistan city',
-                'Shirin ciy',
-                'Yangier ciy',
-                'Gulistan district',
-                'Mirzaabad district',
-                'Saykhunabad district',
-                'Sardoba district',
-                'Sirdarya district',
-                'Khovos district'
-            ],
-            'Tashkent region' => [
-                'Akkurgan district',
-                'Okhangaran district',
-                'Okhangaran city',
-                'Bekobod city district',
-                'Bustonlik district',
-                'Olmalik city',
-                'Angren city',
-                'Bekobod city',
-                'Chirchik city',
-                'Zangiota district',
-                'Kibray district',
-                'Kuyichirchik district',
-                'Parkent district',
-                'Piskent district',
-                'Tashkent district',
-                'Nurafshan city',
-                'Urtachirchik district',
-                'Chinoz district',
-                'Yukorichirchik district',
-                'Yangiyul city',
-                'Yangiyul district'
-            ],
-            'Fergana region' => [
-                'Oltiarik district',
-                'Bagdad district',
-                'Besharik district',
-                'Buvayda district',
-                'Kokand city',
-                'Kuvasay city',
-                'Margilan city',
-                'Fergana city',
-                'Dangara district',
-                'Quva district',
-                'Qushtepa district',
-                'Rishton district',
-                'Sogd district',
-                'Toshlok district',
-                'Uzbekistan district',
-                'Uchkuprik district',
-                'Fergana district',
-                'Furkat district',
-                'Yozyovon district'
-            ],
-            'Khorazm region' => [
-                'Bog`ot district',
-                'Urganch city',
-                'Gurlan district',
-                'Kushkupir district',
-                'Urganch district',
-                'Khazorasp district',
-                'Khonqa district',
-                'Khiva city',
-                'Khiva district',
-                'Shovot district',
-                'Yangiarik district',
-                'Yangibozor district'
-            ],
-            'Tashkent city' => [
-                'Olmazor district',
-                'Bektemir district',
-                'M.Ulugbek district',
-                'Mirabad district',
-                'Sergeli district',
-                'Uchtepa district',
-                'Yashnabad district',
-                'Chilonzor district',
-                'Shaykhontokhur district',
-                'Yunusabad district',
-                'Yakkasaray district'
-            ]
-        ];
+        $data = $request->only(['name']);
+        $this->documentRegionRepository->firstOrCreate(['name' => $data['name'], 'type_id' => $id]);
+
+        return responseData(true);
+    }
+
+    public function addDistrict($id, Request $request)
+    {
+        $data = $request->only(['name', 'region']);
+        $region = $this->documentRegionRepository->firstOrCreate(['name' => $data['region'], 'type_id' => $id]);
+        $this->documentRegionRepository->firstOrCreate(['name' => $data['name'], 'parent_id' => $region->id, 'type_id' => $id]);
+
+        return responseData(true);
+    }
+
+    public function removeRegion($id, Request $request)
+    {
+        $data = $request->only(['region']);
+        $region = $this->documentRegionRepository->firstOrCreate(['name' => $data['region'], 'type_id' => $id]);
+        $this->documentRegionRepository->deleteWhere(['id' => $region->id, 'type_id' => $id]);
+        $districtsList = $this->documentRegionRepository->findWhere(['type_id' => $id, 'parent_id' => $region->id]);
+
+        foreach($districtsList as $item) {
+            $this->documentRegionRepository->deleteWhere(['id' => $item->id, 'type_id' => $id]);
+            $this->documentRepository->deleteWhere(['district_id' => $item->id, 'type_id' => $id]);
+        }
+
+        return responseData(true);
+    }
+
+    public function removeDistrict($id, Request $request)
+    {
+        $data = $request->only(['district']);
+        $district = $this->documentRegionRepository->firstOrCreate(['name' => $data['district'], 'type_id' => $id]);
+        $this->documentRegionRepository->deleteWhere(['id' => $district->id, 'type_id' => $id]);
+        $this->documentRepository->deleteWhere(['district_id' => $district->id, 'type_id' => $id]);
+
+        return responseData(true);
     }
 }

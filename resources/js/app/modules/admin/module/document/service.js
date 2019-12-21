@@ -60,6 +60,90 @@ export default class Service {
             });
     }
 
+    addRegion(id, name, callback) {
+        this.loading(true);
+        http(api.addRegion)
+            .callback(id, name)
+            .send()
+            .then(() => {
+                this.init(id);
+                app.openMessage('Created');
+            })
+            .catch(error => {
+                logger.error('document.addRegion', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+                this.loading(false);
+            });
+    }
+
+    addDistrict(id, name, regionId, callback) {
+        this.loading(true);
+        http(api.addDistrict)
+            .callback(id, name, regionId)
+            .send()
+            .then(() => {
+                this.init(id);
+                app.openMessage('Created');
+            })
+            .catch(error => {
+                logger.error('document.addDistrict', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+                this.loading(false);
+            });
+    }
+
+    deleteRegion(id, region, callback) {
+        this.loading(true);
+        http(api.deleteRegion)
+            .callback(id, region)
+            .send()
+            .then(() => {
+                this.init(id);
+                app.openMessage('Deleted');
+            })
+            .catch(error => {
+                logger.error('document.delete region', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+                this.loading(false);
+            });
+    }
+
+    deleteDistrict(id, district, callback) {
+        this.loading(true);
+        http(api.deleteDistrict)
+            .callback(id, district)
+            .send()
+            .then(() => {
+                this.init(id);
+                app.openMessage('Deleted');
+            })
+            .catch(error => {
+                logger.error('document.delete region', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+                this.loading(false);
+            });
+    }
+
     delete(id, callback, typeId) {
         this.loading(true);
         http(api.delete)

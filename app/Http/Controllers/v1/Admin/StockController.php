@@ -309,8 +309,8 @@ class StockController extends Controller
                     $regionRepository = app(GoodsRepository::class);
                     $goods = $regionRepository->find($item->goods_id);
 
-                    if(count($this->stockRepository->findWhere(['goods_id' => $item->goods_id])->toArray()) > 1) {
-                        $region = $regionRepository->withUser()->create([
+                    if(count($this->stockRepository->findWhere(['goods_id' => $item->goods_id, 'wh_no' => $data['no']])->toArray()) > 1) {
+                        $region = $regionRepository->withUser()->firstOrCreate([
                             'goods_category_id' => $goods->goods_category_id,
                             'name' => $data['val'],
                             'unit' => $goods->unit
@@ -326,8 +326,8 @@ class StockController extends Controller
                     $districtRepository = app(GoodsRepository::class);
                     $goods = $districtRepository->find($item->goods_id);
 
-                    if(count($this->stockRepository->findWhere(['goods_id' => $item->goods_id])->toArray()) > 1) {
-                        $region = $districtRepository->withUser()->create([
+                    if(count($this->stockRepository->findWhere(['goods_id' => $item->goods_id, 'wh_no' => $data['no']])->toArray()) > 1) {
+                        $region = $districtRepository->withUser()->firstOrCreate([
                             'goods_category_id' => $goods->goods_category_id,
                             'name' => $goods->name,
                             'unit' => $data['val']
