@@ -158,13 +158,31 @@ class StockController extends Controller
         $list[$k]['in_total_b'] = '';
         $list[$k]['remark'] = '';
 
+        $k++;
+
+        $list[$k] = [
+            'no' => '',
+            'id' => -1,
+            'item' => '',
+            'unit' => '',
+        ];
+
+        foreach ($inObj as $key => $item) {
+            if(!isset($item['name'])) continue;
+            $list[$k]['in_column_' . $key] = $item['date'];
+        }
+
+        foreach ($outObj as $key => $item) {
+            if(!isset($item['name'])) continue;
+            $list[$k]['out_column_' . $key] = $item['date'];
+        }
 
         $k++;
         foreach ($stocks as $item) {
             $inObj = json_decode($item['in_obj']);
             $outObj = json_decode($item['out_obj']);
             $list[$k] = [
-                'no' => $k,
+                'no' => $k - 1,
                 'id' => $item['id'],
                 'item' => $item['goods']['name'],
                 'unit' => $item['goods']['unit'],
@@ -242,6 +260,29 @@ class StockController extends Controller
         $data = $request->only(['id', 'key', 'val', 'no']);
 
         if (count($data) >= 3) {
+            if($data['id'] == -1) {
+                $keyArr = explode('_', $data['key']);
+                $keyName = $keyArr[0];
+
+                if(count($keyArr) == 3 && in_array($keyName, ['in', 'out'])) {
+                    $keyId = $keyArr[2];
+                    $item = $this->stockRepository->first();
+
+                    if($keyName == 'in') {
+                        $obj = json_decode($item->in_obj, true);
+                        $obj[$keyId]['date'] = $data['val'];
+                        $item->in_obj = json_encode($obj);
+                    } elseif($keyName == 'out') {
+                        $obj = json_decode($item->out_obj, true);
+                        $obj[$keyId]['date'] = $data['val'];
+                        $item->out_obj = json_encode($obj);
+                    }
+
+                    $item->save();
+                }
+
+                return responseData(true);
+            }
             if($data['id'] == 0) {
                 $stock = $this->stockRepository->findWhere(['wh_no' => $data['no']]);
                 $itemObj = $stock->first();
