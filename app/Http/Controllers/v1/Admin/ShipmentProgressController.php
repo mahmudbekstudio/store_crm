@@ -72,9 +72,26 @@ class ShipmentProgressController extends Controller
         $list[$k]['balance'] = '';
 
         $k++;
+
+        $list[$k] = [
+            'no' => '',
+            'id' => -1,
+            'num' => '',
+            'item' => '',
+            'unit' => '',
+            'contract' => '',
+        ];
+
+        foreach($shipment as $key => $item1) {
+            foreach($item1->columns as $subKey => $subItem) {
+                $list[$k]['column_' . $item1->values[$subKey]->index] = $item1->dates[$subKey];
+            }
+        }
+
+        $k++;
         foreach ($shipmentProgress as $item) {
             $list[$k] = [
-                'no' => $k,
+                'no' => $k - 1,
                 'id' => $item['id'],
                 'num' => $item['num'],
                 'item' => $item['goods']['name'],
@@ -109,6 +126,30 @@ class ShipmentProgressController extends Controller
         $data = $request->only(['id', 'key', 'val', 'sheep_no']);
 
         if (count($data) >= 3) {
+            if($data['id'] == -1) {
+                $keyArr = explode('_', $data['key']);
+                $keyName = $keyArr[0];
+
+                if(count($keyArr) == 2 && $keyName == 'column') {
+                    $keyId = $keyArr[1];
+                    $item = $this->shipmentProgressRepository->findWhere(['sheet_no' => $data['sheep_no']])->first();
+                    $obj = json_decode($item->shipment, true);
+
+                    foreach($obj as $key1 => $val) {
+                        foreach($val['values'] as $valKey => $valVal) {
+                            if($valVal['index'] == $keyId) {
+                                $obj[$key1]['dates'][$valKey] = $data['val'];
+                            }
+                        }
+                    }
+
+                    $item->shipment = json_encode($obj);
+
+                    $item->save();
+                }
+
+                return responseData(true);
+            }
             if($data['id'] == 0) {
                 $shipmentProgress = $this->shipmentProgressRepository->findWhere(['sheet_no' => $data['sheep_no']]);
                 $key = str_replace('column_', '', $data['key']);
