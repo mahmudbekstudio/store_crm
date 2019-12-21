@@ -151,5 +151,8 @@ Route::group(['middleware' => ['token:access']], function() {
         Route::post('add-district/{id}', 'DocumentController@addDistrict')->name('add-district');
         Route::delete('delete-region/{id}', 'DocumentController@removeRegion')->name('delete-region');
         Route::delete('delete-district/{id}', 'DocumentController@removeDistrict')->name('delete-district');
+
+        Route::put('rename-region/{id}', 'DocumentController@renameRegion')->name('rename-region');
+        Route::put('rename-district/{id}', 'DocumentController@renameDistrict')->name('rename-district');
     });
 });

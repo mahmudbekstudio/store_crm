@@ -48,6 +48,29 @@ const api = {
         },
         token: true
     },
+    renameRegion: {
+        ...Route.admin('document.rename-region'),
+        callback: function(id, region, name) {
+            this.urlParam('{id}', id);
+            this.data({
+                region,
+                name
+            });
+        },
+        token: true
+    },
+    renameDistrict: {
+        ...Route.admin('document.rename-district'),
+        callback: function(id, region, district, name) {
+            this.urlParam('{id}', id);
+            this.data({
+                region,
+                district,
+                name
+            });
+        },
+        token: true
+    },
     deleteRegion: {
         ...Route.admin('document.delete-region'),
         callback: function (id, region) {

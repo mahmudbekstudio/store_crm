@@ -38,7 +38,21 @@
             </div>
         </div>
         <div v-if="selected.region && !selected.district" class="folder-list">
-            <h4 v-if="regionsLength > 1">Selected region: {{ selected.region }}</h4>
+            <h4 v-if="regionsLength > 1">
+                Selected region: {{ selected.region }}
+                <v-text-field
+                        v-model="selectedRegionName"
+                        :error="selectedRegionError"
+                        :error-messages="selectedRegionMessages"
+                        append-outer-icon="mdi-send"
+                        clear-icon="mdi-close-circle"
+                        clearable
+                        label="Edit region"
+                        type="text"
+                        :disabled="selectedRegionDisabled"
+                        @click:append-outer="renameRegion"
+                ></v-text-field>
+            </h4>
             <h2>
                 <v-btn v-if="regionsLength > 1" color="default" icon @click="selected.region = ''"><v-icon>mdi-keyboard-backspace</v-icon></v-btn>
                 Districts list
@@ -72,7 +86,21 @@
         </div>
         <div v-if="selected.district" class="folder-list">
             <h4 v-if="regionsLength > 1">Selected region: {{ selected.region }}</h4>
-            <h4>Selected district: {{ selected.district }}</h4>
+            <h4>
+                Selected district: {{ selected.district }}
+                <v-text-field
+                        v-model="selectedDistrictName"
+                        :error="selectedDistrictError"
+                        :error-messages="selectedDistrictMessages"
+                        append-outer-icon="mdi-send"
+                        clear-icon="mdi-close-circle"
+                        clearable
+                        label="Edit district"
+                        type="text"
+                        :disabled="selectedDistrictDisabled"
+                        @click:append-outer="renameDistrict"
+                ></v-text-field>
+            </h4>
             <h2><v-btn color="default" icon @click="selected.district = ''"><v-icon>mdi-keyboard-backspace</v-icon></v-btn> Files list</h2>
 
             <div v-for="file of items[selected.district]" class="folder-item">
@@ -112,6 +140,16 @@
                 districtError: false,
                 districtDisabled: false,
                 districtMessages: [],
+
+                selectedRegionName: null,
+                selectedRegionError: false,
+                selectedRegionDisabled: false,
+                selectedRegionMessages: [],
+
+                selectedDistrictName: null,
+                selectedDistrictError: false,
+                selectedDistrictDisabled: false,
+                selectedDistrictMessages: [],
                 selected: {
                     region: '',
                     district: ''
@@ -157,10 +195,46 @@
             },
             districtName() {
                 this.districtError = false;
+            },
+            'selected.region' (val) {
+                this.selectedRegionName = val;
+            },
+            'selected.district' (val) {
+                this.selectedDistrictName = val;
             }
         },
 
         methods: {
+            renameRegion() {
+                this.selectedRegionName = this.selectedRegionName ? this.selectedRegionName.trim() : null;
+
+                if(!this.selectedRegionName) {
+                    this.selectedRegionError = true;
+                    return false;
+                }
+
+                this.selectedRegionDisabled = true;
+                this.$options.service.renameRegion(this.typeId, this.selected.region, this.selectedRegionName, () => {
+                    this.selectedRegionDisabled = false;
+                    this.selected.region = this.selectedRegionName;
+                });
+            },
+
+            renameDistrict() {
+                this.selectedDistrictName = this.selectedDistrictName ? this.selectedDistrictName.trim() : null;
+
+                if(!this.selectedDistrictName) {
+                    this.selectedDistrictError = true;
+                    return false;
+                }
+
+                this.selectedDistrictDisabled = true;
+                this.$options.service.renameDistrict(this.typeId, this.selected.region, this.selected.district, this.selectedDistrictName, () => {
+                    this.selectedDistrictDisabled = false;
+                    this.selected.district = this.selectedDistrictName;
+                });
+            },
+
             addRegion() {
                 this.regionName = this.regionName ? this.regionName.trim() : null;
 

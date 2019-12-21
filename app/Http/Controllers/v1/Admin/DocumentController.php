@@ -145,4 +145,35 @@ class DocumentController extends Controller
 
         return responseData(true);
     }
+
+    public function renameRegion($id, Request $request)
+    {
+        $data = $request->only(['region', 'name']);
+        $region = $this->documentRegionRepository->findWhere([
+            'type_id' => $id,
+            'parent_id' => 0,
+            'name' => $data['region']
+        ])->first();
+        $region->name = $data['name'];
+        $region->save();
+        return responseData(true);
+    }
+
+    public function renameDistrict($id, Request $request)
+    {
+        $data = $request->only(['region', 'district', 'name']);
+        $region = $this->documentRegionRepository->findWhere([
+            'type_id' => $id,
+            'parent_id' => 0,
+            'name' => $data['region']
+        ])->first();
+        $district = $this->documentRegionRepository->findWhere([
+            'type_id' => $id,
+            'parent_id' => $region->id,
+            'name' => $data['district']
+        ])->first();
+        $district->name = $data['name'];
+        $district->save();
+        return responseData(true);
+    }
 }

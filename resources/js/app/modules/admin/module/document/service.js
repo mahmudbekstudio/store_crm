@@ -102,6 +102,48 @@ export default class Service {
             });
     }
 
+    renameRegion(id, region, name, callback) {
+        this.loading(true);
+        http(api.renameRegion)
+            .callback(id, region, name)
+            .send()
+            .then(() => {
+                this.init(id);
+                app.openMessage('Renamed');
+            })
+            .catch(error => {
+                logger.error('document.renameRegion', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+                this.loading(false);
+            });
+    }
+
+    renameDistrict(id, region, district, name, callback) {
+        this.loading(true);
+        http(api.renameDistrict)
+            .callback(id, region, district, name)
+            .send()
+            .then(() => {
+                this.init(id);
+                app.openMessage('Renamed');
+            })
+            .catch(error => {
+                logger.error('document.renameDistrict', error);
+                app.errorMessage('Error');
+            })
+            .then(() => {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+                this.loading(false);
+            });
+    }
+
     deleteRegion(id, region, callback) {
         this.loading(true);
         http(api.deleteRegion)
