@@ -283,22 +283,13 @@ class DocumentRegionSeeder extends Seeder
             $district = \App\Models\District::find($document->district_id);
 
             if($district) {
-                $region = \App\Models\Region::find($district->region_id);
+                $newDistrict = app(\App\Repositories\DocumentRegionRepository::class)->firstOrCreate([
+                    'type_id' => $document->type_id,
+                    'name' => $district->name,
+                ]);
 
-                if($region) {
-                    $newRegion = app(\App\Repositories\DocumentRegionRepository::class)->firstOrCreate([
-                        'type_id' => $document->type_id,
-                        'name' => $region->name
-                    ]);
-                    $newDistrict = app(\App\Repositories\DocumentRegionRepository::class)->firstOrCreate([
-                        'type_id' => $document->type_id,
-                        'name' => $district->name,
-                        'parent_id' => $newRegion->id
-                    ]);
-
-                    $document->district_id = $newDistrict->id;
-                    $document->save();
-                }
+                $document->district_id = $newDistrict->id;
+                $document->save();
             }
         }
     }
