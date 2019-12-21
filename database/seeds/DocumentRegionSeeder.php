@@ -244,14 +244,14 @@ class DocumentRegionSeeder extends Seeder
 
         foreach($types as $typeId) {
             foreach($regions as $regionName => $districtsList) {
-                $region = \App\Models\DocumentRegion::create([
+                $region = \App\Models\DocumentRegion::firstOrCreate([
                     'parent_id' => 0,
                     'type_id' => $typeId,
                     'name' => $regionName
                 ]);
 
                 foreach($districtsList as $districtName) {
-                    \App\Models\DocumentRegion::create([
+                    \App\Models\DocumentRegion::firstOrCreate([
                         'parent_id' => $region->id,
                         'type_id' => $typeId,
                         'name' => $districtName
@@ -260,22 +260,46 @@ class DocumentRegionSeeder extends Seeder
             }
         }
 
-        $region = \App\Models\DocumentRegion::create([
+        $region = \App\Models\DocumentRegion::firstOrCreate([
             'parent_id' => 0,
             'type_id' => 3,
             'name' => 'Region'
         ]);
 
-        \App\Models\DocumentRegion::create([
+        \App\Models\DocumentRegion::firstOrCreate([
             'parent_id' => $region->id,
             'type_id' => 3,
             'name' => 'Samarkand region'
         ]);
 
-        \App\Models\DocumentRegion::create([
+        \App\Models\DocumentRegion::firstOrCreate([
             'parent_id' => $region->id,
             'type_id' => 3,
             'name' => 'Tashkent city'
         ]);
+
+        $documents = \App\Models\Document::all();
+        foreach($documents as $document) {
+            $district = \App\Models\District::find($document->district_id);
+
+            if($district) {
+                $region = \App\Models\Region::find($district->region_id);
+
+                if($region) {
+                    $newRegion = app(\App\Repositories\DocumentRegionRepository::class)->firstOrCreate([
+                        'type_id' => $document->type_id,
+                        'name' => $region->name
+                    ]);
+                    $newDistrict = app(\App\Repositories\DocumentRegionRepository::class)->firstOrCreate([
+                        'type_id' => $document->type_id,
+                        'name' => $district->name,
+                        'parent_id' => $newRegion->id
+                    ]);
+
+                    $document->district_id = $newDistrict->id;
+                    $document->save();
+                }
+            }
+        }
     }
 }
