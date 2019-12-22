@@ -9,6 +9,7 @@
             <v-btn v-if="$store.state.view.website.user.role === 'admin'" @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading"
                    :loading="isLoading">{{ $t('shipmentprogress.submit') }}
             </v-btn>
+            <v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn>
             <span v-if="$store.state.view.website.user.role === 'admin'" class="d-inline-block"><v-switch v-model="isEditMode" label="Edit" color="primary"></v-switch></span>
             <v-dialog
                     v-if="$store.state.view.website.user.role === 'admin'"
@@ -106,9 +107,50 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-            <!--v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn-->
         </p>
-        <div v-show="filterShow"></div>
+        <div v-show="filterShow">
+            <v-container class="grey lighten-5">
+                <v-row no-gutters>
+                    <v-col cols="12" sm="4">
+                        <v-select
+                                :value="filter.item.value"
+                                @input="filterChanged($event, 'item')"
+                                :items="filter.item.list"
+                                label="Item"
+                                :multiple="true"
+                        ></v-select>
+                        <v-select
+                                :value="filter.unit.value"
+                                @input="filterChanged($event, 'unit')"
+                                :items="['All', ...filter.unit.list]"
+                                label="Unit"
+                        ></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                        <v-select
+                                :value="filter.contract.value"
+                                @input="filterChanged($event, 'contract')"
+                                :items="['All', ...filter.contract.list]"
+                                label="Contract"
+                        ></v-select>
+                        <v-select
+                                :value="filter.total.value"
+                                @input="filterChanged($event, 'total')"
+                                :items="['All', ...filter.total.list]"
+                                label="Total"
+                        ></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                        <v-select
+                                :value="filter.balance.value"
+                                @input="filterChanged($event, 'balance')"
+                                :items="['All', ...filter.balance.list]"
+                                label="Balance"
+                        ></v-select>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </div>
         <v-data-table
                 :headers="headers"
                 :items="items"
@@ -1410,8 +1452,8 @@
                     }
 
                     if (
-                        this.filter.item.value !== 'All' &&
-                        this.filter.item.value !== item.item
+                        this.filter.item.value.length &&
+                        this.filter.item.value.indexOf(item.item) === -1
                     ) {
                         return false;
                     }
@@ -1419,6 +1461,27 @@
                     if (
                         this.filter.unit.value !== 'All' &&
                         this.filter.unit.value !== item.unit
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        this.filter.contract.value !== 'All' &&
+                        this.filter.contract.value !== item.contract
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        this.filter.total.value !== 'All' &&
+                        this.filter.total.value !== item.total
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        this.filter.balance.value !== 'All' &&
+                        this.filter.balance.value !== item.balance
                     ) {
                         return false;
                     }
