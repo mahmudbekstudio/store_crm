@@ -147,7 +147,7 @@
                 extensions: ['xlsx'],
                 isLoading: false,
                 headers: [
-                    {
+                    /*{
                         text: 'No',
                         align: 'center',
                         value: 'no',
@@ -178,11 +178,11 @@
                         align: 'center',
                         value: 'survey',
                     },
-                    /*{
-                        text: 'Out W/H',
-                        align: 'center',
-                        value: 'out_wh',
-                    },*/
+                    //{
+                    //    text: 'Out W/H',
+                    //    align: 'center',
+                    //    value: 'out_wh',
+                    //},
                     {
                         text: 'A-Inspection',
                         align: 'center',
@@ -227,7 +227,7 @@
                         text: 'Progress Rate PC(T+S)',
                         align: 'center',
                         value: 'progress_rate_pc',
-                    }
+                    }*/
                 ],
             }
         },
@@ -347,7 +347,9 @@
             }
         },
         created() {
-            this.$options.service.init();
+            this.$options.service.init(null, columns => {
+                this.headers = columns;
+            });
         },
         methods: {
             changeField(id, key, val, send) {

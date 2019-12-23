@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1\Admin;
 
+use App\Helpers\DataFormat;
 use App\Http\Controllers\Controller;
 use App\Models\ProgressRateCheckList;
 use App\Models\UserMeta;
@@ -65,6 +66,15 @@ class ProgressRateController extends Controller
     {
         $details = $this->progressRateRepository->with(['region', 'district', 'school'])->all()->toArray();
         $list = [];
+        $columns = getSetting('progress-rate-detail-columns');
+        $firstItem = ['id' => 0];
+
+        foreach($columns as $item) {
+            $firstItem[$item->value] = $item->text;
+        }
+
+        $list[] = $firstItem;
+
         $k = 0;
 
         foreach ($details as $item) {
@@ -93,7 +103,7 @@ class ProgressRateController extends Controller
             ];
         }
 
-        return responseData(true, ['list' => $list]);
+        return responseData(true, ['list' => $list, 'columns' => $columns]);
     }
 
     public function list()
@@ -199,7 +209,7 @@ class ProgressRateController extends Controller
             }
         }
 
-        return responseData(true, ['list' => $list]);
+        return responseData(true, ['list' => $list, 'columns' => getSetting('progress-rate-detail-columns')]);
     }
 
     public function changeField(Request $request)
@@ -207,6 +217,17 @@ class ProgressRateController extends Controller
         $data = $request->only(['id', 'key', 'val']);
 
         if (count($data) == 3) {
+            if($data['id'] == 0) {
+                $columns = getSetting('progress-rate-detail-columns');
+                foreach($columns as $key => $item) {
+                    if($item->value == $data['key']) {
+                        $columns[$key]->text = $data['val'];
+                        setSetting(auth()->user()->id, 'progress-rate-detail-columns', $columns, DataFormat::FORMAT_JSON);
+                        break;
+                    }
+                }
+                return responseData(true);
+            }
             $item = $this->progressRateRepository->find($data['id']);
 
             switch ($data['key']) {
@@ -304,7 +325,7 @@ class ProgressRateController extends Controller
             }
         }
 
-        return responseData(true);
+        return responseData(true, ['columns' => getSetting('progress-rate-detail-columns')]);
     }
 
     public function changeFieldCheckList(Request $request)
@@ -429,7 +450,7 @@ class ProgressRateController extends Controller
             //- installed_quantity_pc
             'remark' => $data['list'][13]['value'] ?? ''
         ]);
-        return responseData(true);
+        return responseData(true, ['columns' => getSetting('progress-rate-detail-columns')]);
     }
 
     public function addRecordCheckList(Request $request)

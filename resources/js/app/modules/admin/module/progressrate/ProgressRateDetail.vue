@@ -10,6 +10,7 @@
             <File v-if="$store.state.view.website.user.role === 'admin'" v-model="files" :extList="extensions"></File>
             <v-btn v-if="$store.state.view.website.user.role === 'admin'" @click="submitSelectedFile" color="default" :disabled="!files.length || isLoading" :loading="isLoading">{{ $t('progressrate.submit') }}</v-btn>
             <v-btn text color="default" @click="filterShow=!filterShow">Filter</v-btn>
+            <span v-if="$store.state.view.website.user.role === 'admin'" class="d-inline-block"><v-switch v-model="isEditMode" label="Edit" color="primary"></v-switch></span>
 
             <v-dialog
                     v-if="$store.state.view.website.user.role === 'admin'"
@@ -595,6 +596,7 @@
         service: new Service(),
         data() {
             return {
+                isEditMode: false,
                 addRowPopup: false,
                 newRecordFields: [],
                 newRecordExceptFields: ['no', 'installed_quantity_ecc', 'installed_quantity_pc'],
@@ -605,7 +607,7 @@
                 extensions: ['xlsx'],
                 isLoading: false,
                 headers: [
-                    {
+                    /*{
                         text: 'No',
                         align: 'center',
                         value: 'no',
@@ -641,11 +643,11 @@
                         align: 'center',
                         value: 'survey',
                     },
-                    /*{
-                        text: 'Out of W/H',
-                        align: 'center',
-                        value: 'out_wh',
-                    },*/
+                    //{
+                    //    text: 'Out of W/H',
+                    //    align: 'center',
+                    //    value: 'out_wh',
+                    //},
                     {
                         text: 'Site Arrived Inspection',
                         align: 'center',
@@ -690,13 +692,21 @@
                         text: 'Remark',
                         align: 'center',
                         value: 'remark',
-                    },
+                    },*/
                 ],
             }
         },
         computed: {
             items() {
                 return this.$store.state.progressrate.detailList.filter(item => {
+                    if(parseInt(item.id) === 0) {
+                        return this.isEditMode;
+                    }
+
+                    if(this.isEditMode) {
+                        return false;
+                    }
+
                     if (
                         this.filter.region.value.length &&
                         this.filter.region.value.indexOf(item.region) === -1
@@ -809,20 +819,27 @@
             }
         },
         created() {
-            this.$options.service.detailInit();
-            for(let key in this.headers) {
-                if(this.newRecordExceptFields.indexOf(this.headers[key].value) === -1) {
-                    this.newRecordFields.push({
-                        label: this.headers[key].text,
-                        value: ''
-                    });
-                }
-            }
+            this.$options.service.detailInit(null, columns => {
+                this.initColumns(columns);
+            });
         },
         methods: {
+            initColumns(columns) {
+                this.headers = columns;
+                this.newRecordFields = [];
+                for(let key in this.headers) {
+                    if(this.newRecordExceptFields.indexOf(this.headers[key].value) === -1) {
+                        this.newRecordFields.push({
+                            label: this.headers[key].text,
+                            value: ''
+                        });
+                    }
+                }
+            },
             saveNewColumn() {
-                this.$options.service.addRecord(this.newRecordFields, false, () => {
+                this.$options.service.addRecord(this.newRecordFields, false, columns => {
                     this.addRowPopup = false;
+                    this.initColumns(columns);
                 });
             },
             changeField(id, key, val, send, isNumber) {
@@ -830,7 +847,7 @@
                 this.changedFields[id] = this.changedFields[id] || {};
                 this.changedFields[id][key] = val;
 
-                if(isNumber) {
+                if(isNumber && !this.isEditMode) {
                     this.changedFields[id][key] = isNumber === 'int' ? parseInt(this.changedFields[id][key]) : parseFloat(this.changedFields[id][key]);
                 }
 
@@ -841,7 +858,9 @@
             fieldSave(id, key) {
                 if(typeof this.changedFields[id] !== 'undefined' && typeof this.changedFields[id][key] !== 'undefined') {
                     this.$logger.info('changed field', id, key, this.changedFields[id][key]);
-                    this.$options.service.changeField(id, key, this.changedFields[id][key], true);
+                    this.$options.service.changeField(id, key, this.changedFields[id][key], true, columns => {
+                        this.initColumns(columns);
+                    });
                 }
                 this.changedFields = {};
             },

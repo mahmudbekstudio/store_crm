@@ -80,11 +80,11 @@ class DataFormat
     /**
      * Change value to string by format
      *
-     * @param string $val
+     * @param $val
      * @param string $format
      * @return string
      */
-    public static function toString(string $val, string $format): string
+    public static function toString($val, string $format): string
     {
         switch ($format) {
             case self::FORMAT_ARRAY:

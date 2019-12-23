@@ -12,7 +12,7 @@ export default class Service {
         //
     }
 
-    detailInit(text) {
+    detailInit(text, callback) {
         this.loading(true);
         !text && app.openMessage('Loading');
         http(api.detail)
@@ -20,6 +20,9 @@ export default class Service {
             .then(response => {
                 logger.info('progressrate.detailList', response);
                 store.commit('progressrate/changeDetailList', response.data.list);
+                if(typeof callback === 'function' && response.data.columns) {
+                    callback(response.data.columns);
+                }
                 text && app.openMessage(text);
                 !text && app.openMessage('Loaded');
             })
@@ -63,7 +66,7 @@ export default class Service {
                 if(isCheckList) {
                     this.checkListInit('Updated');
                 } else {
-                    this.detailInit('Updated');
+                    this.detailInit('Updated', callback);
                 }
                 if (typeof callback === 'function') {
                     callback();
@@ -78,7 +81,7 @@ export default class Service {
             });
     }
 
-    init(text) {
+    init(text, callback) {
         this.loading(true);
         !text && app.openMessage('Loading');
         http(api.list)
@@ -86,6 +89,9 @@ export default class Service {
             .then(response => {
                 logger.info('progressrate.list', response);
                 let list = response.data.list;
+                if(typeof callback === 'function') {
+                    callback(response.data.columns);
+                }
                 if(list.length) {
                     let total = {
                         id: '',
@@ -130,7 +136,7 @@ export default class Service {
             });
     }
 
-    changeField(id, key, val, isDetail) {
+    changeField(id, key, val, isDetail, callback) {
         this.loading(true);
         app.openMessage('Saving');
         http(api.changeField)
@@ -138,9 +144,9 @@ export default class Service {
             .send()
             .then(response => {
                 if (isDetail) {
-                    this.detailInit('Updated');
+                    this.detailInit('Updated', callback);
                 } else {
-                    this.init('Updated');
+                    this.init('Updated', callback);
                 }
             })
             .catch(error => {
