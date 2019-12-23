@@ -18,6 +18,7 @@ class User extends Authenticatable implements JWTSubject
     const ROLE_MANAGER = 'manager';
     const ROLE_PUBLISHER = 'publisher';
     const ROLE_USER = 'user';
+    const ROLE_VIEWER = 'viewer';
 
     const STATUS_NOT_ACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -44,6 +45,7 @@ class User extends Authenticatable implements JWTSubject
             self::ROLE_MANAGER,
             self::ROLE_PUBLISHER,
             self::ROLE_MINISTER,
+            self::ROLE_VIEWER,
             self::ROLE_GUEST,
             self::ROLE_USER
         ];
@@ -54,6 +56,7 @@ class User extends Authenticatable implements JWTSubject
         return [
             self::ROLE_ADMIN,
             self::ROLE_MINISTER,
+            self::ROLE_VIEWER,
             self::ROLE_GUEST
         ];
     }

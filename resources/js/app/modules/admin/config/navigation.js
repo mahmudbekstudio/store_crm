@@ -124,6 +124,10 @@ export default {
                 { text: 'Etc.', route: {name: 'document.item4'} },
             ],
         },
+    ],
+    viewer: [
+        { text: 'Summary Progress', route: {name: 'progressrate.list'} },
+        { text: 'Progress in Details', route: {name: 'progressrate.detail'} }
     ]
 };
 /*export default [
