@@ -147,7 +147,7 @@
                 extensions: ['xlsx'],
                 isLoading: false,
                 headers: [
-                    /*{
+                    {
                         text: 'No',
                         align: 'center',
                         value: 'no',
@@ -227,7 +227,7 @@
                         text: 'Progress Rate PC(T+S)',
                         align: 'center',
                         value: 'progress_rate_pc',
-                    }*/
+                    }
                 ],
             }
         },
@@ -347,9 +347,7 @@
             }
         },
         created() {
-            this.$options.service.init(null, columns => {
-                this.headers = columns;
-            });
+            this.$options.service.init();
         },
         methods: {
             changeField(id, key, val, send) {
