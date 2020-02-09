@@ -397,31 +397,36 @@ class StockController extends Controller
         $data = $request->only(['list', 'wh_no']);
         $goodsRepository = app(GoodsRepository::class);
         $stockRepository = app(StockRepository::class);
-        $stockItem = $this->stockRepository->with(['goods'])->findWhere(['wh_no' => $data['wh_no']])[0]->toArray();
-        $inObj = json_decode($stockItem['in_obj'], true);
-        $outObj = json_decode($stockItem['out_obj'], true);
-        $listIndex = 0;
-        $inTotal = 0;
-        $outTotal = 0;
+        $goods = $this->stockRepository->with(['goods'])->findWhere(['wh_no' => $data['wh_no']])->toArray();
+        $inObj = [];
+        $outObj = [];
+        if(!empty($goods)) {
+            $stockItem = $goods[0];
+            $inObj = json_decode($stockItem['in_obj'], true);
+            $outObj = json_decode($stockItem['out_obj'], true);
+            $listIndex = 0;
+            $inTotal = 0;
+            $outTotal = 0;
 
-        foreach($inObj as $objKey => $objItem) {
-            for($i = $listIndex; $i < count($data['list']); $i++) {
-                if($data['list'][$i]['label'] == $objItem['name']) {
-                    $inObj[$objKey]['value'] = $data['list'][$i]['value'];
-                    $listIndex = $i;
-                    $inTotal += !empty($inObj[$objKey]['value']) ? (int)$inObj[$objKey]['value'] : 0;
-                    break;
+            foreach($inObj as $objKey => $objItem) {
+                for($i = $listIndex; $i < count($data['list']); $i++) {
+                    if($data['list'][$i]['label'] == $objItem['name']) {
+                        $inObj[$objKey]['value'] = $data['list'][$i]['value'];
+                        $listIndex = $i;
+                        $inTotal += !empty($inObj[$objKey]['value']) ? (int)$inObj[$objKey]['value'] : 0;
+                        break;
+                    }
                 }
             }
-        }
 
-        foreach($outObj as $objKey => $objItem) {
-            for($i = $listIndex; $i < count($data['list']); $i++) {
-                if($data['list'][$i]['label'] == $objItem['name']) {
-                    $outObj[$objKey]['value'] = $data['list'][$i]['value'];
-                    $listIndex = $i;
-                    $outTotal += !empty($outObj[$objKey]['value']) ? (int)$outObj[$objKey]['value'] : 0;
-                    break;
+            foreach($outObj as $objKey => $objItem) {
+                for($i = $listIndex; $i < count($data['list']); $i++) {
+                    if($data['list'][$i]['label'] == $objItem['name']) {
+                        $outObj[$objKey]['value'] = $data['list'][$i]['value'];
+                        $listIndex = $i;
+                        $outTotal += !empty($outObj[$objKey]['value']) ? (int)$outObj[$objKey]['value'] : 0;
+                        break;
+                    }
                 }
             }
         }
@@ -439,9 +444,9 @@ class StockController extends Controller
             'wh_no' => $data['wh_no'],
             'in_obj' => json_encode($inObj),
             'out_obj' => json_encode($outObj),
-            //'in_total' => $inTotal,
-            //'out_total' => $outTotal,
-            'remark' => $data['list'][count($data['list']) - 1]['value']
+            'in_total' => 0,
+            'out_total' => 0,
+            'remark' => ''//$data['list'][count($data['list']) - 1]['value']
         ]);
         return responseData(true);
     }

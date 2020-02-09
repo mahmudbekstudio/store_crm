@@ -72,7 +72,7 @@
                             color="default"
                             v-on="on"
                     >
-                        Add in column
+                        Add column
                     </v-btn>
                 </template>
 
@@ -115,7 +115,7 @@
             </v-dialog>
 
             <v-dialog
-                    v-if="$store.state.view.website.user.role === 'admin'"
+                    v-if="false && $store.state.view.website.user.role === 'admin'"
                     v-model="editOutColumnPopup"
                     width="500"
             >
@@ -373,7 +373,7 @@
                         return this.isEditMode;
                     }
 
-                    if(this.isEditMode) {
+                    if(this.isEditMode || parseInt(item.id) === -1) {
                         return false;
                     }
 
@@ -436,8 +436,8 @@
                 this.changeColumns();
             },
             columns(val) {
-                this.inColumnsList = val.in;
-                this.outColumnsList = val.out;
+                this.inColumnsList = val.in || [];
+                this.outColumnsList = val.out || [];
             },
             headers(val) {
                 this.newRecordFields = [];
@@ -530,11 +530,11 @@
                 }
 
                 if(!this.isEditMode) {
-                    this.headers.push({
+                    /*this.headers.push({
                         text: 'Total (A)',
                         align: 'center',
                         value: 'total_a'
-                    });
+                    });*/
                 }
 
                 for (let key in columns.out) {
@@ -549,7 +549,7 @@
                 }
 
                 if(!this.isEditMode) {
-                    this.headers.push({
+                    /*this.headers.push({
                         text: 'Total (B)',
                         align: 'center',
                         value: 'total_b'
@@ -565,7 +565,7 @@
                         text: 'Remark',
                         align: 'center',
                         value: 'remark'
-                    });
+                    });*/
                 }
             },
             changeWh() {

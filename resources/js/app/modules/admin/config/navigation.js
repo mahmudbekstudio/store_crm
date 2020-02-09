@@ -13,9 +13,10 @@ export default {
             icon: 'mdi-inbox-multiple',
             text: 'Stock Management',
             children: [
-                { text: 'Summary', route: {name: 'stock.list'} },
+                /*{ text: 'Summary', route: {name: 'stock.list'} },
                 { text: 'W/H-1- Tashkent (ET)', route: {name: 'stock.detail1'} },
-                { text: 'W/H-2- Tashkent (NAV)', route: {name: 'stock.detail2'} },
+                { text: 'W/H-2- Tashkent (NAV)', route: {name: 'stock.detail2'} },*/
+                { text: 'Summary', route: {name: 'stock.detail3'} },
             ],
         },
         {
@@ -100,9 +101,10 @@ export default {
             icon: 'mdi-inbox-multiple',
             text: 'Stock Management',
             children: [
-                { text: 'Summary', route: {name: 'stock.list'} },
+                /*{ text: 'Summary', route: {name: 'stock.list'} },
                 { text: 'W/H-1- Tashkent (ET)', route: {name: 'stock.detail1'} },
-                { text: 'W/H-2- Tashkent (NAV)', route: {name: 'stock.detail2'} },
+                { text: 'W/H-2- Tashkent (NAV)', route: {name: 'stock.detail2'} },*/
+                { text: 'Summary', route: {name: 'stock.detail3'} },
             ],
         },
         {
