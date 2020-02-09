@@ -42,7 +42,7 @@ const route = {
             component: StockDetail,
             meta: {
                 requiresAuth: true,
-                title: i18n.t('stock.title-detail') + '3'
+                title: i18n.t('stock.title')
             },
         },
         {
