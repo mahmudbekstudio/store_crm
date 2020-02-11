@@ -423,7 +423,7 @@
             for(let i = 6; i <= 350; i++) {
                 this.outColumnsCells.push({key: 'item.out_column_' + i, name: 'out_column_' + i});
             }
-            for(let i = 3; i <= 350; i++) {
+            for(let i = 1; i <= 350; i++) {
                 this.inColumnsCells.push({key: 'item.in_column_' + i, name: 'in_column_' + i});
             }
             this.changeWh();
